@@ -1,3 +1,6 @@
+import 'package:algo_verse_app/components/find_path_button.dart';
+import 'package:algo_verse_app/components/search_tree_button.dart';
+import 'package:algo_verse_app/components/sorting_button.dart';
 import 'package:algo_verse_app/components/highlighted_option_button.dart';
 import 'package:algo_verse_app/components/home_button.dart';
 import 'package:algo_verse_app/components/option_button.dart';
@@ -24,6 +27,14 @@ class _HomePageState extends State<HomePage> {
     PathFindingPage(),
     SortingPage(),
     TreeSearchPage(),
+  ];
+
+  // the different expandable visualizer button, SizeBox to show nothing on the main page
+  final List<Widget> _fab = const [
+    SizedBox(),
+    FindPathButton(),
+    SortingButton(),
+    SearchTreeButton(),
   ];
 
   bool highlightPath() {
@@ -155,7 +166,7 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       body: _pages[_selectedPage],
-      // floatingAction button expandable
+      floatingActionButton: _fab[_selectedPage],
     );
   }
 }
