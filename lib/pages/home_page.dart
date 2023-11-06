@@ -29,6 +29,13 @@ class _HomePageState extends State<HomePage> {
     SearchTreeButton(),
   ];
 
+  final List<String> _title = [
+    "Home",
+    "Pathfinding",
+    "Sorting",
+    "Treesearch",
+  ];
+
   Widget getPage(int selectedPage) {
     switch (selectedPage) {
       case 0:
@@ -89,6 +96,13 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Text(
+          _title[_selectedPage],
+          style: const TextStyle(
+            color: Color.fromRGBO(255, 255, 255, 1),
+            fontFamily: "Outfit",
+          ),
+        ),
         backgroundColor: const Color.fromRGBO(51, 74, 100, 1),
         actions: <Widget>[
           Padding(
