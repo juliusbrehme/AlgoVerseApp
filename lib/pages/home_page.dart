@@ -1,9 +1,9 @@
-import 'package:algo_verse_app/components/find_path_button.dart';
-import 'package:algo_verse_app/components/search_tree_button.dart';
-import 'package:algo_verse_app/components/sorting_button.dart';
-import 'package:algo_verse_app/components/highlighted_option_button.dart';
-import 'package:algo_verse_app/components/home_button.dart';
-import 'package:algo_verse_app/components/option_button.dart';
+import 'package:algo_verse_app/components/buttons/find_path_button.dart';
+import 'package:algo_verse_app/components/buttons/search_tree_button.dart';
+import 'package:algo_verse_app/components/buttons/sorting_button.dart';
+import 'package:algo_verse_app/components/buttons/highlighted_option_button.dart';
+import 'package:algo_verse_app/components/buttons/home_button.dart';
+import 'package:algo_verse_app/components/buttons/option_button.dart';
 import 'package:algo_verse_app/pages/main_page.dart';
 import 'package:algo_verse_app/pages/pathfinding.dart';
 import 'package:algo_verse_app/pages/sorting.dart';
@@ -21,14 +21,6 @@ class _HomePageState extends State<HomePage> {
   // index to show the right page
   int _selectedPage = 0;
 
-  // the different pages
-  final List<Widget> _pages = const [
-    MainPage(),
-    PathFindingPage(),
-    SortingPage(),
-    TreeSearchPage(),
-  ];
-
   // the different expandable visualizer button, SizeBox to show nothing on the main page
   final List<Widget> _fab = const [
     SizedBox(),
@@ -36,6 +28,41 @@ class _HomePageState extends State<HomePage> {
     SortingButton(),
     SearchTreeButton(),
   ];
+
+  Widget getPage(int selectedPage) {
+    switch (selectedPage) {
+      case 0:
+        return MainPage(
+          toPathFinding: toPathFinding,
+          toSorting: toSorting,
+          toTreeSearch: toTreeSearch,
+        );
+      case 1:
+        return PathFindingPage();
+      case 2:
+        return SortingPage();
+      default:
+        return TreeSearchPage();
+    }
+  }
+
+  void toPathFinding() {
+    setState(() {
+      _selectedPage = 1;
+    });
+  }
+
+  void toSorting() {
+    setState(() {
+      _selectedPage = 2;
+    });
+  }
+
+  void toTreeSearch() {
+    setState(() {
+      _selectedPage = 3;
+    });
+  }
 
   bool highlightPath() {
     if (_selectedPage == 1) {
@@ -165,8 +192,10 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      body: _pages[_selectedPage],
+      body: getPage(_selectedPage),
+      //_pages[_selectedPage],
       floatingActionButton: _fab[_selectedPage],
+      backgroundColor: const Color.fromARGB(255, 79, 115, 156),
     );
   }
 }
