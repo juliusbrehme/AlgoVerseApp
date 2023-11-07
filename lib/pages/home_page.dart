@@ -5,9 +5,9 @@ import 'package:algo_verse_app/components/buttons/highlighted_option_button.dart
 import 'package:algo_verse_app/components/buttons/home_button.dart';
 import 'package:algo_verse_app/components/buttons/option_button.dart';
 import 'package:algo_verse_app/pages/main_page.dart';
-import 'package:algo_verse_app/pages/pathfinding.dart';
-import 'package:algo_verse_app/pages/sorting.dart';
-import 'package:algo_verse_app/pages/treesearch.dart';
+import 'package:algo_verse_app/pages/pathfinding_page.dart';
+import 'package:algo_verse_app/pages/sorting_page.dart';
+import 'package:algo_verse_app/pages/treesearch_page.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -207,7 +207,6 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       body: getPage(_selectedPage),
-      //_pages[_selectedPage],
       floatingActionButton: _fab[_selectedPage],
       backgroundColor: const Color.fromARGB(255, 79, 115, 156),
     );

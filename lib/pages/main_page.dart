@@ -16,20 +16,6 @@ class MainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // const SizedBox(
-        //   height: 50,
-        // ),
-        // const Center(
-        //   child: Text(
-        //     "Select Algorithm:",
-        //     style: TextStyle(
-        //       color: Color.fromRGBO(255, 255, 255, 1),
-        //       fontWeight: FontWeight.w500,
-        //       fontFamily: "Outfit",
-        //       fontSize: 30,
-        //     ),
-        //   ),
-        // ),
         Expanded(
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 100),
