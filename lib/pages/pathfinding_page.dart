@@ -1,5 +1,9 @@
-import 'package:algo_verse_app/components/path_finding/game_coordinator.dart';
+import 'package:algo_verse_app/components/path_finding/pathfinding_coordinator.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+// sollte irgendwie zum consumer werden, damit wenn beim coordinator sich der path ändert hier dann
+// angezeigt werden kann
 
 class PathFindingPage extends StatefulWidget {
   const PathFindingPage({super.key});
@@ -14,9 +18,6 @@ class _PathFindingPageState extends State<PathFindingPage> {
   final int col = 20;
   final int row = 12;
 
-  GameCoordinator coordinator =
-      GameCoordinator.createGameCoordinator(Location(20, 12));
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -30,34 +31,34 @@ class _PathFindingPageState extends State<PathFindingPage> {
   }
 
   Widget _buildGrid() {
-    return Column(
-      children: [
-        ...List.generate(
-          // Maybe change the tiles down?
-          col,
-          (y) => Row(
-            children: [
-              ...List.generate(
-                row,
-                (x) => _buildDragTarget(x, y),
-              ),
-            ],
+    return Consumer<PathFindingCoordinator>(
+      builder: (context, coordinator, child) => Column(
+        children: [
+          ...List.generate(
+            // Maybe change the tiles down?
+            col,
+            (y) => Row(
+              children: [
+                ...List.generate(
+                  row,
+                  (x) => _buildDragTarget(x, y, coordinator),
+                )
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
-  Widget _buildDragTarget(int x, int y) {
+  // start und end node sind die einzigen nodes auf dem feld, da path visited und obstacle nur die farbe der tile geändert wird
+  Widget _buildDragTarget(int x, int y, PathFindingCoordinator coordinator) {
     return DragTarget<Node>(
       onAccept: (node) {
-        final capturedNode = coordinator.getNode(x, y);
-
         setState(() {
-          node.location = Location(x, y);
-          if (capturedNode != null) {
-            coordinator.removeNode(capturedNode);
-          }
+          coordinator.removeNode(node);
+          coordinator
+              .addNode(Node(location: Location(x, y), icon: node.getIcon()));
         });
       },
       onWillAccept: (node) {
@@ -71,16 +72,33 @@ class _PathFindingPageState extends State<PathFindingPage> {
       builder: (context, data, rejects) => Container(
         width: tileWidth,
         height: tileWidth,
-        decoration: _buildTileDecoration(),
-        child: _buildNode(x, y),
+        decoration: _buildTileDecoration(x, y, coordinator),
+        child: _buildNode(x, y, coordinator),
       ),
     );
   }
 
-  Decoration _buildTileDecoration() {
-    return const BoxDecoration(
-      color: Color.fromRGBO(231, 230, 230, 1),
-      border: Border(
+  // wenn mit animation nochmal neu gucken, denn dann werden ja path und visited node eventuell anders generiert und obstacle sowieso
+  // da dies mit drag passiert, also vllt ähnlich wie bei starting end node
+  Decoration _buildTileDecoration(
+      int x, int y, PathFindingCoordinator coordinator) {
+    final Node? wall = coordinator.getObstacle(x, y);
+    final Node? visited = coordinator.getVisitedNode(x, y);
+    final Node? path = coordinator.getPathNode(x, y);
+    Color tileColor = const Color.fromRGBO(231, 230, 230, 1);
+
+    if (wall != null) {
+      tileColor = Colors.black;
+    } else if (visited != null) {
+      tileColor = const Color.fromRGBO(175, 216, 248, 1);
+    }
+    if (path != null) {
+      tileColor = const Color.fromRGBO(239, 237, 295, 1);
+    }
+
+    return BoxDecoration(
+      color: tileColor,
+      border: const Border(
         top: BorderSide(
           color: Color.fromARGB(255, 79, 115, 156),
           width: 0.5,
@@ -101,11 +119,16 @@ class _PathFindingPageState extends State<PathFindingPage> {
     );
   }
 
-  Widget? _buildNode(int x, int y) {
+  // hier dann auch path und visited nodes rein bauen? Vllt erstmal am anfang und dann mal gucken,
+  // je nachdem wie es mit der animation funktioniert. Am anfang um erstmal zu testen ob die
+  // die richtigen sachen auszuprobieren
+  Widget? _buildNode(int x, int y, PathFindingCoordinator coordinator) {
+    // hier dann auch nach walls fragen falls beim coordinator null ist
     final Node? node = coordinator.getNode(x, y);
     if (node != null) {
       final Widget? icon = node.getIcon();
       if (icon != null) {
+        print("test");
         final Widget child = icon;
         return Draggable<Node>(
           data: node,
