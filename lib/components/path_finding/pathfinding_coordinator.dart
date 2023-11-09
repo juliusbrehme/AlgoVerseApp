@@ -39,22 +39,21 @@ class PathFindingCoordinator extends ChangeNotifier {
     );
   }
 
-  Node get getStartNode {
-    return nodes.first;
-  }
+  Node get getStartNode => nodes.first;
 
-  Node get getEndingNode {
-    return nodes.last;
-  }
+  Node get getEndingNode => nodes.last;
 
-  List<Node> get getAllObstacles {
-    return obstacle;
-  }
+  Location get getSize => size;
 
-  Location get getSize {
-    return size;
-  }
+  List<Node> get allNodes => nodes;
 
+  List<Node> get allObstacles => obstacle;
+
+  List<Node> get allVisitedNodes => visitedNodes;
+
+  List<Node> get allPathNodes => path;
+
+  // for setting the nodes, walls, path... on the board, will maybe be changed
   // Get start or ending node
   Node? getNode(int x, int y) {
     return nodes.firstWhereOrNull((p) => x == p.x && y == p.y);
@@ -77,41 +76,24 @@ class PathFindingCoordinator extends ChangeNotifier {
     return path.firstWhereOrNull((element) => x == element.x && y == element.y);
   }
 
-  List<Node> get allNodes => nodes;
-  List<Node> get allObstacles => obstacle;
-
+  // for dragging nodes
   void addNode(Node node) {
     nodes.add(node);
     notifyListeners();
   }
-
+  // for dragging nodes
   void removeNode(Node node) {
     nodes.remove(node);
   }
 
-  // so lassen?
-  void addObstacle(Node node) {
-    obstacle.add(node);
-  }
-
+  // for testing with walls, this will probably change
   void addAllObstacle(List<Node> nodes) {
     obstacle = nodes;
     notifyListeners();
   }
 
-  // so lassen?
-  void removeObstacle(Node node) {
-    obstacle.remove(node);
-  }
-
   void addVisitedNodes(List<Node> nodes) {
     visitedNodes = nodes;
-    notifyListeners();
-  }
-
-  // hier auch notifyen?
-  void removeVisitedNodes() {
-    visitedNodes = [];
     notifyListeners();
   }
 
@@ -120,15 +102,14 @@ class PathFindingCoordinator extends ChangeNotifier {
     notifyListeners();
   }
 
-  // hier auch notifyen?
-  void removePath() {
-    path = [];
+  void addPathNode(Node node) {
+    path.add(node);
     notifyListeners();
   }
 
-  // for debugging
-  List<Node> get getAllPath {
-    return path;
+  void addVisitedNodeNode(Node node) {
+    visitedNodes.add(node);
+    notifyListeners();
   }
 }
 

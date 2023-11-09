@@ -128,7 +128,6 @@ class _PathFindingPageState extends State<PathFindingPage> {
     if (node != null) {
       final Widget? icon = node.getIcon();
       if (icon != null) {
-        print("test");
         final Widget child = icon;
         return Draggable<Node>(
           data: node,
