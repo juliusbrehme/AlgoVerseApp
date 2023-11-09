@@ -1,5 +1,5 @@
-import 'package:algo_verse_app/components/visualization_fab/algorithm_buttons.dart';
-import 'package:algo_verse_app/components/visualization_fab/visualize_button.dart';
+import 'package:algo_verse_app/components/buttons/visualization_fab/algorithm_buttons.dart';
+import 'package:algo_verse_app/components/buttons/visualization_fab/visualize_button.dart';
 import 'package:flutter/material.dart';
 
 class SearchTreeButton extends StatelessWidget {

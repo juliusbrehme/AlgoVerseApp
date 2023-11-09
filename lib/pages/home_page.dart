@@ -4,11 +4,13 @@ import 'package:algo_verse_app/components/buttons/sorting_button.dart';
 import 'package:algo_verse_app/components/buttons/highlighted_option_button.dart';
 import 'package:algo_verse_app/components/buttons/home_button.dart';
 import 'package:algo_verse_app/components/buttons/option_button.dart';
+import 'package:algo_verse_app/components/path_finding/pathfinding_coordinator.dart';
 import 'package:algo_verse_app/pages/main_page.dart';
 import 'package:algo_verse_app/pages/pathfinding_page.dart';
 import 'package:algo_verse_app/pages/sorting_page.dart';
 import 'package:algo_verse_app/pages/treesearch_page.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -45,11 +47,11 @@ class _HomePageState extends State<HomePage> {
           toTreeSearch: toTreeSearch,
         );
       case 1:
-        return PathFindingPage();
+        return const PathFindingPage();
       case 2:
-        return SortingPage();
+        return const SortingPage();
       default:
-        return TreeSearchPage();
+        return const TreeSearchPage();
     }
   }
 
@@ -94,121 +96,129 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          _title[_selectedPage],
-          style: const TextStyle(
-            color: Color.fromRGBO(255, 255, 255, 1),
-            fontFamily: "Outfit",
+    return ChangeNotifierProvider<PathFindingCoordinator>(
+      create: (context) => PathFindingCoordinator(Location(12, 20)),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            _title[_selectedPage],
+            style: const TextStyle(
+              color: Color.fromRGBO(255, 255, 255, 1),
+              fontFamily: "Outfit",
+            ),
+          ),
+          backgroundColor: const Color.fromRGBO(51, 74, 100, 1),
+          actions: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(right: 10),
+              child: IconButton(
+                icon: const Icon(
+                  Icons.sync,
+                  color: Color.fromRGBO(255, 255, 255, 1),
+                ),
+                onPressed: () {
+                  print("Switch");
+                },
+              ),
+            )
+          ],
+          //toolbarHeight: 70,
+        ),
+        // Hier wird mit Index ausgewählt welche Drawer gezeigt wird, daher drawer alle extra in klasse machen
+        drawer: Drawer(
+          backgroundColor: const Color.fromRGBO(51, 74, 100, 1),
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 50,
+              ),
+              HomeButton(
+                onTap: () {
+                  setState(() {
+                    _selectedPage = 0;
+                  });
+                  Navigator.pop(context);
+                },
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              // if (true == 0) ...[const Text("Well")], damit kann man dann einen drawer erstellen!
+              highlightPath()
+                  ? HighlightedOptionButton(
+                      image: "lib/images/pathfinding.png",
+                      description: "Pathfinding Algorithm",
+                      onTap: () {
+                        setState(() {
+                          _selectedPage = 1;
+                        });
+                        Navigator.pop(context);
+                      },
+                    )
+                  : OptionButton(
+                      image: "lib/images/pathfinding.png",
+                      description: "Pathfinding Algorithm",
+                      onTap: () {
+                        setState(() {
+                          _selectedPage = 1;
+                        });
+                        Navigator.pop(context);
+                      },
+                    ),
+              highlightSorting()
+                  ? HighlightedOptionButton(
+                      image: "lib/images/sorting.png",
+                      description: "Sorting Algorithm",
+                      onTap: () {
+                        setState(() {
+                          _selectedPage = 2;
+                        });
+                        Navigator.pop(context);
+                      },
+                    )
+                  : OptionButton(
+                      image: "lib/images/sorting.png",
+                      description: "Sorting Algorithm",
+                      onTap: () {
+                        setState(() {
+                          _selectedPage = 2;
+                        });
+                        Navigator.pop(context);
+                      },
+                    ),
+              highlightTreeSearch()
+                  ? HighlightedOptionButton(
+                      image: "lib/images/treesearch.png",
+                      description: "Tree Search Algorithm",
+                      onTap: () {
+                        setState(() {
+                          _selectedPage = 3;
+                        });
+                        Navigator.pop(context);
+                      },
+                    )
+                  : OptionButton(
+                      image: "lib/images/treesearch.png",
+                      description: "Tree Search Algorithm",
+                      onTap: () {
+                        setState(() {
+                          _selectedPage = 3;
+                        });
+                        Navigator.pop(context);
+                      },
+                    ),
+            ],
           ),
         ),
-        backgroundColor: const Color.fromRGBO(51, 74, 100, 1),
-        actions: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(right: 10),
-            child: IconButton(
-              icon: const Icon(
-                Icons.sync,
-                color: Color.fromRGBO(255, 255, 255, 1),
-              ),
-              onPressed: () {
-                print("Switch");
-              },
-            ),
-          )
-        ],
-        //toolbarHeight: 70,
-      ),
-      // Hier wird mit Index ausgewählt welche Drawer gezeigt wird, daher drawer alle extra in klasse machen
-      drawer: Drawer(
-        backgroundColor: const Color.fromRGBO(51, 74, 100, 1),
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 50,
-            ),
-            HomeButton(
-              onTap: () {
-                setState(() {
-                  _selectedPage = 0;
-                });
-                Navigator.pop(context);
-              },
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            // if (true == 0) ...[const Text("Well")], damit kann man dann einen drawer erstellen!
-            highlightPath()
-                ? HighlightedOptionButton(
-                    image: "lib/images/pathfinding.png",
-                    description: "Pathfinding Algorithm",
-                    onTap: () {
-                      setState(() {
-                        _selectedPage = 1;
-                      });
-                      Navigator.pop(context);
-                    },
-                  )
-                : OptionButton(
-                    image: "lib/images/pathfinding.png",
-                    description: "Pathfinding Algorithm",
-                    onTap: () {
-                      setState(() {
-                        _selectedPage = 1;
-                      });
-                      Navigator.pop(context);
-                    },
-                  ),
-            highlightSorting()
-                ? HighlightedOptionButton(
-                    image: "lib/images/sorting.png",
-                    description: "Sorting Algorithm",
-                    onTap: () {
-                      setState(() {
-                        _selectedPage = 2;
-                      });
-                      Navigator.pop(context);
-                    },
-                  )
-                : OptionButton(
-                    image: "lib/images/sorting.png",
-                    description: "Sorting Algorithm",
-                    onTap: () {
-                      setState(() {
-                        _selectedPage = 2;
-                      });
-                      Navigator.pop(context);
-                    },
-                  ),
-            highlightTreeSearch()
-                ? HighlightedOptionButton(
-                    image: "lib/images/treesearch.png",
-                    description: "Tree Search Algorithm",
-                    onTap: () {
-                      setState(() {
-                        _selectedPage = 3;
-                      });
-                      Navigator.pop(context);
-                    },
-                  )
-                : OptionButton(
-                    image: "lib/images/treesearch.png",
-                    description: "Tree Search Algorithm",
-                    onTap: () {
-                      setState(() {
-                        _selectedPage = 3;
-                      });
-                      Navigator.pop(context);
-                    },
-                  ),
-          ],
+        body: getPage(_selectedPage),
+        floatingActionButton: Padding(
+          padding: const EdgeInsets.only(
+            bottom: 15,
+          ),
+          child: _fab[_selectedPage],
         ),
+        backgroundColor: const Color.fromARGB(255, 79, 115, 156),
       ),
-      body: getPage(_selectedPage),
-      floatingActionButton: _fab[_selectedPage],
-      backgroundColor: const Color.fromARGB(255, 79, 115, 156),
     );
   }
 }
