@@ -8,7 +8,7 @@ abstract class PathFindingStrategy {
   ///
   /// @param board Holds the information of the board.
   /// @return Returns a record of Path, which holds the path and the visited nodes
-  List<List<Node>> findPath();
+  void findPath(PathFindingCoordinator coordinator);
 
   /// This method is to generate the next neighbors for the path finding algorithm.
   ///
@@ -90,13 +90,13 @@ abstract class PathFindingStrategy {
   /// @param visitedNodes The visited nodes in sequence
   /// @param parent       The memory of which node is the parent node
   /// @return Return the path and the sequence of visited nodes
-  List<List<Node>> reconstructPath(Node startingNode, Node endingNode,
-      List<Node> visitedNodes, Map<Node, Node> parent) {
+  void reconstructPath(Node startingNode, Node endingNode,
+      List<Node> visitedNodes, Map<Node, Node> parent, PathFindingCoordinator coordinator) {
     Node node = endingNode;
     List<Node> path = [];
     // check if a solution exist
     if (parent[node] == null) {
-      return [[], visitedNodes];
+      return;
     }
 
     while (node != startingNode) {
@@ -109,6 +109,8 @@ abstract class PathFindingStrategy {
     }
     path.insert(0, startingNode);
 
-    return [path, visitedNodes];
+    for (Node node in path) {
+      coordinator.addPathNode(node);
+    }
   }
 }

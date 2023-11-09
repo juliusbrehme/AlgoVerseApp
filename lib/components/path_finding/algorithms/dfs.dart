@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:io';
 
 import 'package:algo_verse_app/components/path_finding/algorithms/pathfinding_strategy.dart';
 import 'package:algo_verse_app/components/path_finding/pathfinding_coordinator.dart';
@@ -17,26 +18,23 @@ class DFS extends PathFindingStrategy {
   final List<Node> obstacles;
   final Location boardSize;
 
-  // I think there is a bug with getNeighbors or how it is put into the nexNode list or something
   @override
-  List<List<Node>> findPath() {
+  void findPath(PathFindingCoordinator coordinator) {
     if (startingNode == endingNode) {
-      return [
-        [startingNode],
-        []
-      ];
+      return;
     }
 
     List<Node> nextNode = [];
     nextNode.add(startingNode);
     List<Node> visitedNodes = [];
-    //Map<Node, int> visitedNodesMap = HashMap();
     Map<Node, Node> parent = HashMap();
 
     while (nextNode.isNotEmpty) {
       Node node = nextNode.removeLast();
       visitedNodes.add(node);
-      //visitedNodesMap[node] = 1;
+      coordinator.addVisitedNodeNode(node);
+      print(coordinator.allVisitedNodes);
+      sleep(const Duration(milliseconds: 200));
       List<Node> neighbors =
           getNeighbors(node, obstacles, visitedNodes, boardSize);
       for (Node neighbor in neighbors) {
@@ -45,14 +43,14 @@ class DFS extends PathFindingStrategy {
         if (!nextNode.contains(neighbor)) {
           if (endingNode == neighbor) {
             visitedNodes.add(neighbor);
-            return reconstructPath(
-                startingNode, endingNode, visitedNodes, parent);
+            coordinator.addVisitedNodeNode(neighbor);
+            reconstructPath(
+                startingNode, endingNode, visitedNodes, parent, coordinator);
+            return;
           }
           nextNode.add(neighbor);
         }
       }
     }
-
-    return [[], visitedNodes];
   }
 }
