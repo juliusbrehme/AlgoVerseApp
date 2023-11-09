@@ -1,5 +1,4 @@
 import 'dart:collection';
-import 'dart:io';
 
 import 'package:algo_verse_app/components/path_finding/algorithms/pathfinding_strategy.dart';
 import 'package:algo_verse_app/components/path_finding/pathfinding_coordinator.dart';
@@ -19,7 +18,7 @@ class DFS extends PathFindingStrategy {
   final Location boardSize;
 
   @override
-  void findPath(PathFindingCoordinator coordinator) {
+  Future<void> findPath(PathFindingCoordinator coordinator) async {
     if (startingNode == endingNode) {
       return;
     }
@@ -34,7 +33,7 @@ class DFS extends PathFindingStrategy {
       visitedNodes.add(node);
       coordinator.addVisitedNodeNode(node);
       print(coordinator.allVisitedNodes);
-      sleep(const Duration(milliseconds: 200));
+      await Future.delayed(const Duration(seconds: 1));
       List<Node> neighbors =
           getNeighbors(node, obstacles, visitedNodes, boardSize);
       for (Node neighbor in neighbors) {

@@ -90,8 +90,12 @@ abstract class PathFindingStrategy {
   /// @param visitedNodes The visited nodes in sequence
   /// @param parent       The memory of which node is the parent node
   /// @return Return the path and the sequence of visited nodes
-  void reconstructPath(Node startingNode, Node endingNode,
-      List<Node> visitedNodes, Map<Node, Node> parent, PathFindingCoordinator coordinator) {
+  void reconstructPath(
+      Node startingNode,
+      Node endingNode,
+      List<Node> visitedNodes,
+      Map<Node, Node> parent,
+      PathFindingCoordinator coordinator) async {
     Node node = endingNode;
     List<Node> path = [];
     // check if a solution exist
@@ -110,6 +114,7 @@ abstract class PathFindingStrategy {
     path.insert(0, startingNode);
 
     for (Node node in path) {
+      await Future.delayed(const Duration(seconds: 1));
       coordinator.addPathNode(node);
     }
   }

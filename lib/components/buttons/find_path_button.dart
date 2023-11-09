@@ -40,13 +40,8 @@ class FindPathButton extends StatelessWidget {
           },
           algorithm: "Dijkstra",
         ),
-        // anstatt hier danach eine Liste zurück zu geben, können wir auch bei dem jedes mal ein visited nodes hinzugeführt wird
-        // einfach das in coordinator direkt reinwerfen, den consumer notify und dann direkt rebuilden -> animation
-        // das ganze dann auch mit path und dann mal gucken wie schnell das so ist und dementsprechende waits einbauen -> unterbrechen
-        // nicht möglich (man könnte das im thread laufen lassen  und sonst den thread killen oder sowas) und die waits geben wir als
-        // paramater in den jeweiligen algorithmus mit rein damit man theoretisch die geschwindigkeit ändern kann
         AlgorithmButton(
-          onPressed: () {
+          onPressed: () async {
             DFS dfs = DFS(
               startingNode: coordinator.getStartNode,
               endingNode: coordinator.getEndingNode,
