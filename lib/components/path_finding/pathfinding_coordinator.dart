@@ -1,11 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
 
-class GameCoordinator {
+// Game Coordinator should be providor and provide all the important stuff, the nodes (start/end node),
+// obstacles, path (updated when generated) and visited nodes (updated when generated)
+// if any changes happen here, the page will reload. If an algorithm is finished, the results should be
+// added to the game coordinator
+
+class PathFindingCoordinator extends ChangeNotifier {
   List<Node> nodes = [];
   List<Node> obstacle = [];
+  List<Node> visitedNodes = [];
+  List<Node> path = [];
 
-  GameCoordinator._(Location size) {
+  final Location size;
+
+  PathFindingCoordinator(this.size) {
+    // starting Node
     nodes.add(
       Node(
         location: Location(6, 1),
@@ -16,6 +26,7 @@ class GameCoordinator {
         ),
       ),
     );
+    // ending Node
     nodes.add(
       Node(
         location: Location(6, 18),
@@ -28,12 +39,42 @@ class GameCoordinator {
     );
   }
 
-  static GameCoordinator createGameCoordinator(Location size) {
-    return GameCoordinator._(size);
+  Node get getStartNode {
+    return nodes.first;
   }
 
+  Node get getEndingNode {
+    return nodes.last;
+  }
+
+  List<Node> get getAllObstacles {
+    return obstacle;
+  }
+
+  Location get getSize {
+    return size;
+  }
+
+  // Get start or ending node
   Node? getNode(int x, int y) {
     return nodes.firstWhereOrNull((p) => x == p.x && y == p.y);
+  }
+
+  // Get obstacle node
+  Node? getObstacle(int x, int y) {
+    return obstacle
+        .firstWhereOrNull((element) => x == element.x && y == element.y);
+  }
+
+  // Get visitedNode node
+  Node? getVisitedNode(int x, int y) {
+    return visitedNodes
+        .firstWhereOrNull((element) => x == element.x && y == element.y);
+  }
+
+  // Get path node
+  Node? getPathNode(int x, int y) {
+    return path.firstWhereOrNull((element) => x == element.x && y == element.y);
   }
 
   List<Node> get allNodes => nodes;
@@ -41,18 +82,53 @@ class GameCoordinator {
 
   void addNode(Node node) {
     nodes.add(node);
+    notifyListeners();
   }
 
   void removeNode(Node node) {
     nodes.remove(node);
   }
 
+  // so lassen?
   void addObstacle(Node node) {
-    nodes.add(node);
+    obstacle.add(node);
   }
 
+  void addAllObstacle(List<Node> nodes) {
+    obstacle = nodes;
+    notifyListeners();
+  }
+
+  // so lassen?
   void removeObstacle(Node node) {
-    nodes.remove(node);
+    obstacle.remove(node);
+  }
+
+  void addVisitedNodes(List<Node> nodes) {
+    visitedNodes = nodes;
+    notifyListeners();
+  }
+
+  // hier auch notifyen?
+  void removeVisitedNodes() {
+    visitedNodes = [];
+    notifyListeners();
+  }
+
+  void addPath(List<Node> nodes) {
+    path = nodes;
+    notifyListeners();
+  }
+
+  // hier auch notifyen?
+  void removePath() {
+    path = [];
+    notifyListeners();
+  }
+
+  // for debugging
+  List<Node> get getAllPath {
+    return path;
   }
 }
 
@@ -75,7 +151,7 @@ class Location {
 }
 
 class Node {
-  Location location;
+  final Location location;
   final Widget? icon;
   final Location? size;
 
