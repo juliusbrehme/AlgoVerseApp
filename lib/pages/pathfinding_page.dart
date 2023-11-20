@@ -2,9 +2,6 @@ import 'package:algo_verse_app/components/path_finding/pathfinding_coordinator.d
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-// sollte irgendwie zum consumer werden, damit wenn beim coordinator sich der path ändert hier dann
-// angezeigt werden kann
-
 class PathFindingPage extends StatefulWidget {
   const PathFindingPage({super.key});
 
@@ -13,10 +10,6 @@ class PathFindingPage extends StatefulWidget {
 }
 
 class _PathFindingPageState extends State<PathFindingPage> {
-  late final double tileWidth = MediaQuery.of(context).size.width / 12.0;
-
-  final int col = 20;
-  final int row = 12;
 
   @override
   Widget build(BuildContext context) {
@@ -36,11 +29,11 @@ class _PathFindingPageState extends State<PathFindingPage> {
         children: [
           ...List.generate(
             // Maybe change the tiles down?
-            col,
+            coordinator.size.y,
             (y) => Row(
               children: [
                 ...List.generate(
-                  row,
+                  coordinator.size.x,
                   (x) => _buildDragTarget(x, y, coordinator),
                 )
               ],
@@ -66,20 +59,18 @@ class _PathFindingPageState extends State<PathFindingPage> {
           return false;
         }
 
-        return node.canMoveTo(x, y, Location(row, col), coordinator.allNodes,
+        return node.canMoveTo(x, y, coordinator.size, coordinator.allNodes,
             coordinator.allObstacles);
       },
       builder: (context, data, rejects) => Container(
-        width: tileWidth,
-        height: tileWidth,
+        width: MediaQuery.of(context).size.width / coordinator.size.x,
+        height: MediaQuery.of(context).size.width / coordinator.size.x,
         decoration: _buildTileDecoration(x, y, coordinator),
         child: _buildNode(x, y, coordinator),
       ),
     );
   }
 
-  // wenn mit animation nochmal neu gucken, denn dann werden ja path und visited node eventuell anders generiert und obstacle sowieso
-  // da dies mit drag passiert, also vllt ähnlich wie bei starting end node
   Decoration _buildTileDecoration(
       int x, int y, PathFindingCoordinator coordinator) {
     final Node? wall = coordinator.getObstacle(x, y);
@@ -119,11 +110,7 @@ class _PathFindingPageState extends State<PathFindingPage> {
     );
   }
 
-  // hier dann auch path und visited nodes rein bauen? Vllt erstmal am anfang und dann mal gucken,
-  // je nachdem wie es mit der animation funktioniert. Am anfang um erstmal zu testen ob die
-  // die richtigen sachen auszuprobieren
   Widget? _buildNode(int x, int y, PathFindingCoordinator coordinator) {
-    // hier dann auch nach walls fragen falls beim coordinator null ist
     final Node? node = coordinator.getNode(x, y);
     if (node != null) {
       final Widget? icon = node.getIcon();
@@ -136,6 +123,16 @@ class _PathFindingPageState extends State<PathFindingPage> {
           child: child,
         );
       }
+    } else {
+      return GestureDetector(
+        onTap: () {
+          if (coordinator.getObstacle(x, y) == null) {
+            coordinator.addObstacle(Node(location: Location(x, y)));
+          } else {
+            coordinator.removeObstacle(Node(location: Location(x, y)));
+          }
+        },
+      );
     }
     return null;
   }

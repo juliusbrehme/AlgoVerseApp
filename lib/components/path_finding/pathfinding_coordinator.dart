@@ -18,7 +18,7 @@ class PathFindingCoordinator extends ChangeNotifier {
     // starting Node
     nodes.add(
       Node(
-        location: Location(6, 1),
+        location: Location((size.x - 1) ~/ 2, 1),
         size: Location(size.x, size.y),
         icon: const Icon(
           Icons.expand_more,
@@ -29,7 +29,7 @@ class PathFindingCoordinator extends ChangeNotifier {
     // ending Node
     nodes.add(
       Node(
-        location: Location(6, 18),
+        location: Location((size.x - 1) ~/ 2, size.y - 2),
         size: Location(size.x, size.y),
         icon: const Icon(
           Icons.adjust,
@@ -53,7 +53,6 @@ class PathFindingCoordinator extends ChangeNotifier {
 
   List<Node> get allPathNodes => path;
 
-  // for setting the nodes, walls, path... on the board, will maybe be changed
   // Get start or ending node
   Node? getNode(int x, int y) {
     return nodes.firstWhereOrNull((p) => x == p.x && y == p.y);
@@ -81,9 +80,20 @@ class PathFindingCoordinator extends ChangeNotifier {
     nodes.add(node);
     notifyListeners();
   }
+
   // for dragging nodes
   void removeNode(Node node) {
     nodes.remove(node);
+  }
+
+  void addObstacle(Node node) {
+    obstacle.add(node);
+    notifyListeners();
+  }
+
+  void removeObstacle(Node node) {
+    obstacle.remove(node);
+    notifyListeners();
   }
 
   // for testing with walls, this will probably change
