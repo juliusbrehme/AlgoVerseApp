@@ -21,22 +21,7 @@ class FindPathButton extends StatelessWidget {
       children: [
         AlgorithmButton(
           onPressed: () {
-            // call dijkstra and update path and visited -> it will be printed to screen
-            List<Node> nodes = [
-              Node(location: Location(0, 0)),
-              Node(location: Location(1, 1)),
-              Node(location: Location(1, 2)),
-              Node(location: Location(2, 2)),
-              Node(location: Location(3, 2)),
-              Node(location: Location(4, 2)),
-              Node(location: Location(5, 2)),
-              Node(location: Location(6, 2)),
-              Node(location: Location(7, 2)),
-              Node(location: Location(8, 2)),
-              Node(location: Location(9, 2)),
-              Node(location: Location(10, 2)),
-            ];
-            coordinator.addAllObstacle(nodes);
+            print("Dijkstra");
           },
           algorithm: "Dijkstra",
         ),
@@ -49,9 +34,6 @@ class FindPathButton extends StatelessWidget {
               boardSize: coordinator.getSize,
             );
             dfs.findPath(coordinator);
-            // List<List<Node>> pathInformation = dfs.findPath(coordinator);
-            // coordinator.addVisitedNodes(pathInformation.last);
-            // coordinator.addPath(pathInformation.first);
           },
           algorithm: "DFS",
           //closeFabOnTap: true,
@@ -72,5 +54,3 @@ class FindPathButton extends StatelessWidget {
     );
   }
 }
-
-class Nodes {}

@@ -97,7 +97,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<PathFindingCoordinator>(
-      create: (context) => PathFindingCoordinator(Location(12, 20)),
+      create: (context) => PathFindingCoordinator(Location(11, 19)),
       child: Scaffold(
         appBar: AppBar(
           title: Text(

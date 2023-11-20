@@ -32,8 +32,7 @@ class DFS extends PathFindingStrategy {
       Node node = nextNode.removeLast();
       visitedNodes.add(node);
       coordinator.addVisitedNodeNode(node);
-      print(coordinator.allVisitedNodes);
-      await Future.delayed(const Duration(seconds: 1));
+      await Future.delayed(const Duration(milliseconds: 200));
       List<Node> neighbors =
           getNeighbors(node, obstacles, visitedNodes, boardSize);
       for (Node neighbor in neighbors) {
