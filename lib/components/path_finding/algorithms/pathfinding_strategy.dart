@@ -114,7 +114,7 @@ abstract class PathFindingStrategy {
     path.insert(0, startingNode);
 
     for (Node node in path) {
-      await Future.delayed(const Duration(seconds: 1));
+      await Future.delayed(const Duration(milliseconds: 200));
       coordinator.addPathNode(node);
     }
   }
