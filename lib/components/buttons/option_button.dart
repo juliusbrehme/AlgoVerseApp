@@ -4,12 +4,17 @@ class OptionButton extends StatelessWidget {
   final String image;
   final String description;
   final Function()? onTap;
+  final double height;
+  final double width;
 
-  const OptionButton(
-      {super.key,
-      required this.image,
-      required this.description,
-      required this.onTap});
+  const OptionButton({
+    super.key,
+    required this.image,
+    required this.description,
+    required this.onTap,
+    required this.height,
+    required this.width,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +22,8 @@ class OptionButton extends StatelessWidget {
       padding: const EdgeInsets.all(20.0),
       child: ListTile(
         leading: SizedBox(
-          height: 45,
-          width: 50,
+          height: height,
+          width: width,
           child: Image.asset(image),
         ),
         title: Text(

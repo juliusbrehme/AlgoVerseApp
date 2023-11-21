@@ -154,6 +154,8 @@ class _HomePageState extends State<HomePage> {
                         });
                         Navigator.pop(context);
                       },
+                      height: 45,
+                      width: 55,
                     )
                   : OptionButton(
                       image: "lib/images/pathfinding.png",
@@ -164,6 +166,8 @@ class _HomePageState extends State<HomePage> {
                         });
                         Navigator.pop(context);
                       },
+                      height: 45,
+                      width: 55,
                     ),
               highlightSorting()
                   ? HighlightedOptionButton(
@@ -175,6 +179,8 @@ class _HomePageState extends State<HomePage> {
                         });
                         Navigator.pop(context);
                       },
+                      height: 45,
+                      width: 55,
                     )
                   : OptionButton(
                       image: "lib/images/sorting.png",
@@ -185,6 +191,8 @@ class _HomePageState extends State<HomePage> {
                         });
                         Navigator.pop(context);
                       },
+                      height: 45,
+                      width: 55,
                     ),
               highlightTreeSearch()
                   ? HighlightedOptionButton(
@@ -196,6 +204,8 @@ class _HomePageState extends State<HomePage> {
                         });
                         Navigator.pop(context);
                       },
+                      height: 60,
+                      width: 55,
                     )
                   : OptionButton(
                       image: "lib/images/treesearch.png",
@@ -206,6 +216,8 @@ class _HomePageState extends State<HomePage> {
                         });
                         Navigator.pop(context);
                       },
+                      height: 60,
+                      width: 55,
                     ),
             ],
           ),
