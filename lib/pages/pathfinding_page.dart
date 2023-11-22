@@ -1,4 +1,4 @@
-import 'package:algo_verse_app/components/path_finding/pathfinding_coordinator.dart';
+import 'package:algo_verse_app/provider/pathfinding_coordinator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,6 +23,7 @@ class _PathFindingPageState extends State<PathFindingPage> {
     );
   }
 
+  // set the build grid wiht mediaquery for height as well so it is always the right size or somethinglike that? make responsive ? But for when everything is finished
   Widget _buildGrid() {
     return Consumer<PathFindingCoordinator>(
       builder: (context, coordinator, child) => Column(

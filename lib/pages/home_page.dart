@@ -4,7 +4,7 @@ import 'package:algo_verse_app/components/buttons/sorting_button.dart';
 import 'package:algo_verse_app/components/buttons/highlighted_option_button.dart';
 import 'package:algo_verse_app/components/buttons/home_button.dart';
 import 'package:algo_verse_app/components/buttons/option_button.dart';
-import 'package:algo_verse_app/components/path_finding/pathfinding_coordinator.dart';
+import 'package:algo_verse_app/provider/pathfinding_coordinator.dart';
 import 'package:algo_verse_app/pages/main_page.dart';
 import 'package:algo_verse_app/pages/pathfinding_page.dart';
 import 'package:algo_verse_app/pages/sorting_page.dart';

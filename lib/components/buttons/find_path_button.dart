@@ -1,7 +1,7 @@
+import 'package:algo_verse_app/algorithms/dfs.dart';
 import 'package:algo_verse_app/components/buttons/visualization_fab/algorithm_buttons.dart';
 import 'package:algo_verse_app/components/buttons/visualization_fab/visualize_button.dart';
-import 'package:algo_verse_app/components/path_finding/algorithms/dfs.dart';
-import 'package:algo_verse_app/components/path_finding/pathfinding_coordinator.dart';
+import 'package:algo_verse_app/provider/pathfinding_coordinator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

@@ -1,4 +1,4 @@
-import 'package:algo_verse_app/components/path_finding/pathfinding_coordinator.dart';
+import 'package:algo_verse_app/provider/pathfinding_coordinator.dart';
 import 'package:collection/collection.dart';
 
 /// The interface for the Strategy. Every new implemented path finding strategy
