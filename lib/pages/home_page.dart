@@ -9,6 +9,7 @@ import 'package:algo_verse_app/pages/main_page.dart';
 import 'package:algo_verse_app/pages/pathfinding_page.dart';
 import 'package:algo_verse_app/pages/sorting_page.dart';
 import 'package:algo_verse_app/pages/treesearch_page.dart';
+import 'package:algo_verse_app/provider/sorting_coordinator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -96,8 +97,12 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<PathFindingCoordinator>(
-      create: (context) => PathFindingCoordinator(Location(11, 19)),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+            create: (context) => PathFindingCoordinator(Location(11, 19))),
+        ChangeNotifierProvider(create: (context) => SortingCoordinator()),
+      ],
       child: Scaffold(
         appBar: AppBar(
           title: Text(
