@@ -1,6 +1,6 @@
 import 'dart:collection';
 
-import 'package:algo_verse_app/algorithms/pathfinding_strategy.dart';
+import 'package:algo_verse_app/algorithms/path_finding/pathfinding_strategy.dart';
 import 'package:algo_verse_app/provider/pathfinding_coordinator.dart';
 
 /// Implementation of BFS algorithm.

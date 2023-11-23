@@ -1,4 +1,4 @@
-import 'package:algo_verse_app/algorithms/dfs.dart';
+import 'package:algo_verse_app/algorithms/path_finding/dfs.dart';
 import 'package:algo_verse_app/components/buttons/visualization_fab/algorithm_buttons.dart';
 import 'package:algo_verse_app/components/buttons/visualization_fab/visualize_button.dart';
 import 'package:algo_verse_app/provider/pathfinding_coordinator.dart';
@@ -28,10 +28,10 @@ class FindPathButton extends StatelessWidget {
         AlgorithmButton(
           onPressed: () async {
             DFS dfs = DFS(
-              startingNode: coordinator.getStartNode,
-              endingNode: coordinator.getEndingNode,
+              startingNode: coordinator.startNode,
+              endingNode: coordinator.endingNode,
               obstacles: coordinator.allObstacles,
-              boardSize: coordinator.getSize,
+              boardSize: coordinator.size,
             );
             dfs.findPath(coordinator);
           },
