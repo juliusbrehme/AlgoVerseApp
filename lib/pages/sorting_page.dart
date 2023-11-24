@@ -43,7 +43,95 @@ class SortingPage extends StatelessWidget {
           ),
         ),
         const SizedBox(
-          height: 110,
+          height: 20,
+        ),
+        Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 35, right: 2),
+              child: SizedBox(
+                width: 100,
+                height: 40,
+                child: ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromRGBO(51, 74, 100, 1),
+                    shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                  ),
+                  onPressed: () {
+                    coordinator.setSpeed();
+                  },
+                  icon: const Icon(Icons.speed),
+                  label: Text(coordinator.speed.toString()),
+                ),
+              ),
+            ),
+            Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(2),
+                  child: SizedBox(
+                    height: 40,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color.fromRGBO(51, 74, 100, 1),
+                        shape: const RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20))),
+                      ),
+                      onPressed: () {
+                        coordinator.generateSizedArrayOnClick(
+                            coordinator.startingArr.length);
+                      },
+                      child: const Icon(Icons.shuffle),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(2),
+                  child: SizedBox(
+                    height: 40,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color.fromRGBO(51, 74, 100, 1),
+                        shape: const RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20))),
+                      ),
+                      onPressed: () {
+                        print("New random array with new set size");
+                      },
+                      child: const Icon(Icons.bar_chart),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.all(2),
+              child: SizedBox(
+                height: 40,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromRGBO(51, 74, 100, 1),
+                    shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                  ),
+                  onPressed: () {
+                    coordinator.reset();
+                    //print("New random array with new set size");
+                  },
+                  child: const Icon(Icons.restart_alt),
+                ),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 10,
         ),
       ],
     );
