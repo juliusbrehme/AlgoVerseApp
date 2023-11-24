@@ -74,8 +74,7 @@ class SortingPage extends StatelessWidget {
                   child: ActionButton(
                     height: 40,
                     radius: 20,
-                    onTap: () => coordinator.generateSizedArrayOnClick(
-                        coordinator.startingArr.length),
+                    onTap: () => coordinator.generateRandomArrayOnClick(),
                     icon: const Icon(Icons.shuffle),
                   ),
                 ),
@@ -87,7 +86,7 @@ class SortingPage extends StatelessWidget {
                   child: ActionButton(
                     height: 40,
                     radius: 20,
-                    onTap: () => print("New random array wiht new set size"),
+                    onTap: () => print("User input for array"),
                     icon: const Icon(Icons.bar_chart),
                   ),
                 ),

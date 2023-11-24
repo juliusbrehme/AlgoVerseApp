@@ -89,9 +89,8 @@ class SortingCoordinator extends ChangeNotifier {
     notifyListeners();
   }
 
-  // wahrscheinlich nicht gebraucht?
   void generateRandomArrayOnClick() {
-    _startingArr = generateRandomArray(Random().nextInt(101));
+    _startingArr = generateRandomArray(Random().nextInt(41));
     _toSortArr = List.of(_startingArr);
     _indexArr = [for (int i = 0; i < _startingArr.length; i++) i];
     _swapI = -1;
@@ -99,6 +98,7 @@ class SortingCoordinator extends ChangeNotifier {
     notifyListeners();
   }
 
+  // wahrscheinlich weglassen
   void generateSizedArrayOnClick(int size) {
     _startingArr = generateRandomArray(size);
     _toSortArr = List.of(_startingArr);
