@@ -4,10 +4,21 @@ import 'package:algo_verse_app/provider/sorting_coordinator.dart';
 class BubbleSort implements SortingStrategy {
   @override
   Future<void> sort(SortingCoordinator coordinator) async {
+    coordinator.setStopButton(true);
     for (int i = coordinator.toSortArr.length; i > 0; i--) {
+      if (coordinator.stop) {
+        coordinator.resetSwap();
+        coordinator.setStopButton(false);
+        return;
+      }
       int index = 1;
       int max = 0;
       while (index < i) {
+        if (coordinator.stop) {
+          coordinator.resetSwap();
+          coordinator.setStopButton(false);
+          return;
+        }
         if (coordinator.toSortArr[max] < coordinator.toSortArr[index]) {
           max = index;
         }

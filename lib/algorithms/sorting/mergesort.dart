@@ -4,16 +4,41 @@ import 'package:algo_verse_app/provider/sorting_coordinator.dart';
 class MergeSort implements SortingStrategy {
   @override
   Future<void> sort(SortingCoordinator coordinator) async {
+    coordinator.setStopButton(true);
+    if (coordinator.stop) {
+      coordinator.resetSwap();
+      coordinator.setStopButton(false);
+      return;
+    }
     await _mergeSort(0, coordinator.toSortArr.length - 1, coordinator);
   }
 
   Future<void> _mergeSort(
       int start, int end, SortingCoordinator coordinator) async {
+    if (coordinator.stop) {
+      coordinator.resetSwap();
+      coordinator.setStopButton(false);
+      return;
+    }
     if (start < end) {
       int mid = (start + end) ~/ 2;
-
+      if (coordinator.stop) {
+        coordinator.resetSwap();
+        coordinator.setStopButton(false);
+        return;
+      }
       await _mergeSort(start, mid, coordinator);
+      if (coordinator.stop) {
+        coordinator.resetSwap();
+        coordinator.setStopButton(false);
+        return;
+      }
       await _mergeSort(mid + 1, end, coordinator);
+      if (coordinator.stop) {
+        coordinator.resetSwap();
+        coordinator.setStopButton(false);
+        return;
+      }
 
       await _merge(start, mid, end, coordinator);
     }
@@ -23,6 +48,11 @@ class MergeSort implements SortingStrategy {
 
   Future<void> _merge(
       int start, int mid, int end, SortingCoordinator coordinator) async {
+    if (coordinator.stop) {
+      coordinator.resetSwap();
+      coordinator.setStopButton(false);
+      return;
+    }
     int m = (mid - start) + 1;
     int n = (end - mid);
 
@@ -32,10 +62,20 @@ class MergeSort implements SortingStrategy {
     int i, j, k = start;
 
     for (i = 0; i < m; ++i) {
+      if (coordinator.stop) {
+        coordinator.resetSwap();
+        coordinator.setStopButton(false);
+        return;
+      }
       arr1[i] = coordinator.toSortArr[k++];
     }
 
     for (j = 0; j < n; ++j) {
+      if (coordinator.stop) {
+        coordinator.resetSwap();
+        coordinator.setStopButton(false);
+        return;
+      }
       arr2[j] = coordinator.toSortArr[k++];
     }
 
@@ -43,6 +83,11 @@ class MergeSort implements SortingStrategy {
     k = start;
 
     while (i != m && j != n) {
+      if (coordinator.stop) {
+        coordinator.resetSwap();
+        coordinator.setStopButton(false);
+        return;
+      }
       int index;
 
       if (arr1[i] < arr2[j]) {
@@ -63,6 +108,11 @@ class MergeSort implements SortingStrategy {
     }
 
     while (i != m) {
+      if (coordinator.stop) {
+        coordinator.resetSwap();
+        coordinator.setStopButton(false);
+        return;
+      }
       int index = coordinator.startingArr.indexOf(arr1[i]);
       coordinator.swapI = index;
       coordinator.indexArr[index] = k;
@@ -73,6 +123,11 @@ class MergeSort implements SortingStrategy {
     }
 
     while (j != n) {
+      if (coordinator.stop) {
+        coordinator.resetSwap();
+        coordinator.setStopButton(false);
+        return;
+      }
       int index = coordinator.startingArr.indexOf(arr2[j]);
       coordinator.swapJ = index;
       coordinator.indexArr[index] = k;
