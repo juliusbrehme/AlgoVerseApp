@@ -10,8 +10,9 @@ class SortingCoordinator extends ChangeNotifier {
   int _swapI = -1;
   int _swapJ = -1;
   bool _stop = false;
+  bool _stopButton = false;
   bool _isSorting = false;
-  int _animationSpeed = 2000;
+  int _animationSpeed = 1500;
   Enum _speed = Speed.slow;
 
   SortingCoordinator() {
@@ -28,7 +29,7 @@ class SortingCoordinator extends ChangeNotifier {
     notifyListeners();
   }
 
-  set stop(bool boolean) {
+  void setStop(bool boolean) {
     _stop = boolean;
     notifyListeners();
   }
@@ -48,11 +49,16 @@ class SortingCoordinator extends ChangeNotifier {
     switch (speed) {
       case Speed.fast:
         _speed = Speed.slow;
-        _animationSpeed = 2000;
+        _animationSpeed = 1500;
       case Speed.slow:
         _speed = Speed.fast;
-        _animationSpeed = 500;
+        _animationSpeed = 250;
     }
+    notifyListeners();
+  }
+
+  void setStopButton(bool boolean) {
+    _stopButton = boolean;
     notifyListeners();
   }
 
@@ -65,6 +71,7 @@ class SortingCoordinator extends ChangeNotifier {
   List<int> get indexArr => _indexArr;
   int get animationSpeed => _animationSpeed;
   Enum get speed => _speed;
+  bool get stopButton => _stopButton;
 
   List<int> generateRandomArray(int size) {
     Set<int> set = {};
