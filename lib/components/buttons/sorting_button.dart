@@ -22,6 +22,7 @@ class SortingButton extends StatelessWidget {
       children: [
         AlgorithmButton(
           onPressed: () {
+            coordinator.setStop(false);
             SelectionSort selectionSort = SelectionSort();
             selectionSort.sort(coordinator);
           },
@@ -29,6 +30,7 @@ class SortingButton extends StatelessWidget {
         ),
         AlgorithmButton(
           onPressed: () {
+            coordinator.setStop(false);
             InsertionSort insertionSort = InsertionSort();
             insertionSort.sort(coordinator);
           },
@@ -37,6 +39,7 @@ class SortingButton extends StatelessWidget {
         ),
         AlgorithmButton(
           onPressed: () {
+            coordinator.setStop(false);
             BubbleSort bubbleSort = BubbleSort();
             bubbleSort.sort(coordinator);
           },
@@ -44,6 +47,7 @@ class SortingButton extends StatelessWidget {
         ),
         AlgorithmButton(
           onPressed: () {
+            coordinator.setStop(false);
             QuickSort quicksort = QuickSort();
             quicksort.sort(coordinator);
           },
@@ -51,6 +55,7 @@ class SortingButton extends StatelessWidget {
         ),
         AlgorithmButton(
           onPressed: () {
+            coordinator.setStop(false);
             MergeSort mergeSort = MergeSort();
             mergeSort.sort(coordinator);
           },
