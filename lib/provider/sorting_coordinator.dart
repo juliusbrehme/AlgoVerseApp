@@ -10,10 +10,11 @@ class SortingCoordinator extends ChangeNotifier {
   int _swapJ = -1;
   bool _stop = false;
   bool _isSorting = false;
-  int _animationSpeed = 1000;
+  int _animationSpeed = 2000;
+  Enum _speed = Speed.slow;
 
   SortingCoordinator() {
-  setArray(generateRandomArray(10));
+    setArray(generateRandomArray(10));
   }
 
   set swapI(int i) {
@@ -25,7 +26,6 @@ class SortingCoordinator extends ChangeNotifier {
     _swapJ = j;
     notifyListeners();
   }
-
 
   set stop(bool boolean) {
     _stop = boolean;
@@ -43,8 +43,15 @@ class SortingCoordinator extends ChangeNotifier {
     _indexArr = [for (int i = 0; i < array.length; i++) i];
   }
 
-  set animationSpeed(int speed) {
-    _animationSpeed = speed;
+  void setSpeed() {
+    switch (speed) {
+      case Speed.fast:
+        _speed = Speed.slow;
+        _animationSpeed = 2000;
+      case Speed.slow:
+        _speed = Speed.fast;
+        _animationSpeed = 500;
+    }
     notifyListeners();
   }
 
@@ -56,16 +63,45 @@ class SortingCoordinator extends ChangeNotifier {
   List<int> get toSortArr => _toSortArr;
   List<int> get indexArr => _indexArr;
   int get animationSpeed => _animationSpeed;
+  Enum get speed => _speed;
 
   List<int> generateRandomArray(int size) {
     Set<int> set = {};
-    for (int i = 0; i < size; i++) {
+    while (set.length < size) {
       set.add(Random().nextInt(101));
     }
     return set.toList();
   }
 
   void resetSwap() {
+    _swapI = -1;
+    _swapJ = -1;
+    notifyListeners();
+  }
+
+  void reset() {
+    _startingArr = List.of(_startingArr);
+    _toSortArr = List.of(_startingArr);
+    _indexArr = [for (int i = 0; i < _startingArr.length; i++) i];
+    _swapI = -1;
+    _swapJ = -1;
+    notifyListeners();
+  }
+
+  // wahrscheinlich nicht gebraucht?
+  void generateRandomArrayOnClick() {
+    _startingArr = generateRandomArray(Random().nextInt(101));
+    _toSortArr = List.of(_startingArr);
+    _indexArr = [for (int i = 0; i < _startingArr.length; i++) i];
+    _swapI = -1;
+    _swapJ = -1;
+    notifyListeners();
+  }
+
+  void generateSizedArrayOnClick(int size) {
+    _startingArr = generateRandomArray(size);
+    _toSortArr = List.of(_startingArr);
+    _indexArr = [for (int i = 0; i < _startingArr.length; i++) i];
     _swapI = -1;
     _swapJ = -1;
     notifyListeners();
@@ -90,5 +126,16 @@ class SortingCoordinator extends ChangeNotifier {
 
   void notify() {
     notifyListeners();
+  }
+}
+
+enum Speed {
+  fast,
+  slow;
+
+  @override
+  String toString() {
+    String toCapitalize = name;
+    return "${toCapitalize[0].toUpperCase()}${toCapitalize.substring(1)}";
   }
 }
