@@ -15,6 +15,8 @@ class PathFindingCoordinator extends ChangeNotifier {
   List<Node> _path = [];
   int _animationSpeed = 150;
   Enum _speed = Speed.slow;
+  bool _stop = false;
+  bool _stopButton = false;
 
   PathFindingCoordinator(this._size) {
     // starting Node
@@ -58,6 +60,10 @@ class PathFindingCoordinator extends ChangeNotifier {
   int get animationSpeed => _animationSpeed;
 
   Enum get speed => _speed;
+
+  bool get stop => _stop;
+
+  bool get stopButton => _stopButton;
 
   // Get start or ending node
   Node? getNode(int x, int y) {
@@ -165,6 +171,16 @@ class PathFindingCoordinator extends ChangeNotifier {
     _obstacle = [];
     _visitedNodes = [];
     _path = [];
+    notifyListeners();
+  }
+
+  void setStopButton(bool boolean) {
+    _stopButton = boolean;
+    notifyListeners();
+  }
+
+  void setStop(bool boolean) {
+    _stop = boolean;
     notifyListeners();
   }
 }
