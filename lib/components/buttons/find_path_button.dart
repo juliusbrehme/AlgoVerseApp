@@ -1,4 +1,7 @@
+import 'package:algo_verse_app/algorithms/path_finding/astar.dart';
+import 'package:algo_verse_app/algorithms/path_finding/bfs.dart';
 import 'package:algo_verse_app/algorithms/path_finding/dfs.dart';
+import 'package:algo_verse_app/algorithms/path_finding/dijkstra.dart';
 import 'package:algo_verse_app/components/buttons/visualization_fab/algorithm_buttons.dart';
 import 'package:algo_verse_app/components/buttons/visualization_fab/visualize_button.dart';
 import 'package:algo_verse_app/provider/pathfinding_coordinator.dart';
@@ -7,10 +10,6 @@ import 'package:provider/provider.dart';
 
 class FindPathButton extends StatelessWidget {
   const FindPathButton({super.key});
-
-// das wird zum consumer oder so, der dann auf pathfindingcontroller zu greifen kann. dann wird hier
-// mit den sachen auch pathfindingcoordintor die entsprechende funktion aufgerufen und dann coordinator
-// geupdatet -> dadurch werden alle consumer geupdatet, also sollte sich die page updaten
 
   @override
   Widget build(BuildContext context) {
@@ -21,12 +20,18 @@ class FindPathButton extends StatelessWidget {
       children: [
         AlgorithmButton(
           onPressed: () {
-            print("Dijkstra");
+            Dijkstra dijkstra = Dijkstra(
+              startingNode: coordinator.startNode,
+              endingNode: coordinator.endingNode,
+              obstacles: coordinator.allObstacles,
+              boardSize: coordinator.size,
+            );
+            dijkstra.findPath(coordinator);
           },
           algorithm: "Dijkstra",
         ),
         AlgorithmButton(
-          onPressed: () async {
+          onPressed: () {
             DFS dfs = DFS(
               startingNode: coordinator.startNode,
               endingNode: coordinator.endingNode,
@@ -40,13 +45,25 @@ class FindPathButton extends StatelessWidget {
         ),
         AlgorithmButton(
           onPressed: () {
-            print("BFS");
+            BFS bfs = BFS(
+              startingNode: coordinator.startNode,
+              endingNode: coordinator.endingNode,
+              obstacles: coordinator.allObstacles,
+              boardSize: coordinator.size,
+            );
+            bfs.findPath(coordinator);
           },
           algorithm: "BFS",
         ),
         AlgorithmButton(
           onPressed: () {
-            print("Astar");
+            Astar astar = Astar(
+              startingNode: coordinator.startNode,
+              endingNode: coordinator.endingNode,
+              obstacles: coordinator.allObstacles,
+              boardSize: coordinator.size,
+            );
+            astar.findPath(coordinator);
           },
           algorithm: "Astar",
         ),

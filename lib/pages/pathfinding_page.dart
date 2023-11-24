@@ -10,7 +10,6 @@ class PathFindingPage extends StatefulWidget {
 }
 
 class _PathFindingPageState extends State<PathFindingPage> {
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -50,9 +49,8 @@ class _PathFindingPageState extends State<PathFindingPage> {
     return DragTarget<Node>(
       onAccept: (node) {
         setState(() {
-          coordinator.removeNode(node);
-          coordinator
-              .addNode(Node(location: Location(x, y), icon: node.getIcon()));
+          coordinator.changeNode(
+              Node(location: Location(x, y), icon: node.getIcon()), node);
         });
       },
       onWillAccept: (node) {
