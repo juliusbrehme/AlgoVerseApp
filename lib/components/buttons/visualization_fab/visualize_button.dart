@@ -85,10 +85,13 @@ class _VisualizeButtonState extends State<VisualizeButton>
           progress: _expandAnimation,
           child: widget.children[i],
           onTap: () {
-            if (widget.children[i].closeFabOnTap) {
-              _toggle();
+            if (_open == false) {
+            } else {
+              if (widget.children[i].closeFabOnTap) {
+                _toggle();
+              }
+              widget.children[i].onPressed?.call();
             }
-            widget.children[i].onPressed?.call();
           },
         ),
       );
@@ -123,6 +126,7 @@ class _VisualizeButtonState extends State<VisualizeButton>
     return IgnorePointer(
       ignoring: _open,
       child: AnimatedContainer(
+        padding: const EdgeInsets.only(bottom: 5),
         transformAlignment: Alignment.center,
         transform: Matrix4.diagonal3Values(
           _open ? 0.7 : 1.0,
