@@ -20,6 +20,7 @@ class FindPathButton extends StatelessWidget {
       children: [
         AlgorithmButton(
           onPressed: () {
+            coordinator.resetPath();
             Dijkstra dijkstra = Dijkstra(
               startingNode: coordinator.startNode,
               endingNode: coordinator.endingNode,
@@ -32,6 +33,7 @@ class FindPathButton extends StatelessWidget {
         ),
         AlgorithmButton(
           onPressed: () {
+            coordinator.resetPath();
             DFS dfs = DFS(
               startingNode: coordinator.startNode,
               endingNode: coordinator.endingNode,
@@ -45,6 +47,7 @@ class FindPathButton extends StatelessWidget {
         ),
         AlgorithmButton(
           onPressed: () {
+            coordinator.resetPath();
             BFS bfs = BFS(
               startingNode: coordinator.startNode,
               endingNode: coordinator.endingNode,
@@ -57,6 +60,7 @@ class FindPathButton extends StatelessWidget {
         ),
         AlgorithmButton(
           onPressed: () {
+            coordinator.resetPath();
             Astar astar = Astar(
               startingNode: coordinator.startNode,
               endingNode: coordinator.endingNode,
