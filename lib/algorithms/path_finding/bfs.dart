@@ -3,9 +3,8 @@ import 'dart:collection';
 import 'package:algo_verse_app/algorithms/path_finding/pathfinding_strategy.dart';
 import 'package:algo_verse_app/provider/pathfinding_coordinator.dart';
 
-/// Implementation of BFS algorithm.
-class DFS extends PathFindingStrategy {
-  DFS({
+class BFS extends PathFindingStrategy {
+  BFS({
     required this.startingNode,
     required this.endingNode,
     required this.obstacles,
@@ -30,26 +29,26 @@ class DFS extends PathFindingStrategy {
     Map<Node, Node> parent = HashMap();
 
     while (nextNode.isNotEmpty) {
-      Node node = nextNode.removeLast();
-      if (visitedNodes.contains(node)) {
-        continue;
-      }
+      Node node = nextNode.removeAt(0);
       visitedNodes.add(node);
       coordinator.addVisitedNodeNode(node);
-      await Future.delayed(const Duration(milliseconds: 0));
+      await Future.delayed(const Duration(milliseconds: 200));
       List<Node> neighbors =
           getNeighbors(node, obstacles, visitedNodes, boardSize);
       for (Node neighbor in neighbors) {
         parent[neighbor] = node;
         // neighbor is not in visited, because of getNeighbor function
-        if (endingNode == neighbor) {
-          visitedNodes.add(neighbor);
-          coordinator.addVisitedNodeNode(neighbor);
-          reconstructPath(
-              startingNode, endingNode, visitedNodes, parent, coordinator);
-          return;
+        if (!nextNode.contains(neighbor)) {
+          if (endingNode == neighbor) {
+            visitedNodes.add(neighbor);
+            coordinator.addVisitedNodeNode(neighbor);
+            await Future.delayed(const Duration(milliseconds: 200));
+            reconstructPath(
+                startingNode, endingNode, visitedNodes, parent, coordinator);
+            return;
+          }
+          nextNode.add(neighbor);
         }
-        nextNode.add(neighbor);
       }
     }
   }
