@@ -1,3 +1,4 @@
+import 'package:algo_verse_app/provider/speed.dart';
 import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
 
@@ -7,13 +8,13 @@ import 'package:collection/collection.dart';
 // added to the game coordinator
 
 class PathFindingCoordinator extends ChangeNotifier {
+  final Location _size;
   final List<Node> _nodes = [];
   List<Node> _obstacle = [];
   List<Node> _visitedNodes = [];
   List<Node> _path = [];
-  int _animatedSpeed = 200;
-
-  final Location _size;
+  int _animationSpeed = 150;
+  Enum _speed = Speed.slow;
 
   PathFindingCoordinator(this._size) {
     // starting Node
@@ -54,7 +55,9 @@ class PathFindingCoordinator extends ChangeNotifier {
 
   List<Node> get allPathNodes => _path;
 
-  int get animatedSpeed => _animatedSpeed;
+  int get animationSpeed => _animationSpeed;
+
+  Enum get speed => _speed;
 
   // Get start or ending node
   Node? getNode(int x, int y) {
@@ -77,10 +80,6 @@ class PathFindingCoordinator extends ChangeNotifier {
   Node? getPathNode(int x, int y) {
     return _path
         .firstWhereOrNull((element) => x == element.x && y == element.y);
-  }
-
-  set setAnimatedSpeed(int value) {
-    _animatedSpeed = value;
   }
 
   // for changing starting or end node position
@@ -125,6 +124,47 @@ class PathFindingCoordinator extends ChangeNotifier {
 
   void addVisitedNodeNode(Node node) {
     _visitedNodes.add(node);
+    notifyListeners();
+  }
+
+  void setSpeed() {
+    switch (_speed) {
+      case Speed.fast:
+        _speed = Speed.slow;
+        _animationSpeed = 150;
+      case Speed.slow:
+        _speed = Speed.fast;
+        _animationSpeed = 35;
+    }
+    notifyListeners();
+  }
+
+  void resetPath() {
+    _visitedNodes = [];
+    _path = [];
+    notifyListeners();
+  }
+
+  void reset() {
+    _nodes[0] = Node(
+      location: Location((_size.x - 1) ~/ 2, 1),
+      size: Location(_size.x, _size.y),
+      icon: const Icon(
+        Icons.expand_more,
+        size: 35,
+      ),
+    );
+    _nodes[1] = Node(
+      location: Location((_size.x - 1) ~/ 2, _size.y - 2),
+      size: Location(_size.x, _size.y),
+      icon: const Icon(
+        Icons.adjust,
+        size: 35,
+      ),
+    );
+    _obstacle = [];
+    _visitedNodes = [];
+    _path = [];
     notifyListeners();
   }
 }
