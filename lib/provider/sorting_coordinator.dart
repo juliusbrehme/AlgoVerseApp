@@ -11,7 +11,6 @@ class SortingCoordinator extends ChangeNotifier {
   int _swapJ = -1;
   bool _stop = false;
   bool _stopButton = false;
-  bool _isSorting = false;
   int _animationSpeed = 1500;
   Enum _speed = Speed.slow;
 
@@ -31,11 +30,6 @@ class SortingCoordinator extends ChangeNotifier {
 
   void setStop(bool boolean) {
     _stop = boolean;
-    notifyListeners();
-  }
-
-  set isSorting(bool boolean) {
-    _isSorting = boolean;
     notifyListeners();
   }
 
@@ -63,7 +57,6 @@ class SortingCoordinator extends ChangeNotifier {
   }
 
   bool get stop => _stop;
-  bool get isSorting => _isSorting;
   int get swapI => _swapI;
   int get swapJ => _swapJ;
   List<int> get startingArr => _startingArr;
