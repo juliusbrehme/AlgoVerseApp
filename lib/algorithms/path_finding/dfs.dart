@@ -19,6 +19,10 @@ class DFS extends PathFindingStrategy {
 
   @override
   Future<void> findPath(PathFindingCoordinator coordinator) async {
+    if (coordinator.stop) {
+      coordinator.setStopButton(false);
+      return;
+    }
     if (startingNode == endingNode) {
       coordinator.addPathNode(startingNode);
       return;
@@ -30,6 +34,10 @@ class DFS extends PathFindingStrategy {
     Map<Node, Node> parent = HashMap();
 
     while (nextNode.isNotEmpty) {
+      if (coordinator.stop) {
+        coordinator.setStopButton(false);
+        return;
+      }
       Node node = nextNode.removeLast();
       if (visitedNodes.contains(node)) {
         continue;
@@ -40,6 +48,10 @@ class DFS extends PathFindingStrategy {
       List<Node> neighbors =
           getNeighbors(node, obstacles, visitedNodes, boardSize);
       for (Node neighbor in neighbors) {
+        if (coordinator.stop) {
+          coordinator.setStopButton(false);
+          return;
+        }
         parent[neighbor] = node;
         // neighbor is not in visited, because of getNeighbor function
         if (endingNode == neighbor) {
@@ -52,5 +64,6 @@ class DFS extends PathFindingStrategy {
         nextNode.add(neighbor);
       }
     }
+    coordinator.setStopButton(false);
   }
 }

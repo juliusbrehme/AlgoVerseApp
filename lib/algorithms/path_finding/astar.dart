@@ -18,6 +18,10 @@ class Astar extends PathFindingStrategy {
 
   @override
   Future<void> findPath(PathFindingCoordinator coordinator) async {
+    if (coordinator.stop) {
+      coordinator.setStopButton(false);
+      return;
+    }
     if (startingNode == endingNode) {
       coordinator.addPathNode(startingNode);
       return;
@@ -30,6 +34,10 @@ class Astar extends PathFindingStrategy {
     Map<Node, Node> parent = HashMap();
 
     while (nextNode.isNotEmpty) {
+      if (coordinator.stop) {
+        coordinator.setStopButton(false);
+        return;
+      }
       _Tuple nextTuple = nextNode.removeAt(0);
       Node node = nextTuple.node;
       visitedNodes.add(node);
@@ -41,11 +49,14 @@ class Astar extends PathFindingStrategy {
             startingNode, endingNode, visitedNodes, parent, coordinator);
         return;
       }
-
       List<Node> neighbors =
           getNeighbors(node, obstacles, visitedNodes, boardSize);
 
       for (Node neighbor in neighbors) {
+        if (coordinator.stop) {
+          coordinator.setStopButton(false);
+          return;
+        }
         // cost and dist is irrelevant for equality, check if node is in nextNode
         if (!nextNode.contains(_Tuple(neighbor, 0, 0))) {
           parent[neighbor] = node;

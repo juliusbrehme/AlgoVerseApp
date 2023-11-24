@@ -17,6 +17,10 @@ class Dijkstra extends PathFindingStrategy {
   final Location boardSize;
   @override
   Future<void> findPath(PathFindingCoordinator coordinator) async {
+    if (coordinator.stop) {
+      coordinator.setStopButton(false);
+      return;
+    }
     Map<Node, Node> prevNodes = HashMap();
     List<Node> visitedNodes = [];
 
@@ -32,6 +36,10 @@ class Dijkstra extends PathFindingStrategy {
 
     // pathfinding algorithm, we will look at every node and don't stop early
     while (nextNodes.isNotEmpty) {
+      if (coordinator.stop) {
+        coordinator.setStopButton(false);
+        return;
+      }
       Node node = nextNodes.removeAt(0);
       visitedNodes.add(node);
       coordinator.addVisitedNodeNode(node);
@@ -40,6 +48,10 @@ class Dijkstra extends PathFindingStrategy {
       List<Node> neighbors =
           getNeighbors(node, obstacles, visitedNodes, boardSize);
       for (Node neighbor in neighbors) {
+        if (coordinator.stop) {
+          coordinator.setStopButton(false);
+          return;
+        }
         if (adjacentMatrix[neighbor.y][neighbor.x] >
                 adjacentMatrix[node.y][node.x] + 1 ||
             adjacentMatrix[neighbor.y][neighbor.x] == -1) {
