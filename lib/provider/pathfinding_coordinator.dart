@@ -11,6 +11,7 @@ class PathFindingCoordinator extends ChangeNotifier {
   List<Node> _obstacle = [];
   List<Node> _visitedNodes = [];
   List<Node> _path = [];
+  int _animatedSpeed = 200;
 
   final Location _size;
 
@@ -53,6 +54,8 @@ class PathFindingCoordinator extends ChangeNotifier {
 
   List<Node> get allPathNodes => _path;
 
+  int get animatedSpeed => _animatedSpeed;
+
   // Get start or ending node
   Node? getNode(int x, int y) {
     return _nodes.firstWhereOrNull((p) => x == p.x && y == p.y);
@@ -76,15 +79,17 @@ class PathFindingCoordinator extends ChangeNotifier {
         .firstWhereOrNull((element) => x == element.x && y == element.y);
   }
 
-  // for dragging nodes
-  void addNode(Node node) {
-    _nodes.add(node);
-    notifyListeners();
+  set setAnimatedSpeed(int value) {
+    _animatedSpeed = value;
   }
 
-  // for dragging nodes
-  void removeNode(Node node) {
-    _nodes.remove(node);
+  // for changing starting or end node position
+  void changeNode(Node newNode, Node oldNode) {
+    if (oldNode == startNode) {
+      _nodes[0] = newNode;
+    } else {
+      _nodes[1] = newNode;
+    }
   }
 
   void addObstacle(Node node) {

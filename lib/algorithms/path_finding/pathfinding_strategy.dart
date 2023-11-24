@@ -2,7 +2,7 @@ import 'package:algo_verse_app/provider/pathfinding_coordinator.dart';
 import 'package:collection/collection.dart';
 
 /// The interface for the Strategy. Every new implemented path finding strategy
-/// should implement this interface.
+/// should extend this interface.
 abstract class PathFindingStrategy {
   /// This method is generating the path of the path finding algorithm.
   ///
@@ -10,7 +10,8 @@ abstract class PathFindingStrategy {
   /// @return Returns a record of Path, which holds the path and the visited nodes
   void findPath(PathFindingCoordinator coordinator);
 
-  /// This method is to generate the next neighbors for the path finding algorithm.
+  /// This method is to generate the next neighbors for the path finding algorithm. The methods considers, if
+  /// a node was already visited.
   ///
   /// @param node         The node to generate the neighbors from
   /// @param wall         All obstacles, those nodes can not be visited or used
@@ -19,10 +20,6 @@ abstract class PathFindingStrategy {
   /// @return Returns a list of all neighbors, that still need to be visited
   List<Node> getNeighbors(
       Node node, List<Node> wall, List<Node> visitedNodes, Location boardSize) {
-    // if we allow weighted nodes, implement getNeighbors with a priorityQueue (heap),
-    // so that we use a priority as an attribute getNeighbors updates that priorityQueue.
-    // Changes need to be made to findPath as well
-
     List<Node> neighbors = [];
     if (0 <= node.x &&
         node.x < boardSize.x &&
