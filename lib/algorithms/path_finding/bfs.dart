@@ -32,7 +32,7 @@ class BFS extends PathFindingStrategy {
       Node node = nextNode.removeAt(0);
       visitedNodes.add(node);
       coordinator.addVisitedNodeNode(node);
-      await Future.delayed(const Duration(milliseconds: 200));
+      await Future.delayed(Duration(milliseconds: coordinator.animationSpeed));
       List<Node> neighbors =
           getNeighbors(node, obstacles, visitedNodes, boardSize);
       for (Node neighbor in neighbors) {
@@ -42,7 +42,7 @@ class BFS extends PathFindingStrategy {
           if (endingNode == neighbor) {
             visitedNodes.add(neighbor);
             coordinator.addVisitedNodeNode(neighbor);
-            await Future.delayed(const Duration(milliseconds: 200));
+            await Future.delayed(Duration(milliseconds: coordinator.animationSpeed));
             reconstructPath(
                 startingNode, endingNode, visitedNodes, parent, coordinator);
             return;

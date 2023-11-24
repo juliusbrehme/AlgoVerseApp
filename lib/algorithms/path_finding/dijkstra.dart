@@ -35,7 +35,7 @@ class Dijkstra extends PathFindingStrategy {
       Node node = nextNodes.removeAt(0);
       visitedNodes.add(node);
       coordinator.addVisitedNodeNode(node);
-      await Future.delayed(const Duration(milliseconds: 0));
+      await Future.delayed(Duration(milliseconds: coordinator.animationSpeed));
       //vistedNodeMap.put(node, 1);
       List<Node> neighbors =
           getNeighbors(node, obstacles, visitedNodes, boardSize);

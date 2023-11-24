@@ -34,7 +34,7 @@ class Astar extends PathFindingStrategy {
       Node node = nextTuple.node;
       visitedNodes.add(node);
       coordinator.addVisitedNodeNode(node);
-      await Future.delayed(const Duration(milliseconds: 0));
+      await Future.delayed(Duration(milliseconds: coordinator.animationSpeed));
 
       if (node == endingNode) {
         reconstructPath(
