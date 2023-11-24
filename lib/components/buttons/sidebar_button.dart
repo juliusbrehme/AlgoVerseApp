@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class OptionButton extends StatelessWidget {
+class SideBarButton extends StatelessWidget {
   final String image;
   final String description;
   final Function()? onTap;
   final double height;
   final double width;
 
-  const OptionButton({
+  const SideBarButton({
     super.key,
     required this.image,
     required this.description,

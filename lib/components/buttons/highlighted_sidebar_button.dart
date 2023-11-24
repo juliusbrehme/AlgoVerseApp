@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class HighlightedOptionButton extends StatelessWidget {
+class HighlightedSideBarButton extends StatelessWidget {
   final String image;
   final String description;
   final Function()? onTap;
   final double height;
   final double width;
 
-  const HighlightedOptionButton({
+  const HighlightedSideBarButton({
     super.key,
     required this.image,
     required this.description,
