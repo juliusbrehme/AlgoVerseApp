@@ -101,6 +101,10 @@ abstract class PathFindingStrategy {
     }
 
     while (node != startingNode) {
+      if (coordinator.stop) {
+        coordinator.setStopButton(false);
+        return;
+      }
       path.insert(0, node);
       // it should never be null
       Node? nodeOrNull = parent[node];
@@ -111,8 +115,13 @@ abstract class PathFindingStrategy {
     path.insert(0, startingNode);
 
     for (Node node in path) {
+      if (coordinator.stop) {
+        coordinator.setStopButton(false);
+        return;
+      }
       await Future.delayed(Duration(milliseconds: coordinator.animationSpeed));
       coordinator.addPathNode(node);
     }
+    coordinator.setStopButton(false);
   }
 }
