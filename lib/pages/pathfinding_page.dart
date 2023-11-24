@@ -1,3 +1,4 @@
+import 'package:algo_verse_app/components/buttons/action_button.dart';
 import 'package:algo_verse_app/provider/pathfinding_coordinator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -28,7 +29,7 @@ class _PathFindingPageState extends State<PathFindingPage> {
       builder: (context, coordinator, child) => Column(
         children: [
           ...List.generate(
-            // Maybe change the tiles down?
+
             coordinator.size.y,
             (y) => Row(
               children: [
@@ -38,6 +39,54 @@ class _PathFindingPageState extends State<PathFindingPage> {
                 )
               ],
             ),
+          ),
+          const SizedBox(
+            height: 25,
+          ),
+          Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 20),
+                child: SizedBox(
+                  width: 100,
+                  height: 40,
+                  child: ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color.fromRGBO(51, 74, 100, 1),
+                      shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(20))),
+                    ),
+                    onPressed: () {
+                      coordinator.setSpeed();
+                    },
+                    icon: const Icon(Icons.speed),
+                    label: Text(coordinator.speed.toString()),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: ActionButton(
+                  height: 40,
+                  radius: 20,
+                  onTap: () => print("generate random maze"),
+                  icon: const Icon(
+                    Icons.stairs,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: ActionButton(
+                  height: 40,
+                  radius: 20,
+                  onTap: coordinator.reset,
+                  icon: const Icon(
+                    Icons.restart_alt,
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),
