@@ -118,7 +118,7 @@ class _HomePageState extends State<HomePage> {
               padding: const EdgeInsets.only(right: 10),
               child: IconButton(
                 icon: const Icon(
-                  Icons.sync,
+                  Icons.description,
                   color: Color.fromRGBO(255, 255, 255, 1),
                 ),
                 onPressed: () {
