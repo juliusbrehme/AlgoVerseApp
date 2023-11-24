@@ -6,7 +6,6 @@ import 'package:algo_verse_app/provider/sorting_coordinator.dart';
 class QuickSort implements SortingStrategy {
   @override
   Future<void> sort(SortingCoordinator coordinator) async {
-    coordinator.setStopButton(true);
     if (coordinator.stop) {
       coordinator.resetSwap();
       coordinator.setStopButton(false);
