@@ -1,9 +1,9 @@
 import 'package:algo_verse_app/components/buttons/find_path_button.dart';
 import 'package:algo_verse_app/components/buttons/search_tree_button.dart';
 import 'package:algo_verse_app/components/buttons/sorting_button.dart';
-import 'package:algo_verse_app/components/buttons/highlighted_option_button.dart';
+import 'package:algo_verse_app/components/buttons/highlighted_sidebar_button.dart';
 import 'package:algo_verse_app/components/buttons/home_button.dart';
-import 'package:algo_verse_app/components/buttons/option_button.dart';
+import 'package:algo_verse_app/components/buttons/sidebar_button.dart';
 import 'package:algo_verse_app/provider/pathfinding_coordinator.dart';
 import 'package:algo_verse_app/pages/main_page.dart';
 import 'package:algo_verse_app/pages/pathfinding_page.dart';
@@ -150,7 +150,7 @@ class _HomePageState extends State<HomePage> {
               ),
               // if (true == 0) ...[const Text("Well")], damit kann man dann einen drawer erstellen!
               highlightPath()
-                  ? HighlightedOptionButton(
+                  ? HighlightedSideBarButton(
                       image: "lib/images/pathfinding.png",
                       description: "Pathfinding Algorithm",
                       onTap: () {
@@ -162,7 +162,7 @@ class _HomePageState extends State<HomePage> {
                       height: 45,
                       width: 55,
                     )
-                  : OptionButton(
+                  : SideBarButton(
                       image: "lib/images/pathfinding.png",
                       description: "Pathfinding Algorithm",
                       onTap: () {
@@ -175,7 +175,7 @@ class _HomePageState extends State<HomePage> {
                       width: 55,
                     ),
               highlightSorting()
-                  ? HighlightedOptionButton(
+                  ? HighlightedSideBarButton(
                       image: "lib/images/sorting.png",
                       description: "Sorting Algorithm",
                       onTap: () {
@@ -187,7 +187,7 @@ class _HomePageState extends State<HomePage> {
                       height: 45,
                       width: 55,
                     )
-                  : OptionButton(
+                  : SideBarButton(
                       image: "lib/images/sorting.png",
                       description: "Sorting Algorithm",
                       onTap: () {
@@ -200,7 +200,7 @@ class _HomePageState extends State<HomePage> {
                       width: 55,
                     ),
               highlightTreeSearch()
-                  ? HighlightedOptionButton(
+                  ? HighlightedSideBarButton(
                       image: "lib/images/treesearch.png",
                       description: "Tree Search Algorithm",
                       onTap: () {
@@ -212,7 +212,7 @@ class _HomePageState extends State<HomePage> {
                       height: 60,
                       width: 55,
                     )
-                  : OptionButton(
+                  : SideBarButton(
                       image: "lib/images/treesearch.png",
                       description: "Tree Search Algorithm",
                       onTap: () {

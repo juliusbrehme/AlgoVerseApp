@@ -1,4 +1,5 @@
 import 'package:algo_verse_app/components/bar.dart';
+import 'package:algo_verse_app/components/buttons/action_button.dart';
 import 'package:algo_verse_app/provider/sorting_coordinator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -69,63 +70,36 @@ class SortingPage extends StatelessWidget {
             Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.all(2),
-                  child: SizedBox(
+                  padding: const EdgeInsets.all(2.0),
+                  child: ActionButton(
                     height: 40,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color.fromRGBO(51, 74, 100, 1),
-                        shape: const RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(20))),
-                      ),
-                      onPressed: () {
-                        coordinator.generateSizedArrayOnClick(
-                            coordinator.startingArr.length);
-                      },
-                      child: const Icon(Icons.shuffle),
-                    ),
+                    radius: 20,
+                    onTap: () => coordinator.generateSizedArrayOnClick(
+                        coordinator.startingArr.length),
+                    icon: const Icon(Icons.shuffle),
                   ),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(2),
-                  child: SizedBox(
+                  padding: const EdgeInsets.all(2.0),
+                  child: ActionButton(
                     height: 40,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color.fromRGBO(51, 74, 100, 1),
-                        shape: const RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(20))),
-                      ),
-                      onPressed: () {
-                        print("New random array with new set size");
-                      },
-                      child: const Icon(Icons.bar_chart),
-                    ),
+                    radius: 20,
+                    onTap: () => print("New random array wiht new set size"),
+                    icon: const Icon(Icons.bar_chart),
                   ),
                 ),
               ],
             ),
             Padding(
-              padding: const EdgeInsets.all(2),
-              child: SizedBox(
+              padding: const EdgeInsets.all(2.0),
+              child: ActionButton(
                 height: 40,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromRGBO(51, 74, 100, 1),
-                    shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20))),
-                  ),
-                  onPressed: () {
-                    coordinator.reset();
-                    //print("New random array with new set size");
-                  },
-                  child: const Icon(Icons.restart_alt),
-                ),
+                radius: 20,
+                onTap: coordinator.reset,
+                icon: const Icon(Icons.restart_alt),
               ),
             ),
           ],
