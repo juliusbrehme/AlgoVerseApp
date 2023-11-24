@@ -31,6 +31,16 @@ class _HomePageState extends State<HomePage> {
       case 0:
         return const SizedBox();
       case 1:
+        if (pathFindingCoordinator.stopButton) {
+          return Padding(
+            padding: const EdgeInsets.only(right: 15),
+            child: FloatingActionButton(
+              onPressed: () => pathFindingCoordinator.setStop(true),
+              backgroundColor: const Color.fromARGB(255, 195, 44, 33),
+              child: const Icon(Icons.stop_circle),
+            ),
+          );
+        }
         return const FindPathButton();
       case 2:
         if (sortingCoordinator.stopButton) {
