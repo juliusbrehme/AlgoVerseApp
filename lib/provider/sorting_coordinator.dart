@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:algo_verse_app/provider/speed.dart';
 import 'package:flutter/material.dart';
 
 class SortingCoordinator extends ChangeNotifier {
@@ -126,16 +127,5 @@ class SortingCoordinator extends ChangeNotifier {
 
   void notify() {
     notifyListeners();
-  }
-}
-
-enum Speed {
-  fast,
-  slow;
-
-  @override
-  String toString() {
-    String toCapitalize = name;
-    return "${toCapitalize[0].toUpperCase()}${toCapitalize.substring(1)}";
   }
 }
