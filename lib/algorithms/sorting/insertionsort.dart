@@ -36,5 +36,6 @@ class InsertionSort implements SortingStrategy {
     }
 
     coordinator.resetSwap();
+    coordinator.stopButton = false;
   }
 }

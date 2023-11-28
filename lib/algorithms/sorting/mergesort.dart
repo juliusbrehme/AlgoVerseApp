@@ -137,5 +137,6 @@ class MergeSort implements SortingStrategy {
     }
 
     coordinator.resetSwap();
+    coordinator.stopButton = false;
   }
 }

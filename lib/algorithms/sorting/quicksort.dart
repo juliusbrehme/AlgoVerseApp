@@ -12,6 +12,7 @@ class QuickSort implements SortingStrategy {
       return;
     }
     await _quickSort(0, coordinator.toSortArr.length - 1, coordinator);
+    coordinator.stopButton = false;
   }
 
   Future<void> _quickSort(

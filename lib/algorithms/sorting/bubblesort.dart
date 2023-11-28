@@ -27,5 +27,6 @@ class BubbleSort implements SortingStrategy {
       await Future.delayed(Duration(milliseconds: coordinator.animationSpeed));
     }
     coordinator.resetSwap();
+    coordinator.stopButton = false;
   }
 }
