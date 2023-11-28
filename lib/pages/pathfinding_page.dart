@@ -29,7 +29,6 @@ class _PathFindingPageState extends State<PathFindingPage> {
       builder: (context, coordinator, child) => Column(
         children: [
           ...List.generate(
-
             coordinator.size.y,
             (y) => Row(
               children: [
@@ -59,8 +58,18 @@ class _PathFindingPageState extends State<PathFindingPage> {
                     onPressed: () {
                       coordinator.setSpeed();
                     },
-                    icon: const Icon(Icons.speed),
-                    label: Text(coordinator.speed.toString()),
+                    icon: const Icon(
+                      Icons.speed,
+                      color: Colors.white,
+                    ),
+                    label: Text(
+                      coordinator.speed.toString(),
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -72,6 +81,7 @@ class _PathFindingPageState extends State<PathFindingPage> {
                   onTap: () => print("generate random maze"),
                   icon: const Icon(
                     Icons.stairs,
+                    color: Colors.white,
                   ),
                 ),
               ),
@@ -83,6 +93,7 @@ class _PathFindingPageState extends State<PathFindingPage> {
                   onTap: coordinator.reset,
                   icon: const Icon(
                     Icons.restart_alt,
+                    color: Colors.white,
                   ),
                 ),
               ),

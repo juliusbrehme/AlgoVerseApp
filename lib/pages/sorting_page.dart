@@ -62,8 +62,18 @@ class SortingPage extends StatelessWidget {
                   onPressed: () {
                     coordinator.setSpeed();
                   },
-                  icon: const Icon(Icons.speed),
-                  label: Text(coordinator.speed.toString()),
+                  icon: const Icon(
+                    Icons.speed,
+                    color: Colors.white,
+                  ),
+                  label: Text(
+                    coordinator.speed.toString(),
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -75,7 +85,10 @@ class SortingPage extends StatelessWidget {
                     height: 40,
                     radius: 20,
                     onTap: () => coordinator.generateRandomArrayOnClick(),
-                    icon: const Icon(Icons.shuffle),
+                    icon: const Icon(
+                      Icons.shuffle,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
                 const SizedBox(
@@ -87,7 +100,10 @@ class SortingPage extends StatelessWidget {
                     height: 40,
                     radius: 20,
                     onTap: () => print("User input for array"),
-                    icon: const Icon(Icons.bar_chart),
+                    icon: const Icon(
+                      Icons.bar_chart,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ],
@@ -98,13 +114,16 @@ class SortingPage extends StatelessWidget {
                 height: 40,
                 radius: 20,
                 onTap: coordinator.reset,
-                icon: const Icon(Icons.restart_alt),
+                icon: const Icon(
+                  Icons.restart_alt,
+                  color: Colors.white,
+                ),
               ),
             ),
           ],
         ),
         const SizedBox(
-          height: 6,
+          height: 9,
         ),
       ],
     );
