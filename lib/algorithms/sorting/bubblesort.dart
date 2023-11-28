@@ -7,7 +7,7 @@ class BubbleSort implements SortingStrategy {
     for (int i = coordinator.toSortArr.length; i > 0; i--) {
       if (coordinator.stop) {
         coordinator.resetSwap();
-        coordinator.setStopButton(false);
+        coordinator.stopButton = false;
         return;
       }
       int index = 1;
@@ -15,7 +15,7 @@ class BubbleSort implements SortingStrategy {
       while (index < i) {
         if (coordinator.stop) {
           coordinator.resetSwap();
-          coordinator.setStopButton(false);
+          coordinator.stopButton = false;
           return;
         }
         if (coordinator.toSortArr[max] < coordinator.toSortArr[index]) {

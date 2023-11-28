@@ -102,7 +102,7 @@ abstract class PathFindingStrategy {
 
     while (node != startingNode) {
       if (coordinator.stop) {
-        coordinator.setStopButton(false);
+        coordinator.stopButton = false;
         return;
       }
       path.insert(0, node);
@@ -116,12 +116,12 @@ abstract class PathFindingStrategy {
 
     for (Node node in path) {
       if (coordinator.stop) {
-        coordinator.setStopButton(false);
+        coordinator.stopButton = false;
         return;
       }
       await Future.delayed(Duration(milliseconds: coordinator.animationSpeed));
       coordinator.addPathNode(node);
     }
-    coordinator.setStopButton(false);
+    coordinator.stopButton = false;
   }
 }

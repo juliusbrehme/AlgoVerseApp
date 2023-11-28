@@ -6,7 +6,7 @@ class MergeSort implements SortingStrategy {
   Future<void> sort(SortingCoordinator coordinator) async {
     if (coordinator.stop) {
       coordinator.resetSwap();
-      coordinator.setStopButton(false);
+      coordinator.stopButton = false;
       return;
     }
     await _mergeSort(0, coordinator.toSortArr.length - 1, coordinator);
@@ -16,26 +16,26 @@ class MergeSort implements SortingStrategy {
       int start, int end, SortingCoordinator coordinator) async {
     if (coordinator.stop) {
       coordinator.resetSwap();
-      coordinator.setStopButton(false);
+      coordinator.stopButton = false;
       return;
     }
     if (start < end) {
       int mid = (start + end) ~/ 2;
       if (coordinator.stop) {
         coordinator.resetSwap();
-        coordinator.setStopButton(false);
+        coordinator.stopButton = false;
         return;
       }
       await _mergeSort(start, mid, coordinator);
       if (coordinator.stop) {
         coordinator.resetSwap();
-        coordinator.setStopButton(false);
+        coordinator.stopButton = false;
         return;
       }
       await _mergeSort(mid + 1, end, coordinator);
       if (coordinator.stop) {
         coordinator.resetSwap();
-        coordinator.setStopButton(false);
+        coordinator.stopButton = false;
         return;
       }
 
@@ -49,7 +49,7 @@ class MergeSort implements SortingStrategy {
       int start, int mid, int end, SortingCoordinator coordinator) async {
     if (coordinator.stop) {
       coordinator.resetSwap();
-      coordinator.setStopButton(false);
+      coordinator.stopButton = false;
       return;
     }
     int m = (mid - start) + 1;
@@ -63,7 +63,7 @@ class MergeSort implements SortingStrategy {
     for (i = 0; i < m; ++i) {
       if (coordinator.stop) {
         coordinator.resetSwap();
-        coordinator.setStopButton(false);
+        coordinator.stopButton = false;
         return;
       }
       arr1[i] = coordinator.toSortArr[k++];
@@ -72,7 +72,7 @@ class MergeSort implements SortingStrategy {
     for (j = 0; j < n; ++j) {
       if (coordinator.stop) {
         coordinator.resetSwap();
-        coordinator.setStopButton(false);
+        coordinator.stopButton = false;
         return;
       }
       arr2[j] = coordinator.toSortArr[k++];
@@ -84,7 +84,7 @@ class MergeSort implements SortingStrategy {
     while (i != m && j != n) {
       if (coordinator.stop) {
         coordinator.resetSwap();
-        coordinator.setStopButton(false);
+        coordinator.stopButton = false;
         return;
       }
       int index;
@@ -109,7 +109,7 @@ class MergeSort implements SortingStrategy {
     while (i != m) {
       if (coordinator.stop) {
         coordinator.resetSwap();
-        coordinator.setStopButton(false);
+        coordinator.stopButton = false;
         return;
       }
       int index = coordinator.startingArr.indexOf(arr1[i]);
@@ -124,7 +124,7 @@ class MergeSort implements SortingStrategy {
     while (j != n) {
       if (coordinator.stop) {
         coordinator.resetSwap();
-        coordinator.setStopButton(false);
+        coordinator.stopButton = false;
         return;
       }
       int index = coordinator.startingArr.indexOf(arr2[j]);

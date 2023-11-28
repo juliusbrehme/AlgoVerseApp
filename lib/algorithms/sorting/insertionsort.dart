@@ -7,7 +7,7 @@ class InsertionSort implements SortingStrategy {
     for (int i = 0; i < coordinator.toSortArr.length; ++i) {
       if (coordinator.stop) {
         coordinator.resetSwap();
-        coordinator.setStopButton(false);
+        coordinator.stopButton = false;
         return;
       }
       int temp = coordinator.toSortArr[i];
@@ -18,7 +18,7 @@ class InsertionSort implements SortingStrategy {
       while (j >= 0 && coordinator.toSortArr[j] > temp) {
         if (coordinator.stop) {
           coordinator.resetSwap();
-          coordinator.setStopButton(false);
+          coordinator.stopButton = false;
           return;
         }
         int indexJ = coordinator.startingArr.indexOf(coordinator.toSortArr[j]);

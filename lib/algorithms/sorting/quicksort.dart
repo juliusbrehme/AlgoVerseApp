@@ -8,7 +8,7 @@ class QuickSort implements SortingStrategy {
   Future<void> sort(SortingCoordinator coordinator) async {
     if (coordinator.stop) {
       coordinator.resetSwap();
-      coordinator.setStopButton(false);
+      coordinator.stopButton = false;
       return;
     }
     await _quickSort(0, coordinator.toSortArr.length - 1, coordinator);
@@ -18,20 +18,20 @@ class QuickSort implements SortingStrategy {
       int start, int end, SortingCoordinator coordinator) async {
     if (coordinator.stop) {
       coordinator.resetSwap();
-      coordinator.setStopButton(false);
+      coordinator.stopButton = false;
       return;
     }
     if (start < end) {
       int pIndex = await _partition(start, end, coordinator);
       if (pIndex == -1 || coordinator.stop) {
         coordinator.resetSwap();
-        coordinator.setStopButton(false);
+        coordinator.stopButton = false;
         return;
       }
       await _quickSort(start, pIndex - 1, coordinator);
       if (coordinator.stop) {
         coordinator.resetSwap();
-        coordinator.setStopButton(false);
+        coordinator.stopButton = false;
         return;
       }
       await _quickSort(pIndex + 1, end, coordinator);
@@ -42,7 +42,7 @@ class QuickSort implements SortingStrategy {
       int start, int end, SortingCoordinator coordinator) async {
     if (coordinator.stop) {
       coordinator.resetSwap();
-      coordinator.setStopButton(false);
+      coordinator.stopButton = false;
       return -1;
     }
     int pivot = coordinator.toSortArr[end];
@@ -51,7 +51,7 @@ class QuickSort implements SortingStrategy {
     for (int i = start; i < end; ++i) {
       if (coordinator.stop) {
         coordinator.resetSwap();
-        coordinator.setStopButton(false);
+        coordinator.stopButton = false;
         return -1;
       }
       if (coordinator.toSortArr[i] <= pivot) {

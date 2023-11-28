@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> {
           return Padding(
             padding: const EdgeInsets.only(right: 15),
             child: FloatingActionButton(
-              onPressed: () => pathFindingCoordinator.setStop(true),
+              onPressed: () => pathFindingCoordinator.stop = true,
               backgroundColor: const Color.fromARGB(255, 195, 44, 33),
               child: const Icon(Icons.stop_circle),
             ),
@@ -47,7 +47,7 @@ class _HomePageState extends State<HomePage> {
           return Padding(
             padding: const EdgeInsets.only(right: 15),
             child: FloatingActionButton(
-              onPressed: () => sortingCoordinator.setStop(true),
+              onPressed: () => sortingCoordinator.stop = true,
               backgroundColor: const Color.fromARGB(255, 195, 44, 33),
               child: const Icon(Icons.stop_circle),
             ),

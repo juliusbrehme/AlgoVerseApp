@@ -28,7 +28,7 @@ class SortingCoordinator extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setStop(bool boolean) {
+  set stop(bool boolean) {
     _stop = boolean;
     notifyListeners();
   }
@@ -51,7 +51,7 @@ class SortingCoordinator extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setStopButton(bool boolean) {
+  set stopButton(bool boolean) {
     _stopButton = boolean;
     notifyListeners();
   }

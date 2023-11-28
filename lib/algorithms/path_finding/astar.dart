@@ -19,7 +19,7 @@ class Astar extends PathFindingStrategy {
   @override
   Future<void> findPath(PathFindingCoordinator coordinator) async {
     if (coordinator.stop) {
-      coordinator.setStopButton(false);
+      coordinator.stopButton = false;
       return;
     }
     if (startingNode == endingNode) {
@@ -35,7 +35,7 @@ class Astar extends PathFindingStrategy {
 
     while (nextNode.isNotEmpty) {
       if (coordinator.stop) {
-        coordinator.setStopButton(false);
+        coordinator.stopButton = false;
         return;
       }
       _Tuple nextTuple = nextNode.removeAt(0);
@@ -54,7 +54,7 @@ class Astar extends PathFindingStrategy {
 
       for (Node neighbor in neighbors) {
         if (coordinator.stop) {
-          coordinator.setStopButton(false);
+          coordinator.stopButton = false;
           return;
         }
         // cost and dist is irrelevant for equality, check if node is in nextNode

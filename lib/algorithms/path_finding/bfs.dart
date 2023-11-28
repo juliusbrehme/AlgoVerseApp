@@ -19,7 +19,7 @@ class BFS extends PathFindingStrategy {
   @override
   Future<void> findPath(PathFindingCoordinator coordinator) async {
     if (coordinator.stop) {
-      coordinator.setStopButton(false);
+      coordinator.stopButton = false;
       return;
     }
     if (startingNode == endingNode) {
@@ -34,7 +34,7 @@ class BFS extends PathFindingStrategy {
 
     while (nextNode.isNotEmpty) {
       if (coordinator.stop) {
-        coordinator.setStopButton(false);
+        coordinator.stopButton = false;
         return;
       }
       Node node = nextNode.removeAt(0);
@@ -45,7 +45,7 @@ class BFS extends PathFindingStrategy {
           getNeighbors(node, obstacles, visitedNodes, boardSize);
       for (Node neighbor in neighbors) {
         if (coordinator.stop) {
-          coordinator.setStopButton(false);
+          coordinator.stopButton = false;
           return;
         }
         parent[neighbor] = node;
@@ -64,6 +64,6 @@ class BFS extends PathFindingStrategy {
         }
       }
     }
-    coordinator.setStopButton(false);
+    coordinator.stopButton = false;
   }
 }

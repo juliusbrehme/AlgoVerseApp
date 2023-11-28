@@ -7,7 +7,7 @@ class SelectionSort implements SortingStrategy {
     for (int i = 0; i < coordinator.toSortArr.length; ++i) {
       if (coordinator.stop) {
         coordinator.resetSwap();
-        coordinator.setStopButton(false);
+        coordinator.stopButton = false;
         return;
       }
       int smallest = coordinator.toSortArr[i];
@@ -20,7 +20,7 @@ class SelectionSort implements SortingStrategy {
       for (int j = (i + 1); j < coordinator.toSortArr.length; ++j) {
         if (coordinator.stop) {
           coordinator.resetSwap();
-          coordinator.setStopButton(false);
+          coordinator.stopButton = false;
           return;
         }
         if (coordinator.toSortArr[j] < smallest) {
@@ -39,6 +39,6 @@ class SelectionSort implements SortingStrategy {
       await Future.delayed(Duration(milliseconds: coordinator.animationSpeed));
     }
     coordinator.resetSwap();
-    coordinator.setStopButton(false);
+    coordinator.stopButton = false;
   }
 }

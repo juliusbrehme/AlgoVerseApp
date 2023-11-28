@@ -107,12 +107,6 @@ class PathFindingCoordinator extends ChangeNotifier {
     notifyListeners();
   }
 
-  // for testing with walls, this will probably change
-  void addAllObstacle(List<Node> nodes) {
-    _obstacle = nodes;
-    notifyListeners();
-  }
-
   void addVisitedNodes(List<Node> nodes) {
     _visitedNodes = nodes;
     notifyListeners();
@@ -174,12 +168,12 @@ class PathFindingCoordinator extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setStopButton(bool boolean) {
+  set stopButton(bool boolean) {
     _stopButton = boolean;
     notifyListeners();
   }
 
-  void setStop(bool boolean) {
+  set stop(bool boolean) {
     _stop = boolean;
     notifyListeners();
   }
