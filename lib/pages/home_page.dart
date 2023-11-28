@@ -134,9 +134,14 @@ class _HomePageState extends State<HomePage> {
         child: Builder(
           builder: (context) => Scaffold(
             appBar: AppBar(
-              leading: const Icon(
-                Icons.menu,
-                color: Colors.white,
+              leading: Builder(
+                builder: (context) => IconButton(
+                  onPressed: Scaffold.of(context).openDrawer,
+                  icon: const Icon(
+                    Icons.menu,
+                    color: Colors.white,
+                  ),
+                ),
               ),
               title: Text(
                 _title[_selectedPage],
