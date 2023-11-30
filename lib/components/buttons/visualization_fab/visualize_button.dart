@@ -200,7 +200,7 @@ class _ExpandingActionButton extends StatelessWidget {
       child: FadeTransition(
         opacity: progress,
         child: InkWell(
-          splashColor: Colors.green,
+          splashColor: const Color.fromRGBO(51, 74, 100, 1),
           onTap: onTap,
           child: child,
         ),
