@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:algo_verse_app/algorithms/binary_search_tree/binary_search_tree.dart';
 import 'package:algo_verse_app/components/buttons/find_path_button.dart';
 import 'package:algo_verse_app/components/buttons/search_tree_button.dart';
 import 'package:algo_verse_app/components/buttons/sorting_button.dart';
@@ -126,13 +129,24 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(
               create: (context) => PathFindingCoordinator(Location(11, 19))),
           ChangeNotifierProvider(create: (context) => SortingCoordinator()),
           ChangeNotifierProvider(
-              create: (context) => BinarySearchTreeCoordinator()),
+            create: (context) => BinarySearchTreeCoordinator(
+              BinarySearchTree.fromList(
+                  List.generate(Random().nextInt(21) + 1,
+                      (index) => Random().nextInt(100)),
+                  56,
+                  50,
+                  10,
+                  screenWidth),
+            ),
+          ),
         ],
         child: Builder(
           builder: (context) => Scaffold(
