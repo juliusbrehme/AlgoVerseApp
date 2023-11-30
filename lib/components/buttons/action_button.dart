@@ -4,14 +4,12 @@ class ActionButton extends StatelessWidget {
   const ActionButton({
     super.key,
     required this.height,
-    required this.width,
     required this.radius,
     required this.onTap,
     required this.icon,
   });
 
   final double height;
-  final double width;
   final double radius;
   final VoidCallback onTap;
   final Widget icon;
