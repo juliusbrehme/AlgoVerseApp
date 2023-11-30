@@ -4,10 +4,13 @@ import 'dart:math';
 import 'package:algo_verse_app/algorithms/binary_search_tree/node.dart';
 
 abstract class BinaryTreePosition {
-  int nodeSize = 56;
-  double siblingDistance = 50;
-  double treeDistance = 10;
-  double screenWidth = 440;
+  int nodeSize;
+  double siblingDistance;
+  double treeDistance;
+  double screenWidth;
+
+  BinaryTreePosition(
+      this.nodeSize, this.siblingDistance, this.treeDistance, this.screenWidth);
 
   void calculateNodePositions(Node? root) {
     if (root != null) {

@@ -7,10 +7,22 @@ import 'node.dart';
 class BinarySearchTree extends BinaryTreePosition {
   Node? root;
 
-  BinarySearchTree({this.root});
+  BinarySearchTree({
+    this.root,
+    required int nodeSize,
+    required double siblingDistance,
+    required double treeDistance,
+    required double screenWidth,
+  }) : super(nodeSize, siblingDistance, treeDistance, screenWidth);
 
-  factory BinarySearchTree.fromList(List<int> list) {
-    BinarySearchTree tree = BinarySearchTree();
+  factory BinarySearchTree.fromList(List<int> list, int nodeSize,
+      double siblingDistance, double treeDistance, double screenWidth) {
+    BinarySearchTree tree = BinarySearchTree(
+      nodeSize: nodeSize,
+      siblingDistance: siblingDistance,
+      treeDistance: treeDistance,
+      screenWidth: screenWidth,
+    );
     tree.fromList(list);
     return tree;
   }
@@ -55,8 +67,8 @@ class BinarySearchTree extends BinaryTreePosition {
 
   void randomTree() {
     clear();
-    fromList(
-        List.generate(Random().nextInt(21), (index) => Random().nextInt(100)));
+    fromList(List.generate(
+        Random().nextInt(21) + 1, (index) => Random().nextInt(100)));
   }
 
   List<Node> bfs() {
