@@ -10,7 +10,7 @@ class BinarySearchTreeCoordinator extends ChangeNotifier {
   BinarySearchTreeCoordinator() {
     _binaryTree = BinarySearchTree.fromList(
         List.generate(15, (index) => Random().nextInt(100)));
-    binaryTree.calculateNodePositions();
+    binaryTree.calculateNodePositions(binaryTree.root);
   }
 
   BinarySearchTree get binaryTree => _binaryTree;
@@ -18,19 +18,19 @@ class BinarySearchTreeCoordinator extends ChangeNotifier {
 
   set binaryTree(BinarySearchTree tree) {
     binaryTree = tree;
-    binaryTree.calculateNodePositions();
+    binaryTree.calculateNodePositions(binaryTree.root);
     notifyListeners();
   }
 
   void addNode(int value) {
     binaryTree.add(value);
-    binaryTree.calculateNodePositions();
+    binaryTree.calculateNodePositions(binaryTree.root);
     notifyListeners();
   }
 
   void addNodes(List<int> list) {
     binaryTree.fromList(list);
-    binaryTree.calculateNodePositions();
+    binaryTree.calculateNodePositions(binaryTree.root);
     notifyListeners();
   }
 
@@ -41,7 +41,7 @@ class BinarySearchTreeCoordinator extends ChangeNotifier {
 
   void randomTree() {
     binaryTree.randomTree();
-    binaryTree.calculateNodePositions();
+    binaryTree.calculateNodePositions(binaryTree.root);
     notifyListeners();
   }
 }
