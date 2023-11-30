@@ -4,6 +4,7 @@ import 'package:algo_verse_app/components/buttons/sorting_button.dart';
 import 'package:algo_verse_app/components/buttons/highlighted_sidebar_button.dart';
 import 'package:algo_verse_app/components/buttons/home_button.dart';
 import 'package:algo_verse_app/components/buttons/sidebar_button.dart';
+import 'package:algo_verse_app/provider/binary_search_tree_coordinator.dart';
 import 'package:algo_verse_app/provider/pathfinding_coordinator.dart';
 import 'package:algo_verse_app/pages/main_page.dart';
 import 'package:algo_verse_app/pages/pathfinding_page.dart';
@@ -130,6 +131,8 @@ class _HomePageState extends State<HomePage> {
           ChangeNotifierProvider(
               create: (context) => PathFindingCoordinator(Location(11, 19))),
           ChangeNotifierProvider(create: (context) => SortingCoordinator()),
+          ChangeNotifierProvider(
+              create: (context) => BinarySearchTreeCoordinator()),
         ],
         child: Builder(
           builder: (context) => Scaffold(
