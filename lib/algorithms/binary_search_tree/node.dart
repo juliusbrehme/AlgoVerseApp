@@ -6,6 +6,8 @@ class Node {
   double x = 0;
   int y = 0;
   double mod = 0;
+  bool highlight = false;
+  bool found = false;
 
   Node(this.value, [this.parent, this.left, this.right]);
 
