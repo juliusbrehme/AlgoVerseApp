@@ -70,33 +70,4 @@ class BinarySearchTree extends BinaryTreePosition {
     fromList(List.generate(
         Random().nextInt(21) + 1, (index) => Random().nextInt(100)));
   }
-
-  List<Node> bfs() {
-    List<Node> result = [];
-    List<Node> nextNode = [];
-    if (root == null) {
-      return result;
-    } else {
-      nextNode.add(root!);
-    }
-
-    while (nextNode.isNotEmpty) {
-      Node node = nextNode.removeAt(0);
-      result.add(node);
-
-      if (node.left != null) {
-        nextNode.add(node.left!);
-      }
-
-      if (node.right != null) {
-        nextNode.add(node.right!);
-      }
-    }
-    return result;
-  }
-
-  @override
-  String toString() {
-    return bfs().toString();
-  }
 }
