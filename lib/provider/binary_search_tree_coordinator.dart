@@ -46,7 +46,7 @@ class BinarySearchTreeCoordinator extends ChangeNotifier {
   Future<void> addNodesAnimated(List<int> list) async {
     for (int value in list) {
       addNode(value);
-      await Future.delayed(const Duration(milliseconds: 50));
+      await Future.delayed(const Duration(milliseconds: 500));
     }
   }
 

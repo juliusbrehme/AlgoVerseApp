@@ -37,6 +37,7 @@ class SortingCoordinator extends ChangeNotifier {
     _startingArr = List.of(array);
     _toSortArr = List.of(array);
     _indexArr = [for (int i = 0; i < array.length; i++) i];
+    notifyListeners();
   }
 
   void setSpeed() {
