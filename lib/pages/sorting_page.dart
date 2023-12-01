@@ -1,5 +1,6 @@
 import 'package:algo_verse_app/components/bar.dart';
 import 'package:algo_verse_app/components/buttons/action_button.dart';
+import 'package:algo_verse_app/components/input_fields/custom_input_dialog.dart';
 import 'package:algo_verse_app/provider/sorting_coordinator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -99,7 +100,25 @@ class SortingPage extends StatelessWidget {
                   child: ActionButton(
                     height: 40,
                     radius: 20,
-                    onTap: () => print("User input for array"),
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              backgroundColor:
+                                  const Color.fromARGB(255, 150, 157, 162),
+                              content: StatefulBuilder(builder:
+                                  (BuildContext context, StateSetter setState) {
+                                return CustomInputDialog(
+                                  title: "Provide elements for the Array",
+                                  onSubmit: (List<int> list) =>
+                                      coordinator.setArray(list),
+                                  smallerHundred: true,
+                                );
+                              }),
+                            );
+                          });
+                    },
                     icon: const Icon(
                       Icons.bar_chart,
                       color: Colors.white,
