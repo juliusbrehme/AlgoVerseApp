@@ -62,7 +62,7 @@ class TreePainter extends CustomPainter {
           text: TextSpan(
             text: key.toString(),
             style: TextStyle(
-              color: Colors.white,
+              color: key.highlight ? Colors.orange : key.found ? Colors.green : Colors.white,
               fontSize: key.value < -99 ? 20 : 25,
               fontWeight: FontWeight.bold,
             ),
