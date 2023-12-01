@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:algo_verse_app/components/buttons/action_button.dart';
+import 'package:algo_verse_app/components/input_fields/custom_input_dialog.dart';
 import 'package:algo_verse_app/fonts/my_flutter_app_icons.dart';
 import 'package:algo_verse_app/painter/tree_painter.dart';
 import 'package:algo_verse_app/provider/binary_search_tree_coordinator.dart';
@@ -109,7 +110,26 @@ class _TreeSearchPageState extends State<TreeSearchPage> {
               ActionButton(
                 height: 40,
                 radius: 20,
-                onTap: () => print("Put in List!"),
+                onTap: () {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          backgroundColor:
+                              const Color.fromARGB(255, 150, 157, 162),
+                          content: StatefulBuilder(builder:
+                              (BuildContext context, StateSetter setState) {
+                            return CustomInputDialog(
+                              title:
+                                  "Provide elements for the Binarysearch tree",
+                              onSubmitFuture: (List<int> list) =>
+                                  coordinator.addNodesAnimated(list),
+                              smallerHundred: false,
+                            );
+                          }),
+                        );
+                      });
+                },
                 icon: const Icon(
                   MyIcon.flowTree,
                   color: Colors.white,
@@ -166,14 +186,16 @@ class InputField extends StatelessWidget {
           textAlign: TextAlign.center,
           controller: controller,
           decoration: const InputDecoration(
-            hintMaxLines: 1,
-            hintText: "Search Value",
-            hintStyle: TextStyle(
-              color: Colors.white,
-              fontSize: 10,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+              hintMaxLines: 1,
+              hintText: "Search Value",
+              hintStyle: TextStyle(
+                color: Colors.white,
+                fontSize: 10,
+                fontWeight: FontWeight.bold,
+              ),
+              focusedBorder: InputBorder.none,
+              border: InputBorder.none,
+              enabledBorder: InputBorder.none),
           onTap: () => onTap(),
           onEditingComplete: () => onEditingComplete(),
         ),
