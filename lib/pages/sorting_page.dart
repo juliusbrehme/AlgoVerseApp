@@ -106,7 +106,7 @@ class SortingPage extends StatelessWidget {
                           builder: (context) {
                             return AlertDialog(
                               backgroundColor:
-                                  const Color.fromARGB(255, 150, 157, 162),
+                                  const Color.fromARGB(255, 197, 201, 205),
                               content: StatefulBuilder(builder:
                                   (BuildContext context, StateSetter setState) {
                                 return CustomInputDialog(
