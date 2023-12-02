@@ -172,11 +172,10 @@ class NumberBox extends StatelessWidget {
   final Function onTap;
 
   const NumberBox(
-      {Key? key,
+      {super.key,
       required this.number,
       required this.onTap,
-      required this.index})
-      : super(key: key);
+      required this.index});
 
   @override
   Widget build(BuildContext context) {
