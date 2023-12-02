@@ -45,6 +45,10 @@ class Node {
     }
   }
 
+  String debug() {
+    return "$value, X: $x";
+  }
+
   @override
   String toString() {
     return "$value";
