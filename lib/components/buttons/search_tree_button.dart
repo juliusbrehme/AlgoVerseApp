@@ -16,18 +16,24 @@ class SearchTreeButton extends StatelessWidget {
       children: [
         AlgorithmButton(
           onPressed: () {
+            coordinator.stop = false;
+            coordinator.stopButton = true;
             coordinator.dfs(coordinator.getSearchValue()!);
           },
           algorithm: "DFS",
         ),
         AlgorithmButton(
           onPressed: () {
+            coordinator.stop = false;
+            coordinator.stopButton = true;
             coordinator.bfs(coordinator.getSearchValue()!);
           },
           algorithm: "BFS",
         ),
         AlgorithmButton(
           onPressed: () {
+            coordinator.stop = false;
+            coordinator.stopButton = true;
             coordinator.binarySearch(coordinator.getSearchValue()!);
           },
           algorithm: "BinarySearch",
