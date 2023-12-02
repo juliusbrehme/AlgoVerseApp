@@ -2,13 +2,13 @@ import 'dart:math';
 
 import 'package:algo_verse_app/components/buttons/action_button.dart';
 import 'package:algo_verse_app/components/input_fields/custom_input_dialog.dart';
+import 'package:algo_verse_app/components/input_fields/input_button.dart';
 import 'package:algo_verse_app/fonts/my_flutter_app_icons.dart';
 import 'package:algo_verse_app/painter/tree_painter.dart';
 import 'package:algo_verse_app/provider/binary_search_tree_coordinator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zoom_widget/zoom_widget.dart';
-import 'package:flutter/services.dart';
 
 class TreeSearchPage extends StatefulWidget {
   const TreeSearchPage({super.key});
@@ -54,81 +54,135 @@ class _TreeSearchPageState extends State<TreeSearchPage> {
                   ),
                 )),
           ),
-          // const SizedBox(
-          // //   height: 30,
-          // ),
-
-          InputField(
-            controller: _controller,
-            onTap: () {
-              setState(() {
-                small = true;
-              });
-            },
-            onEditingComplete: () {
-              setState(() {
-                small = false;
-              });
-              FocusScope.of(context).unfocus();
-              if (_controller.text != "") {
-                coordinator.searchValue = int.parse(_controller.text);
-              }
-            },
+          const SizedBox(
+            height: 10,
           ),
-
           Row(
             children: [
-              ActionButton(
-                height: 40,
-                radius: 20,
-                onTap: coordinator.clear,
-                icon: const Icon(
-                  Icons.delete,
-                  color: Colors.white,
+              Padding(
+                padding: const EdgeInsets.only(left: 15, right: 10),
+                child: SizedBox(
+                  width: 100,
+                  height: 40,
+                  child: ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color.fromRGBO(51, 74, 100, 1),
+                      shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(20))),
+                    ),
+                    onPressed: () {
+                      coordinator.setSpeed();
+                    },
+                    icon: const Icon(
+                      Icons.speed,
+                      color: Colors.white,
+                    ),
+                    label: Text(
+                      coordinator.speed.toString(),
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
                 ),
               ),
-              ActionButton(
-                height: 40,
-                radius: 20,
-                onTap: coordinator.randomTree,
-                icon: const Icon(
-                  Icons.shuffle,
-                  color: Colors.white,
-                ),
+              InputButton(
+                controller: _controller,
+                onTap: () {
+                  setState(() {
+                    small = true;
+                  });
+                },
+                onEditingComplete: () {
+                  setState(() {
+                    small = false;
+                  });
+                  FocusScope.of(context).unfocus();
+                  if (_controller.text != "") {
+                    coordinator.searchValue = int.parse(_controller.text);
+                  }
+                },
               ),
-              ActionButton(
-                height: 40,
-                radius: 20,
-                onTap: () => coordinator.addNode(
-                  Random().nextInt(100),
-                ),
-                icon: const Icon(
-                  Icons.add,
-                  color: Colors.white,
-                ),
+              const SizedBox(
+                width: 10,
               ),
               ActionButton(
                 height: 40,
                 radius: 20,
                 onTap: () {
-                  showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          backgroundColor:
-                              const Color.fromARGB(255, 150, 157, 162),
-                          content: StatefulBuilder(builder:
-                              (BuildContext context, StateSetter setState) {
-                            return CustomInputDialog(
-                              title:
-                                  "Provide elements for the Binarysearch tree",
-                              onSubmitFuture: (List<int> list) =>
-                                  coordinator.addNodesAnimated(list),
-                              smallerHundred: false,
+                  coordinator.stopButton ? null : coordinator.randomTree();
+                },
+                icon: const Icon(
+                  Icons.shuffle,
+                  color: Colors.white,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Row(
+            children: [
+              const SizedBox(
+                width: 30,
+              ),
+              ActionButton(
+                height: 40,
+                radius: 20,
+                onTap: () {
+                  coordinator.stopButton ? null : coordinator.clear();
+                },
+                icon: const Icon(
+                  Icons.delete,
+                  color: Colors.white,
+                ),
+              ),
+              const SizedBox(
+                width: 15,
+              ),
+              ActionButton(
+                height: 40,
+                radius: 20,
+                onTap: () => coordinator.stopButton
+                    ? null
+                    : coordinator.addNode(
+                        Random().nextInt(100),
+                      ),
+                icon: const Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
+              ),
+              const SizedBox(
+                width: 15,
+              ),
+              ActionButton(
+                height: 40,
+                radius: 20,
+                onTap: () {
+                  coordinator.stopButton
+                      ? null
+                      : showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              backgroundColor:
+                                  const Color.fromARGB(255, 197, 201, 205),
+                              content: StatefulBuilder(builder:
+                                  (BuildContext context, StateSetter setState) {
+                                return CustomInputDialog(
+                                  title:
+                                      "Provide elements for the Binarysearch tree",
+                                  onSubmitFuture: (List<int> list) =>
+                                      coordinator.addNodesAnimated(list),
+                                  smallerHundred: false,
+                                );
+                              }),
                             );
-                          }),
-                        );
-                      });
+                          });
                 },
                 icon: const Icon(
                   MyIcon.flowTree,
@@ -139,66 +193,6 @@ class _TreeSearchPageState extends State<TreeSearchPage> {
             ],
           ),
         ],
-      ),
-    );
-  }
-}
-
-class InputField extends StatelessWidget {
-  const InputField(
-      {super.key,
-      required this.controller,
-      required this.onTap,
-      required this.onEditingComplete});
-
-  final TextEditingController controller;
-  final Function onTap;
-  final Function onEditingComplete;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 80,
-      height: 40,
-      decoration: BoxDecoration(
-          color: const Color.fromRGBO(51, 74, 100, 1),
-          borderRadius: BorderRadius.circular(20)),
-      child: Padding(
-        padding: const EdgeInsets.only(
-          bottom: 8,
-        ),
-        child: TextField(
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 15,
-            fontWeight: FontWeight.bold,
-          ),
-          keyboardType: const TextInputType.numberWithOptions(
-              signed: true, decimal: false),
-          inputFormatters: <TextInputFormatter>[
-            FilteringTextInputFormatter.allow(RegExp(r'[1-9]+[0-9]*')),
-            TextInputFormatter.withFunction(
-              (oldValue, newValue) => newValue.copyWith(
-                text: newValue.text.replaceAll('.', ','),
-              ),
-            ),
-          ],
-          textAlign: TextAlign.center,
-          controller: controller,
-          decoration: const InputDecoration(
-              hintMaxLines: 1,
-              hintText: "Search Value",
-              hintStyle: TextStyle(
-                color: Colors.white,
-                fontSize: 10,
-                fontWeight: FontWeight.bold,
-              ),
-              focusedBorder: InputBorder.none,
-              border: InputBorder.none,
-              enabledBorder: InputBorder.none),
-          onTap: () => onTap(),
-          onEditingComplete: () => onEditingComplete(),
-        ),
       ),
     );
   }
