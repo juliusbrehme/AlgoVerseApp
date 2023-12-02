@@ -1,7 +1,5 @@
 import 'dart:math';
-
 import 'package:algo_verse_app/algorithms/binary_search_tree/binary_tree_position.dart';
-
 import 'node.dart';
 
 class BinarySearchTree extends BinaryTreePosition {
@@ -27,14 +25,14 @@ class BinarySearchTree extends BinaryTreePosition {
     return tree;
   }
 
-  void add(int value) {
-    root = addRecursive(root, Node(value));
-  }
-
   void fromList(List<int> list) {
     for (var element in list) {
       add(element);
     }
+  }
+
+  void add(int value) {
+    root = addRecursive(root, Node(value));
   }
 
   Node addRecursive(Node? root, Node value) {
@@ -69,5 +67,30 @@ class BinarySearchTree extends BinaryTreePosition {
     clear();
     fromList(List.generate(
         Random().nextInt(21) + 1, (index) => Random().nextInt(100)));
+  }
+
+  @override
+  String toString() {
+    List<Node> nodes = [];
+    List<Node> nextNode = [];
+    if (root == null) {
+      return nodes.toString();
+    } else {
+      nextNode.add(root!);
+    }
+
+    while (nextNode.isNotEmpty) {
+      Node node = nextNode.removeAt(0);
+      nodes.add(node);
+
+      if (node.left != null) {
+        nextNode.add(node.left!);
+      }
+
+      if (node.right != null) {
+        nextNode.add(node.right!);
+      }
+    }
+    return nodes.toString();
   }
 }
