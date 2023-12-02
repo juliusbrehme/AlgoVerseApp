@@ -85,7 +85,9 @@ class SortingPage extends StatelessWidget {
                   child: ActionButton(
                     height: 40,
                     radius: 20,
-                    onTap: () => coordinator.generateRandomArrayOnClick(),
+                    onTap: () => coordinator.stopButton
+                        ? null
+                        : coordinator.generateRandomArrayOnClick(),
                     icon: const Icon(
                       Icons.shuffle,
                       color: Colors.white,
@@ -101,23 +103,27 @@ class SortingPage extends StatelessWidget {
                     height: 40,
                     radius: 20,
                     onTap: () {
-                      showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              backgroundColor:
-                                  const Color.fromARGB(255, 197, 201, 205),
-                              content: StatefulBuilder(builder:
-                                  (BuildContext context, StateSetter setState) {
-                                return CustomInputDialog(
-                                  title: "Provide elements for the Array",
-                                  onSubmit: (List<int> list) =>
-                                      coordinator.setArray(list),
-                                  smallerHundred: true,
+                      coordinator.stopButton
+                          ? null
+                          : showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  backgroundColor:
+                                      const Color.fromARGB(255, 197, 201, 205),
+                                  content: StatefulBuilder(builder:
+                                      (BuildContext context,
+                                          StateSetter setState) {
+                                    return CustomInputDialog(
+                                      title: "Provide elements for the Array",
+                                      onSubmit: (List<int> list) {
+                                        coordinator.setArray(list);
+                                      },
+                                      smallerHundred: true,
+                                    );
+                                  }),
                                 );
-                              }),
-                            );
-                          });
+                              });
                     },
                     icon: const Icon(
                       Icons.bar_chart,
@@ -132,7 +138,8 @@ class SortingPage extends StatelessWidget {
               child: ActionButton(
                 height: 40,
                 radius: 20,
-                onTap: coordinator.reset,
+                onTap: () =>
+                    coordinator.stopButton ? null : coordinator.reset(),
                 icon: const Icon(
                   Icons.restart_alt,
                   color: Colors.white,

@@ -78,7 +78,9 @@ class _PathFindingPageState extends State<PathFindingPage> {
                 child: ActionButton(
                   height: 40,
                   radius: 20,
-                  onTap: () => print("generate random maze"),
+                  onTap: () => coordinator.stopButton
+                      ? null
+                      : print("generate random maze"),
                   icon: const Icon(
                     Icons.stairs,
                     color: Colors.white,
@@ -90,7 +92,8 @@ class _PathFindingPageState extends State<PathFindingPage> {
                 child: ActionButton(
                   height: 40,
                   radius: 20,
-                  onTap: coordinator.reset,
+                  onTap: () =>
+                      coordinator.stopButton ? null : coordinator.reset(),
                   icon: const Icon(
                     Icons.restart_alt,
                     color: Colors.white,
