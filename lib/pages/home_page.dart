@@ -29,8 +29,11 @@ class _HomePageState extends State<HomePage> {
   int _selectedPage = 0;
 
   // the different expandable visualizer button, SizeBox to show nothing on the main page
-  Widget showFab(PathFindingCoordinator pathFindingCoordinator,
-      SortingCoordinator sortingCoordinator, int selectedPage) {
+  Widget showFab(
+      PathFindingCoordinator pathFindingCoordinator,
+      SortingCoordinator sortingCoordinator,
+      BinarySearchTreeCoordinator treeCoordinator,
+      int selectedPage) {
     switch (selectedPage) {
       case 0:
         return const SizedBox();
@@ -60,7 +63,18 @@ class _HomePageState extends State<HomePage> {
           return const SortingButton();
         }
       default:
-        return const SearchTreeButton();
+        if (treeCoordinator.stopButton) {
+          return Padding(
+            padding: const EdgeInsets.only(right: 15),
+            child: FloatingActionButton(
+              onPressed: () => treeCoordinator.stop = true,
+              backgroundColor: const Color.fromARGB(255, 195, 44, 33),
+              child: const Icon(Icons.stop_circle),
+            ),
+          );
+        } else {
+          return const SearchTreeButton();
+        }
     }
   }
 
@@ -287,8 +301,11 @@ class _HomePageState extends State<HomePage> {
               padding: const EdgeInsets.only(
                 bottom: 15,
               ),
-              child: showFab(context.watch<PathFindingCoordinator>(),
-                  context.watch<SortingCoordinator>(), _selectedPage),
+              child: showFab(
+                  context.watch<PathFindingCoordinator>(),
+                  context.watch<SortingCoordinator>(),
+                  context.watch<BinarySearchTreeCoordinator>(),
+                  _selectedPage),
             ),
             backgroundColor: const Color.fromARGB(255, 79, 115, 156),
           ),
