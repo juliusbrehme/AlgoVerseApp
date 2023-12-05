@@ -92,6 +92,7 @@ abstract class PathFindingStrategy {
     List<Node> path = [];
     /* check if a solution exist */
     if (parent[node] == null) {
+      coordinator.stopButton = false;
       return;
     }
 
