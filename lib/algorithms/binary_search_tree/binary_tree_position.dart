@@ -16,12 +16,13 @@ abstract class BinaryTreePosition {
     if (root != null) {
       initializeNode(root, 0);
       calculateInitalX(root);
-      checkAllChildrenOnScreen(root);
+      //checkAllChildrenOnScreen(root);
       calculatePositions(root, 0);
       double movingFactor = root.x < (screenWidth / 2)
           ? screenWidth / 2 - root.x
-          : root.x - screenWidth / 2;
+          : -(root.x - screenWidth / 2);
       calculateFinalPosition(root, movingFactor);
+      checkAllChildrenOnScreen(root);
     }
   }
 
@@ -101,20 +102,55 @@ abstract class BinaryTreePosition {
     }
   }
 
-  void checkAllChildrenOnScreen(Node node) {
-    var nodeCounter = HashMap<int, double>();
-    getLeftContour(node, 0, nodeCounter);
-    double shiftAmount = 0;
-    for (var y in nodeCounter.keys) {
-      if (nodeCounter[y]! + shiftAmount < 0) {
-        shiftAmount = nodeCounter[y]! * -1;
+  void checkAllChildrenOnScreen(Node? root) {
+    Node? node = root;
+    if (node == null) {
+      return;
+    }
+    while (node!.left != null) {
+      node = node.left;
+    }
+
+    double shiftValue = 0;
+
+    if (node.x <= 0) {
+      shiftValue = node.x * -1 + nodeSize + 10;
+
+      List<Node> nextNode = [];
+      if (root == null) {
+        return;
+      } else {
+        nextNode.add(root);
       }
-      if (shiftAmount > 0) {
-        node.x += shiftAmount;
-        node.mod += shiftAmount;
+      while (nextNode.isNotEmpty) {
+        Node node = nextNode.removeAt(0);
+        node.x += shiftValue;
+        if (node.left != null) {
+          nextNode.add(node.left!);
+        }
+        if (node.right != null) {
+          nextNode.add(node.right!);
+        }
       }
+      return;
     }
   }
+
+  // void checkAllChildrenOnScreen(Node node) {
+  //   var nodeCounter = HashMap<int, double>();
+  //   getLeftContour(node, 0, nodeCounter);
+  //   print(nodeCounter);
+  //   double shiftAmount = 0;
+  //   for (var y in nodeCounter.keys) {
+  //     if (nodeCounter[y]! + shiftAmount <= 0) {
+  //       shiftAmount = nodeCounter[y]! * -1;
+  //     }
+  //     if (shiftAmount > 0) {
+  //       node.x += shiftAmount;
+  //       node.mod += shiftAmount;
+  //     }
+  //   }
+  // }
 
   void calculatePositions(Node? root, double modSum) {
     Node? node = root;
