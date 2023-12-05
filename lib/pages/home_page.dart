@@ -148,7 +148,7 @@ class _HomePageState extends State<HomePage> {
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(
-              create: (context) => PathFindingCoordinator(Location(11, 19))),
+              create: (context) => PathFindingCoordinator(Location(11, 18))),
           ChangeNotifierProvider(create: (context) => SortingCoordinator()),
           ChangeNotifierProvider(
             create: (context) => BinarySearchTreeCoordinator(
