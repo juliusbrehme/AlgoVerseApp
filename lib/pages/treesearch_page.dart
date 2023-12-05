@@ -32,6 +32,7 @@ class _TreeSearchPageState extends State<TreeSearchPage> {
         children: [
           SizedBox(
             width: MediaQuery.of(context).size.width,
+            // height: small ? 400 : MediaQuery.of(context).size.height - 195?
             height: small ? 440 : 670,
             child: Zoom(
                 opacityScrollBars: 0.0,
