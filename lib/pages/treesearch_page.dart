@@ -32,7 +32,7 @@ class _TreeSearchPageState extends State<TreeSearchPage> {
         children: [
           SizedBox(
             width: MediaQuery.of(context).size.width,
-            height: small ? 440 : 700,
+            height: small ? 440 : MediaQuery.of(context).size.height - 193,
             child: Zoom(
                 opacityScrollBars: 0.0,
                 backgroundColor: const Color.fromARGB(255, 79, 115, 156),
@@ -44,7 +44,7 @@ class _TreeSearchPageState extends State<TreeSearchPage> {
                 },
                 child: ClipRect(
                   child: CustomPaint(
-                    size: const Size(2000, 2000),
+                    size: const Size(4000, 4000),
                     painter: TreePainter(
                       treeMap: coordinator.treeMap,
                       offset: offset,

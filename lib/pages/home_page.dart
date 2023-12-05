@@ -191,7 +191,8 @@ class _HomePageState extends State<HomePage> {
                       color: Color.fromRGBO(255, 255, 255, 1),
                     ),
                     onPressed: () {
-                      print("Switch");
+                      // this should be switch to show background of the algorithms, not implemented yet
+                      null;
                     },
                   ),
                 )
