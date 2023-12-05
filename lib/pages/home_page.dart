@@ -198,7 +198,6 @@ class _HomePageState extends State<HomePage> {
                 )
               ],
             ),
-            /* TODO Hier wird mit Index ausgewählt welche Drawer gezeigt wird, daher drawer alle extra in klasse machen */
             drawer: Drawer(
               backgroundColor: const Color.fromRGBO(51, 74, 100, 1),
               child: Column(
@@ -311,4 +310,3 @@ class _HomePageState extends State<HomePage> {
         ));
   }
 }
-
