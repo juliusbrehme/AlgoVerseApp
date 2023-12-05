@@ -108,6 +108,9 @@ class _CustomInputDialogState extends State<CustomInputDialog> {
                           ),
                         ),
                       ],
+                      onEditingComplete: () {
+                        addNumber();
+                      },
                     ),
                   ),
                   TextButton(
