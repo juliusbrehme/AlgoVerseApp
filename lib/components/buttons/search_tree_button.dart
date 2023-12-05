@@ -7,6 +7,40 @@ import 'package:provider/provider.dart';
 class SearchTreeButton extends StatelessWidget {
   const SearchTreeButton({super.key});
 
+  Future showException(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text(
+            "Search Value",
+            textAlign: TextAlign.center,
+          ),
+          backgroundColor: const Color.fromARGB(255, 197, 201, 205),
+          content: const SingleChildScrollView(
+            child: Column(
+              children: [
+                Text(
+                  "Please provide a search value.",
+                  style: TextStyle(
+                    fontSize: 18,
+                  ),
+                )
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text("Ok")),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     BinarySearchTreeCoordinator coordinator =
@@ -16,25 +50,37 @@ class SearchTreeButton extends StatelessWidget {
       children: [
         AlgorithmButton(
           onPressed: () {
-            coordinator.stop = false;
-            coordinator.stopButton = true;
-            coordinator.dfs(coordinator.getSearchValue()!);
+            if (coordinator.getSearchValue() == null) {
+              showException(context);
+            } else {
+              coordinator.stop = false;
+              coordinator.stopButton = true;
+              coordinator.dfs(coordinator.getSearchValue()!);
+            }
           },
           algorithm: "DFS",
         ),
         AlgorithmButton(
           onPressed: () {
-            coordinator.stop = false;
-            coordinator.stopButton = true;
-            coordinator.bfs(coordinator.getSearchValue()!);
+            if (coordinator.getSearchValue() == null) {
+              showException(context);
+            } else {
+              coordinator.stop = false;
+              coordinator.stopButton = true;
+              coordinator.bfs(coordinator.getSearchValue()!);
+            }
           },
           algorithm: "BFS",
         ),
         AlgorithmButton(
           onPressed: () {
-            coordinator.stop = false;
-            coordinator.stopButton = true;
-            coordinator.binarySearch(coordinator.getSearchValue()!);
+            if (coordinator.getSearchValue() == null) {
+              showException(context);
+            } else {
+              coordinator.stop = false;
+              coordinator.stopButton = true;
+              coordinator.binarySearch(coordinator.getSearchValue()!);
+            }
           },
           algorithm: "BinarySearch",
         ),
