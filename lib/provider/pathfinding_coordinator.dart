@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:algo_verse_app/provider/speed.dart';
 import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
@@ -83,15 +85,15 @@ class PathFindingCoordinator extends ChangeNotifier {
         .firstWhereOrNull((element) => x == element.x && y == element.y);
   }
 
-/// Get path node, depending on the location [x] and [y].
+  /// Get path node, depending on the location [x] and [y].
   Node? getPathNode(int x, int y) {
     return _path
         .firstWhereOrNull((element) => x == element.x && y == element.y);
   }
 
   /// Change either start node or end node.
-  /// 
-  /// Change either start node to [newNode] or change end node to [newNode] depending if [oldNode] is the 
+  ///
+  /// Change either start node to [newNode] or change end node to [newNode] depending if [oldNode] is the
   /// start or end node.
   void changeNode(Node newNode, Node oldNode) {
     if (oldNode == startNode) {
@@ -109,6 +111,10 @@ class PathFindingCoordinator extends ChangeNotifier {
   void removeObstacle(Node node) {
     _obstacle.remove(node);
     notifyListeners();
+  }
+
+  bool isObstacle(Node node) {
+    return _obstacle.contains(node);
   }
 
   void addVisitedNodes(List<Node> nodes) {
@@ -180,6 +186,152 @@ class PathFindingCoordinator extends ChangeNotifier {
   set stop(bool boolean) {
     _stop = boolean;
     notifyListeners();
+  }
+
+  // This methods creates a random maze, but this maze is sometimes not solvable and also does not utilize the best space.
+  //Should be updated. Also it would be possible and easy to make an animation to visualize how the maze is generated.
+  void createRandomMaze() {
+    /* set nodes of board */
+    _nodes[0] = Node(location: Location(size.x + 1, size.y + 1));
+    _nodes[1] = Node(location: Location(size.x + 2, size.y + 2));
+    _obstacle = [];
+    _visitedNodes = [];
+    _path = [];
+
+    int x = size.x;
+    int y = size.y;
+
+    /* make every node an obstacle */
+    for (int i = 0; i < x; i++) {
+      for (int j = 0; j < y; j++) {
+        addObstacle(Node(location: Location(i, j)));
+      }
+    }
+
+    Node startNode = Node(
+        location:
+            Location(Random().nextInt(x - 2) + 1, Random().nextInt(y - 2) + 1));
+    removeObstacle(startNode);
+
+    print("StartNode: $startNode");
+
+    List<Node> nextNodes = getNeighbors(startNode);
+
+    Node prevNode = startNode;
+
+    while (nextNodes.isNotEmpty) {
+      nextNodes.shuffle();
+      Node node = nextNodes.removeLast();
+
+      if (!isNotEdge(node)) {
+        continue;
+      }
+
+      /* set the new path */
+      removeObstacle(node);
+      removeObstacle(connectedNode(prevNode, node));
+
+      nextNodes.addAll(getNeighbors(node));
+      prevNode = node;
+    }
+
+    for (int i = 1; i < size.y - 1; i++) {
+      for (int j = 0; j < size.x; j++) {
+        Node startNode = Node(
+            location: Location(j, i),
+            icon: const Icon(
+              Icons.expand_more,
+              size: 35,
+            ));
+        if (!isObstacle(startNode)) {
+          _nodes[0] = startNode;
+          i = size.y;
+          break;
+        }
+      }
+    }
+
+    for (int i = size.y - 2; i > 1; i--) {
+      for (int j = size.x - 2; j > 1; j--) {
+        Node endNode = Node(
+          location: Location(j, i),
+          icon: const Icon(
+            Icons.adjust,
+            size: 35,
+          ),
+        );
+        if (!isObstacle(endNode)) {
+          _nodes[1] = endNode;
+          i = 0;
+          break;
+        }
+      }
+    }
+
+    print(_nodes);
+
+    notifyListeners();
+  }
+
+  List<Node> getNeighbors(Node node) {
+    List<Node> neighbors = [];
+    Node north = Node(location: Location(node.x, node.y + 2));
+    Node south = Node(location: Location(node.x, node.y - 2));
+    Node west = Node(location: Location(node.x - 2, node.y));
+    Node east = Node(location: Location(node.x + 2, node.y));
+
+    if (north.x > 0 &&
+        north.y > 0 &&
+        north.x < size.x &&
+        north.y < size.y &&
+        isObstacle(north) &&
+        isNotEdge(north)) {
+      neighbors.add(north);
+    }
+    if (south.x > 0 &&
+        south.y > 0 &&
+        south.x < size.x &&
+        south.y < size.y &&
+        isObstacle(south) &&
+        isNotEdge(south)) {
+      neighbors.add(south);
+    }
+    if (west.x > 0 &&
+        west.y > 0 &&
+        west.x < size.x &&
+        west.y < size.y &&
+        isObstacle(west) &&
+        isNotEdge(west)) {
+      neighbors.add(west);
+    }
+    if (east.x > 0 &&
+        east.y > 0 &&
+        east.x < size.x &&
+        east.y < size.y &&
+        isObstacle(east) &&
+        isNotEdge(east)) {
+      neighbors.add(east);
+    }
+    return neighbors;
+  }
+
+  bool isNotEdge(Node node) {
+    return (node.x > 0 &&
+        node.x < size.x - 1 &&
+        node.y > 0 &&
+        node.y < size.y - 1);
+  }
+
+  Node connectedNode(Node prevNode, Node node) {
+    if (node.x > prevNode.x) {
+      return Node(location: Location(node.x - 1, node.y));
+    } else if (node.x < prevNode.x) {
+      return Node(location: Location(node.x + 1, node.y));
+    } else if (node.y > prevNode.y) {
+      return Node(location: Location(node.x, node.y - 1));
+    } else {
+      return Node(location: Location(node.x, node.y + 1));
+    }
   }
 }
 

@@ -79,8 +79,7 @@ class _PathFindingPageState extends State<PathFindingPage> {
                   radius: 20,
                   onTap: () => coordinator.stopButton
                       ? null
-                      /* TODO: should add method to calculate a random maze */
-                      : null,
+                      : coordinator.createRandomMaze(),
                   icon: const Icon(
                     Icons.stairs,
                     color: Colors.white,
