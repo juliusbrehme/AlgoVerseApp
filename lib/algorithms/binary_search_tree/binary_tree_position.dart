@@ -12,6 +12,7 @@ abstract class BinaryTreePosition {
   BinaryTreePosition(
       this.nodeSize, this.siblingDistance, this.treeDistance, this.screenWidth);
 
+  /// Calculates all the nodes position of the tree.
   void calculateNodePositions(Node? root) {
     if (root != null) {
       initializeNode(root, 0);
@@ -26,6 +27,7 @@ abstract class BinaryTreePosition {
     }
   }
 
+  /// The x value of each node will be set to zero and the y value will be set to the level of the node in the tree.
   void initializeNode(Node? root, int depth) {
     Node? node = root;
     if (node == null) {
@@ -40,6 +42,7 @@ abstract class BinaryTreePosition {
     }
   }
 
+  /// The x value will be updated to 0 or 1, depending if the tree is a left or right child.
   void calculateInitalX(Node? root) {
     Node? node = root;
     if (node == null) {
@@ -72,6 +75,10 @@ abstract class BinaryTreePosition {
     }
   }
 
+  /// Checks if two subtrees overlap.
+  /// 
+  /// Takes the rightmost nodes postions of the left subtree and checks if the leftmost nodes position of the
+  /// right subtree overlap. If they do, a shiftvalue will be calculated and added to the right subtree's nodes.
   void checkForConflicts(Node node) {
     double minDistance = treeDistance + nodeSize;
     double shiftValue = 0;
@@ -102,6 +109,10 @@ abstract class BinaryTreePosition {
     }
   }
 
+  /// Checks if all nodes are visible on the screen.
+  /// 
+  /// Selects the leftmost node in a tree and checks if the position is grater 0. The tree's node will be updated 
+  /// by the leftmost node position * -1 + [nodeSize].
   void checkAllChildrenOnScreen(Node? root) {
     Node? node = root;
     if (node == null) {
@@ -135,22 +146,6 @@ abstract class BinaryTreePosition {
       return;
     }
   }
-
-  // void checkAllChildrenOnScreen(Node node) {
-  //   var nodeCounter = HashMap<int, double>();
-  //   getLeftContour(node, 0, nodeCounter);
-  //   print(nodeCounter);
-  //   double shiftAmount = 0;
-  //   for (var y in nodeCounter.keys) {
-  //     if (nodeCounter[y]! + shiftAmount <= 0) {
-  //       shiftAmount = nodeCounter[y]! * -1;
-  //     }
-  //     if (shiftAmount > 0) {
-  //       node.x += shiftAmount;
-  //       node.mod += shiftAmount;
-  //     }
-  //   }
-  // }
 
   void calculatePositions(Node? root, double modSum) {
     Node? node = root;

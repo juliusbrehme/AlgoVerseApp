@@ -24,7 +24,7 @@ class Dijkstra extends PathFindingStrategy {
     Map<Node, Node> prevNodes = HashMap();
     List<Node> visitedNodes = [];
 
-    // create an adjacentMatrix
+    /* create an adjacentMatrix */
     List<List<int>> adjacentMatrix = List<List<int>>.generate(boardSize.y,
         (i) => List<int>.generate(boardSize.x, (index) => -1, growable: false),
         growable: false);
@@ -34,7 +34,7 @@ class Dijkstra extends PathFindingStrategy {
     List<Node> nextNodes = [];
     nextNodes.add(startingNode);
 
-    // pathfinding algorithm, we will look at every node and don't stop early
+    /* pathfinding algorithm, we will look at every node and don't stop early */
     while (nextNodes.isNotEmpty) {
       if (coordinator.stop) {
         coordinator.stopButton = false;
@@ -44,7 +44,6 @@ class Dijkstra extends PathFindingStrategy {
       visitedNodes.add(node);
       coordinator.addVisitedNodeNode(node);
       await Future.delayed(Duration(milliseconds: coordinator.animationSpeed));
-      //vistedNodeMap.put(node, 1);
       List<Node> neighbors =
           getNeighbors(node, obstacles, visitedNodes, boardSize);
       for (Node neighbor in neighbors) {
@@ -60,9 +59,9 @@ class Dijkstra extends PathFindingStrategy {
           prevNodes[neighbor] = node;
           if (neighbor == endingNode) {}
         }
-        // already visited and we do not need to visit again
+        /* already visited and we do not need to visit again */
         if (visitedNodes.contains(neighbor) == false) {
-          // possible already in nextNodes
+          /* possible already in nextNodes */
           if (!nextNodes.contains(neighbor)) {
             nextNodes.add(neighbor);
           }

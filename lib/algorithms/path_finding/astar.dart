@@ -57,7 +57,7 @@ class Astar extends PathFindingStrategy {
           coordinator.stopButton = false;
           return;
         }
-        // cost and dist is irrelevant for equality, check if node is in nextNode
+        /* cost and dist is irrelevant for equality, check if node is in nextNode */
         if (!nextNode.contains(_Tuple(neighbor, 0, 0))) {
           parent[neighbor] = node;
           nextNode.add(_Tuple(neighbor, nextTuple.cost + 1,
@@ -72,7 +72,7 @@ class Astar extends PathFindingStrategy {
                 _heuristicFunction(neighbor, endingNode)));
           }
         }
-        // sort nextNode, so the first element is the best choice
+        /* sort nextNode, so the first element is the best choice */
         nextNode.sort();
       }
     }
@@ -83,9 +83,8 @@ class Astar extends PathFindingStrategy {
 
   /// Calculates the manhattan distance.
   ///
-  /// @param startNode The starting point
-  /// @param endNode   The ending point
-  /// @return Returns the distance
+  /// The [startNode] is the start point and the [endNode] is the end point.
+  /// The [distance] will be returned.
   int _heuristicFunction(Node startNode, Node endNode) {
     return (startNode.x - endNode.x).abs() + (startNode.y - endNode.y).abs();
   }
@@ -104,7 +103,7 @@ class _Tuple implements Comparable<_Tuple> {
 
   int get dist => _dist;
 
-  // The manhattan distance plus the cost is the comparing factor
+  // The manhattan distance plus the cost is the comparing factor.
   @override
   int compareTo(_Tuple tuple) {
     return (cost + dist).compareTo(tuple.cost + tuple.dist);

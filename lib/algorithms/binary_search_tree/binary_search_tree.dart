@@ -13,6 +13,10 @@ class BinarySearchTree extends BinaryTreePosition {
     required double screenWidth,
   }) : super(nodeSize, siblingDistance, treeDistance, screenWidth);
 
+  /// Creates a binary tree from a [list].
+  /// 
+  /// To position the tree on the display the [nodeSize], the [siblingsDistance], the [treeDistance] and
+  /// the [screenWidth] is needed.
   factory BinarySearchTree.fromList(List<int> list, int nodeSize,
       double siblingDistance, double treeDistance, double screenWidth) {
     BinarySearchTree tree = BinarySearchTree(

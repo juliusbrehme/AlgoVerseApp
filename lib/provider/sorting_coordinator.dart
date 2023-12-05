@@ -99,19 +99,9 @@ class SortingCoordinator extends ChangeNotifier {
     notifyListeners();
   }
 
-  // wahrscheinlich weglassen
-  void generateSizedArrayOnClick(int size) {
-    _startingArr = generateRandomArray(size);
-    _toSortArr = List.of(_startingArr);
-    _indexArr = [for (int i = 0; i < _startingArr.length; i++) i];
-    _swapI = -1;
-    _swapJ = -1;
-    notifyListeners();
-  }
-
   void swap(int i, int j) {
-    // getting the index of the value and then swapping the index to
-    // the right position
+    /* getting the index of the value and then swapping the index to
+    the right position */
     int indexI = _startingArr.indexOf(_toSortArr[i]);
     int indexJ = _startingArr.indexOf(_toSortArr[j]);
 

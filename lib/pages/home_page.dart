@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
   // index to show the right page
   int _selectedPage = 0;
 
-  // the different expandable visualizer button, SizeBox to show nothing on the main page
+  // the different expandable visualizer buttons, SizeBox to show nothing on the main page
   Widget showFab(
       PathFindingCoordinator pathFindingCoordinator,
       SortingCoordinator sortingCoordinator,
@@ -191,15 +191,14 @@ class _HomePageState extends State<HomePage> {
                       color: Color.fromRGBO(255, 255, 255, 1),
                     ),
                     onPressed: () {
-                      // this should be switch to show background of the algorithms, not implemented yet
+                      /* TODO: this should be switch to show background of the algorithms, not implemented yet. */
                       null;
                     },
                   ),
                 )
               ],
-              //toolbarHeight: 70,
             ),
-            // Hier wird mit Index ausgewählt welche Drawer gezeigt wird, daher drawer alle extra in klasse machen
+            /* TODO Hier wird mit Index ausgewählt welche Drawer gezeigt wird, daher drawer alle extra in klasse machen */
             drawer: Drawer(
               backgroundColor: const Color.fromRGBO(51, 74, 100, 1),
               child: Column(
@@ -218,7 +217,6 @@ class _HomePageState extends State<HomePage> {
                   const SizedBox(
                     height: 20,
                   ),
-                  // if (true == 0) ...[const Text("Well")], damit kann man dann einen drawer erstellen!
                   highlightPath()
                       ? HighlightedSideBarButton(
                           image: "lib/images/pathfinding.png",
@@ -314,4 +312,3 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-// color for main pages: #496a8e

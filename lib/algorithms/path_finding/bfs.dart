@@ -49,7 +49,7 @@ class BFS extends PathFindingStrategy {
           return;
         }
         parent[neighbor] = node;
-        // neighbor is not in visited, because of getNeighbor function
+        /* neighbor is not in visited, because of getNeighbor function */
         if (!nextNode.contains(neighbor)) {
           if (endingNode == neighbor) {
             visitedNodes.add(neighbor);

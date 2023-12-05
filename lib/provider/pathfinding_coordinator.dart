@@ -9,6 +9,7 @@ import 'package:collection/collection.dart';
 
 class PathFindingCoordinator extends ChangeNotifier {
   final Location _size;
+  // Stores the starting and ending node
   final List<Node> _nodes = [];
   List<Node> _obstacle = [];
   List<Node> _visitedNodes = [];
@@ -19,7 +20,7 @@ class PathFindingCoordinator extends ChangeNotifier {
   bool _stopButton = false;
 
   PathFindingCoordinator(this._size) {
-    // starting Node
+    /* starting Node */
     _nodes.add(
       Node(
         location: Location((_size.x - 1) ~/ 2, 1),
@@ -30,7 +31,7 @@ class PathFindingCoordinator extends ChangeNotifier {
         ),
       ),
     );
-    // ending Node
+    /* ending Node */
     _nodes.add(
       Node(
         location: Location((_size.x - 1) ~/ 2, _size.y - 2),
@@ -65,30 +66,33 @@ class PathFindingCoordinator extends ChangeNotifier {
 
   bool get stopButton => _stopButton;
 
-  // Get start or ending node
+  /// Get either the starting or ending node, depending on the location [x] and [y].
   Node? getNode(int x, int y) {
     return _nodes.firstWhereOrNull((p) => x == p.x && y == p.y);
   }
 
-  // Get obstacle node
+  /// Get obstacle node, depending on the location [x] and [y].
   Node? getObstacle(int x, int y) {
     return _obstacle
         .firstWhereOrNull((element) => x == element.x && y == element.y);
   }
 
-  // Get visitedNode node
+  /// Get visited node, depending on the location [x] and [y].
   Node? getVisitedNode(int x, int y) {
     return _visitedNodes
         .firstWhereOrNull((element) => x == element.x && y == element.y);
   }
 
-  // Get path node
+/// Get path node, depending on the location [x] and [y].
   Node? getPathNode(int x, int y) {
     return _path
         .firstWhereOrNull((element) => x == element.x && y == element.y);
   }
 
-  // for changing starting or end node position
+  /// Change either start node or end node.
+  /// 
+  /// Change either start node to [newNode] or change end node to [newNode] depending if [oldNode] is the 
+  /// start or end node.
   void changeNode(Node newNode, Node oldNode) {
     if (oldNode == startNode) {
       _nodes[0] = newNode;

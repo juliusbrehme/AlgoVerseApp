@@ -3,7 +3,6 @@ import 'dart:collection';
 import 'package:algo_verse_app/algorithms/path_finding/pathfinding_strategy.dart';
 import 'package:algo_verse_app/provider/pathfinding_coordinator.dart';
 
-/// Implementation of BFS algorithm.
 class DFS extends PathFindingStrategy {
   DFS({
     required this.startingNode,
@@ -53,7 +52,7 @@ class DFS extends PathFindingStrategy {
           return;
         }
         parent[neighbor] = node;
-        // neighbor is not in visited, because of getNeighbor function
+        /* neighbor is not in visited, because of getNeighbor function */
         if (endingNode == neighbor) {
           visitedNodes.add(neighbor);
           coordinator.addVisitedNodeNode(neighbor);

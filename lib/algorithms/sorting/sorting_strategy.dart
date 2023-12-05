@@ -4,9 +4,8 @@ import 'package:algo_verse_app/provider/sorting_coordinator.dart';
 /// implement this interface.
 abstract class SortingStrategy {
 
-  /// This method is to sort the integer array given by the sorting coordinator. This method should mutate
-  /// the array that is supposed to be sorted
-  ///
-  /// @param coordinator The sorting coordinator holding the valuable information of the arrays
+  /// This method is to sort the integer array given by the sorting coordinator. 
+  /// 
+  /// This method mutates the array that is supposed to be sorted given by the [coordinator].
   void sort(SortingCoordinator coordinator);
 }

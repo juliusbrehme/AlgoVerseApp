@@ -52,12 +52,16 @@ class BinarySearchTreeCoordinator extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Adds a [list] of nodes to the tree.
   void addNodes(List<int> list) {
     binaryTree.fromList(list);
     binaryTree.calculateNodePositions(binaryTree.root);
     notifyListeners();
   }
 
+  /// Adds a [list] of nodes to the tree.
+  /// 
+  /// After adding one node to the tree, the tree will be repainted, therefore, animted.
   Future<void> addNodesAnimated(List<int> list) async {
     stopButton = true;
     stop = false;
@@ -79,6 +83,7 @@ class BinarySearchTreeCoordinator extends ChangeNotifier {
     stop = false;
   }
 
+  /// Deletes all the nodes of a tree.
   void clear() {
     binaryTree.clear();
     notifyListeners();

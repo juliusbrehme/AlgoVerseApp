@@ -23,7 +23,6 @@ class _PathFindingPageState extends State<PathFindingPage> {
     );
   }
 
-  // set the build grid wiht mediaquery for height as well so it is always the right size or somethinglike that? make responsive ? But for when everything is finished
   Widget _buildGrid() {
     return Consumer<PathFindingCoordinator>(
       builder: (context, coordinator, child) => Column(
@@ -80,7 +79,8 @@ class _PathFindingPageState extends State<PathFindingPage> {
                   radius: 20,
                   onTap: () => coordinator.stopButton
                       ? null
-                      : print("generate random maze"),
+                      /* TODO: should add method to calculate a random maze */
+                      : null,
                   icon: const Icon(
                     Icons.stairs,
                     color: Colors.white,
@@ -107,7 +107,6 @@ class _PathFindingPageState extends State<PathFindingPage> {
     );
   }
 
-  // start und end node sind die einzigen nodes auf dem feld, da path visited und obstacle nur die farbe der tile geändert wird
   Widget _buildDragTarget(int x, int y, PathFindingCoordinator coordinator) {
     return DragTarget<Node>(
       onAccept: (node) {

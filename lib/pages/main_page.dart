@@ -48,7 +48,6 @@ class MainPage extends StatelessWidget {
 
 class _AlgorithmTile extends StatelessWidget {
   const _AlgorithmTile({
-    super.key,
     required this.image,
     required this.description,
     required this.onTap,

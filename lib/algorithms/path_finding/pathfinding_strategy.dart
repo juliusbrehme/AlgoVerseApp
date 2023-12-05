@@ -1,23 +1,21 @@
 import 'package:algo_verse_app/provider/pathfinding_coordinator.dart';
 import 'package:collection/collection.dart';
 
-/// The interface for the Strategy. Every new implemented path finding strategy
+/// The interface for the Strategy.
+///
+/// Every new implemented path finding strategy
 /// should extend this interface.
 abstract class PathFindingStrategy {
   /// This method is generating the path of the path finding algorithm.
   ///
-  /// @param board Holds the information of the board.
-  /// @return Returns a record of Path, which holds the path and the visited nodes
+  /// Holds the information of the [board] and returns a record of [Path], which holds the path and the visited nodes
   void findPath(PathFindingCoordinator coordinator);
 
-  /// This method is to generate the next neighbors for the path finding algorithm. The methods considers, if
-  /// a node was already visited.
+  /// This method is to generate the next neighbors for the path finding algorithm.
   ///
-  /// @param node         The node to generate the neighbors from
-  /// @param wall         All obstacles, those nodes can not be visited or used
-  /// @param visitedNodes All already visited nodes
-  /// @param boardSize    The size of the board
-  /// @return Returns a list of all neighbors, that still need to be visited
+  /// The methods considers, if a node was already visited.
+  /// The [node] to generate the neighbors from, the [wall] which can not be visited or used, the already [visitedNodes] and
+  /// the [boardSize]. The method will return a list of neighbors.
   List<Node> getNeighbors(
       Node node, List<Node> wall, List<Node> visitedNodes, Location boardSize) {
     List<Node> neighbors = [];
@@ -82,11 +80,8 @@ abstract class PathFindingStrategy {
 
   /// Method to reconstruct the Path from memory.
   ///
-  /// @param startingNode The starting node
-  /// @param endingNode   The ending node
-  /// @param visitedNodes The visited nodes in sequence
-  /// @param parent       The memory of which node is the parent node
-  /// @return Return the path and the sequence of visited nodes
+  /// It usesd the [endingNode] to find the previous node and get to the [startingNode]. It will
+  /// use the [parent] as the memory to track back the path. 
   void reconstructPath(
       Node startingNode,
       Node endingNode,
@@ -95,7 +90,7 @@ abstract class PathFindingStrategy {
       PathFindingCoordinator coordinator) async {
     Node node = endingNode;
     List<Node> path = [];
-    // check if a solution exist
+    /* check if a solution exist */
     if (parent[node] == null) {
       return;
     }
@@ -106,7 +101,7 @@ abstract class PathFindingStrategy {
         return;
       }
       path.insert(0, node);
-      // it should never be null
+      /* it should never be null */
       Node? nodeOrNull = parent[node];
       if (nodeOrNull != null) {
         node = nodeOrNull;
