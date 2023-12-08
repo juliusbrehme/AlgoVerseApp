@@ -55,7 +55,8 @@ class SearchTreeButton extends StatelessWidget {
             } else {
               coordinator.stop = false;
               coordinator.stopButton = true;
-              coordinator.dfs(coordinator.getSearchValue()!);
+              coordinator.resetNodes();
+              coordinator.dfs(coordinator.getSearchValue()!, coordinator);
             }
           },
           algorithm: "DFS",
@@ -67,7 +68,8 @@ class SearchTreeButton extends StatelessWidget {
             } else {
               coordinator.stop = false;
               coordinator.stopButton = true;
-              coordinator.bfs(coordinator.getSearchValue()!);
+              coordinator.resetNodes();
+              coordinator.bfs(coordinator.getSearchValue()!, coordinator);
             }
           },
           algorithm: "BFS",
@@ -79,7 +81,9 @@ class SearchTreeButton extends StatelessWidget {
             } else {
               coordinator.stop = false;
               coordinator.stopButton = true;
-              coordinator.binarySearch(coordinator.getSearchValue()!);
+              coordinator.resetNodes();
+              coordinator.binarySearch(
+                  coordinator.getSearchValue()!, coordinator);
             }
           },
           algorithm: "BinarySearch",
