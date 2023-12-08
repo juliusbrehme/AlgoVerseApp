@@ -38,16 +38,13 @@ class InputButton extends StatelessWidget {
                 borderRadius: const BorderRadius.all(Radius.circular(5.0)),
                 border: Border.all(color: const Color(0xffafafaf))),
             child: TextField(
-              maxLines: 1,
-              keyboardType: TextInputType.number,
-              controller: _controller,
-              style: TextStyle(color: Colors.grey[900]),
-              decoration: InputDecoration(
-                  hintText: 'E.g. 34    (0 < 1000)',
-                  hintStyle: TextStyle(color: Colors.grey[900]),
-                  focusedBorder: InputBorder.none,
-                  border: InputBorder.none,
-                  enabledBorder: InputBorder.none),
+              style: TextStyle(
+                color: Colors.grey[900],
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+              ),
+              keyboardType: const TextInputType.numberWithOptions(
+                  signed: true, decimal: false),
               inputFormatters: <TextInputFormatter>[
                 FilteringTextInputFormatter.allow(
                     RegExp(r'^[1-9][0-9]{1,2}$|^\d$')),
@@ -57,41 +54,25 @@ class InputButton extends StatelessWidget {
                   ),
                 ),
               ],
-              // style: TextStyle(
-              //   color: Colors.grey[900],
-              //   fontSize: 15,
-              //   fontWeight: FontWeight.bold,
-              // ),
-              // keyboardType: const TextInputType.numberWithOptions(
-              //     signed: true, decimal: false),
-              // inputFormatters: <TextInputFormatter>[
-              //   FilteringTextInputFormatter.allow(
-              //       RegExp(r'^[1-9][0-9]{1,2}$|^\d$')),
-              //   TextInputFormatter.withFunction(
-              //     (oldValue, newValue) => newValue.copyWith(
-              //       text: newValue.text.replaceAll('.', ','),
-              //     ),
-              //   ),
-              // ],
-              // textAlign: TextAlign.center,
-              // controller: _controller,
-              // decoration: const InputDecoration(
-              //     prefixIconConstraints: BoxConstraints(maxWidth: 15),
-              //     prefixIcon: Padding(
-              //       padding: EdgeInsets.only(left: 8.0),
-              //       child: Icon(
-              //         Icons.search,
-              //         color: Colors.black,
-              //       ),
-              //     ),
-              //     hintMaxLines: 1,
-              //     hintText: 'E.g. 34    (0 < 1000)',
-              //     hintStyle: TextStyle(
-              //       color: Colors.black,
-              //     ),
-              //     focusedBorder: InputBorder.none,
-              //     border: InputBorder.none,
-              //     enabledBorder: InputBorder.none),
+              textAlign: TextAlign.center,
+              controller: _controller,
+              decoration: const InputDecoration(
+                  prefixIconConstraints: BoxConstraints(maxWidth: 15),
+                  prefixIcon: Padding(
+                    padding: EdgeInsets.only(left: 8.0),
+                    child: Icon(
+                      Icons.search,
+                      color: Colors.black,
+                    ),
+                  ),
+                  hintMaxLines: 1,
+                  hintText: 'E.g. 34    (0 < 1000)',
+                  hintStyle: TextStyle(
+                    color: Colors.black,
+                  ),
+                  focusedBorder: InputBorder.none,
+                  border: InputBorder.none,
+                  enabledBorder: InputBorder.none),
               onEditingComplete: () {
                 onEditingComplete(_controller);
                 Navigator.pop(context);
