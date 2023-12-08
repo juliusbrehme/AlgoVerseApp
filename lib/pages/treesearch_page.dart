@@ -24,6 +24,8 @@ class _TreeSearchPageState extends State<TreeSearchPage> {
 
   @override
   Widget build(BuildContext context) {
+    print(MediaQuery.of(context).size.height);
+
     return Consumer<BinarySearchTreeCoordinator>(
       builder: (context, coordinator, child) => Column(
         children: [
@@ -57,7 +59,7 @@ class _TreeSearchPageState extends State<TreeSearchPage> {
           Row(
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: 10, right: 10),
+                padding: const EdgeInsets.only(left: 8, right: 10),
                 child: SizedBox(
                   width: 100,
                   height: 40,
