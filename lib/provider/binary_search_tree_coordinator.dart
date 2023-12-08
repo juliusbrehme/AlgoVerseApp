@@ -21,6 +21,7 @@ class BinarySearchTreeCoordinator extends ChangeNotifier {
   Enum get speed => _speed;
   bool get stop => _stop;
   bool get stopButton => _stopButton;
+  int get animationSpeed => _animationSpeed;
 
   int? getSearchValue() {
     return _searchValue;
@@ -28,6 +29,7 @@ class BinarySearchTreeCoordinator extends ChangeNotifier {
 
   set searchValue(int value) {
     _searchValue = value;
+    notifyListeners();
   }
 
   set stop(bool boolean) {
@@ -60,7 +62,7 @@ class BinarySearchTreeCoordinator extends ChangeNotifier {
   }
 
   /// Adds a [list] of nodes to the tree.
-  /// 
+  ///
   /// After adding one node to the tree, the tree will be repainted, therefore, animted.
   Future<void> addNodesAnimated(List<int> list) async {
     stopButton = true;
@@ -107,142 +109,27 @@ class BinarySearchTreeCoordinator extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> binarySearch(int value) {
-    return searchRecursive(_binaryTree.root, value);
+  Future<bool> binarySearch(
+      int value, BinarySearchTreeCoordinator coordinator) {
+    return binaryTree.binarySearch(value, coordinator);
   }
 
-  Future<bool> searchRecursive(Node? node, int value) async {
-    Node? root = node;
-    if (stop) {
-      stopButton = false;
-      return false;
-    }
-    if (root == null) {
-      stopButton = false;
-      notifyListeners();
-      return false;
-    } else if (root.value < value) {
-      if (stop) {
-        stopButton = false;
-        return false;
-      }
-      root.highlight = true;
-      notifyListeners();
-      await Future.delayed(Duration(milliseconds: _animationSpeed));
-      root.highlight = false;
-      return searchRecursive(root.right, value);
-    } else if (root.value > value) {
-      if (stop) {
-        stopButton = false;
-        return false;
-      }
-      root.highlight = true;
-      notifyListeners();
-      await Future.delayed(Duration(milliseconds: _animationSpeed));
-      root.highlight = false;
-      return searchRecursive(root.left, value);
-    } else {
-      if (stop) {
-        stopButton = false;
-        return false;
-      }
-      root.found = true;
-      notifyListeners();
-      await Future.delayed(Duration(milliseconds: _animationSpeed + 400));
-      root.found = false;
-      notifyListeners();
-      stopButton = false;
-      return true;
-    }
+  Future<bool> bfs(
+      int searchValue, BinarySearchTreeCoordinator coordinator) async {
+    return binaryTree.bfs(searchValue, coordinator);
   }
 
-  Future<bool> bfs(int value) async {
-    List<Node> nextNode = [];
-    if (stop) {
-      stopButton = false;
-      return false;
-    }
-    if (binaryTree.root == null) {
-      stopButton = false;
-      return false;
-    } else {
-      nextNode.add(binaryTree.root!);
-    }
-
-    while (nextNode.isNotEmpty) {
-      if (stop) {
-        stopButton = false;
-        return false;
-      }
-      Node node = nextNode.removeAt(0);
-      if (value == node.value) {
-        node.found = true;
-        notifyListeners();
-        await Future.delayed(Duration(milliseconds: _animationSpeed));
-        node.found = false;
-        stopButton = false;
-        return true;
-      } else {
-        node.highlight = true;
-        notifyListeners();
-        await Future.delayed(Duration(milliseconds: _animationSpeed));
-        node.highlight = false;
-
-        if (node.left != null) {
-          nextNode.add(node.left!);
-        }
-
-        if (node.right != null) {
-          nextNode.add(node.right!);
-        }
-      }
-    }
-    stopButton = false;
-    return false;
+  Future<bool> dfs(
+      int searchValue, BinarySearchTreeCoordinator coordinator) async {
+    return binaryTree.dfs(searchValue, coordinator);
   }
 
-  Future<bool> dfs(int value) async {
-    List<Node> nextNode = [];
-    if (stop) {
-      stopButton = false;
-      return false;
-    }
-    if (binaryTree.root == null) {
-      stopButton = false;
-      return false;
-    } else {
-      nextNode.add(binaryTree.root!);
-    }
+  void notify() {
+    notifyListeners();
+  }
 
-    while (nextNode.isNotEmpty) {
-      if (stop) {
-        stopButton = false;
-        return false;
-      }
-      Node node = nextNode.removeLast();
-      if (value == node.value) {
-        node.found = true;
-        notifyListeners();
-        await Future.delayed(Duration(milliseconds: _animationSpeed));
-        node.found = false;
-        stopButton = false;
-        return true;
-      } else {
-        node.highlight = true;
-        notifyListeners();
-        await Future.delayed(Duration(milliseconds: _animationSpeed));
-        node.highlight = false;
-
-        if (node.right != null) {
-          nextNode.add(node.right!);
-        }
-
-        if (node.left != null) {
-          nextNode.add(node.left!);
-        }
-      }
-    }
-    stopButton = false;
-    return false;
+  void resetNodes() {
+    binaryTree.resetNodes(binaryTree.root);
+    notifyListeners();
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:algo_verse_app/algorithms/binary_search_tree/binary_tree_position.dart';
+import 'package:algo_verse_app/provider/binary_search_tree_coordinator.dart';
 import 'node.dart';
 
 class BinarySearchTree extends BinaryTreePosition {
@@ -14,7 +15,7 @@ class BinarySearchTree extends BinaryTreePosition {
   }) : super(nodeSize, siblingDistance, treeDistance, screenWidth);
 
   /// Creates a binary tree from a [list].
-  /// 
+  ///
   /// To position the tree on the display the [nodeSize], the [siblingsDistance], the [treeDistance] and
   /// the [screenWidth] is needed.
   factory BinarySearchTree.fromList(List<int> list, int nodeSize,
@@ -71,6 +72,156 @@ class BinarySearchTree extends BinaryTreePosition {
     clear();
     fromList(List.generate(
         Random().nextInt(21) + 1, (index) => Random().nextInt(100)));
+  }
+
+  Future<bool> bfs(int value, BinarySearchTreeCoordinator coordinator) async {
+    List<Node> nextNode = [];
+    if (coordinator.stop) {
+      coordinator.stopButton = false;
+      return false;
+    }
+    if (root == null) {
+      coordinator.stopButton = false;
+      return false;
+    } else {
+      nextNode.add(root!);
+    }
+
+    while (nextNode.isNotEmpty) {
+      if (coordinator.stop) {
+        coordinator.stopButton = false;
+        return false;
+      }
+      Node node = nextNode.removeAt(0);
+      if (value == node.value) {
+        node.found = true;
+        coordinator.notify();
+        await Future.delayed(
+            Duration(milliseconds: coordinator.animationSpeed));
+        coordinator.stopButton = false;
+        return true;
+      } else {
+        node.highlight = true;
+        coordinator.notify();
+        await Future.delayed(
+            Duration(milliseconds: coordinator.animationSpeed));
+
+        if (node.left != null) {
+          nextNode.add(node.left!);
+        }
+
+        if (node.right != null) {
+          nextNode.add(node.right!);
+        }
+      }
+    }
+    coordinator.stopButton = false;
+    return false;
+  }
+
+  Future<bool> dfs(int value, BinarySearchTreeCoordinator coordinator) async {
+    List<Node> nextNode = [];
+    if (coordinator.stop) {
+      coordinator.stopButton = false;
+      return false;
+    }
+    if (root == null) {
+      coordinator.stopButton = false;
+      return false;
+    } else {
+      nextNode.add(root!);
+    }
+
+    while (nextNode.isNotEmpty) {
+      if (coordinator.stop) {
+        coordinator.stopButton = false;
+        return false;
+      }
+      Node node = nextNode.removeLast();
+      if (value == node.value) {
+        node.found = true;
+        coordinator.notify();
+        await Future.delayed(
+            Duration(milliseconds: coordinator.animationSpeed));
+        coordinator.stopButton = false;
+        return true;
+      } else {
+        node.highlight = true;
+        coordinator.notify();
+        await Future.delayed(
+            Duration(milliseconds: coordinator.animationSpeed));
+
+        if (node.right != null) {
+          nextNode.add(node.right!);
+        }
+
+        if (node.left != null) {
+          nextNode.add(node.left!);
+        }
+      }
+    }
+    coordinator.stopButton = false;
+    return false;
+  }
+
+  Future<bool> binarySearch(
+      int value, BinarySearchTreeCoordinator coordinator) {
+    return searchRecursive(root, value, coordinator);
+  }
+
+  Future<bool> searchRecursive(
+      Node? node, int value, BinarySearchTreeCoordinator coordinator) async {
+    Node? root = node;
+    if (coordinator.stop) {
+      coordinator.stopButton = false;
+      return false;
+    }
+    if (root == null) {
+      coordinator.stopButton = false;
+      coordinator.notify();
+      return false;
+    } else if (root.value < value) {
+      if (coordinator.stop) {
+        coordinator.stopButton = false;
+        return false;
+      }
+      root.highlight = true;
+      coordinator.notify();
+      await Future.delayed(Duration(milliseconds: coordinator.animationSpeed));
+      return searchRecursive(root.right, value, coordinator);
+    } else if (root.value > value) {
+      if (coordinator.stop) {
+        coordinator.stopButton = false;
+        return false;
+      }
+      root.highlight = true;
+      coordinator.notify();
+      await Future.delayed(Duration(milliseconds: coordinator.animationSpeed));
+      return searchRecursive(root.left, value, coordinator);
+    } else {
+      if (coordinator.stop) {
+        coordinator.stopButton = false;
+        return false;
+      }
+      root.found = true;
+      coordinator.notify();
+      await Future.delayed(
+          Duration(milliseconds: coordinator.animationSpeed + 400));
+      coordinator.notify();
+      coordinator.stopButton = false;
+      return true;
+    }
+  }
+
+  void resetNodes(Node? node) {
+    if (node == null) {
+      return;
+    } else {
+      resetNodes(node.left);
+      node.highlight = false;
+      node.found = false;
+      resetNodes(node.right);
+    }
   }
 
   @override
