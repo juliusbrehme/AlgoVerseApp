@@ -21,11 +21,11 @@ class CustomInputDialog extends StatefulWidget {
 
 class _CustomInputDialogState extends State<CustomInputDialog> {
   final TextEditingController _controller = TextEditingController();
-  List<int> resultsList = [];
+  Set<int> resultsList = {};
 
-  void removeNumber(int index) {
+  void removeNumber(int value) {
     setState(() {
-      resultsList.removeAt(index);
+      resultsList.remove(value);
     });
   }
 
@@ -61,7 +61,7 @@ class _CustomInputDialogState extends State<CustomInputDialog> {
             (index) {
               return NumberBox(
                 index: index,
-                number: resultsList[index],
+                number: resultsList.toList()[index],
                 onTap: removeNumber,
               );
             },
@@ -154,9 +154,9 @@ class _CustomInputDialogState extends State<CustomInputDialog> {
                 onPressed: () {
                   resultsList.isNotEmpty
                       ? widget.onSubmit != null
-                          ? widget.onSubmit!(resultsList)
+                          ? widget.onSubmit!(resultsList.toList())
                           : widget.onSubmitFuture != null
-                              ? widget.onSubmitFuture!(resultsList)
+                              ? widget.onSubmitFuture!(resultsList.toList())
                               : null
                       : null;
                   Navigator.pop(context);
@@ -173,7 +173,7 @@ class _CustomInputDialogState extends State<CustomInputDialog> {
 class NumberBox extends StatelessWidget {
   final int index;
   final int number;
-  final Function onTap;
+  final Function(int) onTap;
 
   const NumberBox(
       {super.key,
@@ -185,7 +185,7 @@ class NumberBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        onTap(index);
+        onTap(number);
       },
       child: Container(
         width: 50,
