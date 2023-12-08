@@ -149,7 +149,7 @@ class _HomePageState extends State<HomePage> {
         providers: [
           ChangeNotifierProvider(
               create: (context) =>
-                  PathFindingCoordinator(Location(11, 19))), //18 -> 19 for demo
+                  PathFindingCoordinator(Location(11, 18))), //18 -> 19 for demo
           ChangeNotifierProvider(create: (context) => SortingCoordinator()),
           ChangeNotifierProvider(
             create: (context) => BinarySearchTreeCoordinator(
