@@ -21,9 +21,6 @@ class _TreeSearchPageState extends State<TreeSearchPage> {
   Offset offset = const Offset(0, 0);
   // ignore: unused_field
   double _zoom = 0;
-  bool small = false;
-
-  final TextEditingController _controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +29,7 @@ class _TreeSearchPageState extends State<TreeSearchPage> {
         children: [
           SizedBox(
             width: MediaQuery.of(context).size.width,
-            // height: small ? 400 : MediaQuery.of(context).size.height - 195?
-            height: small ? 440 : 670,
+            height: MediaQuery.of(context).size.height - 195,
             child: Zoom(
                 opacityScrollBars: 0.0,
                 backgroundColor: const Color.fromARGB(255, 79, 115, 156),
@@ -61,7 +57,7 @@ class _TreeSearchPageState extends State<TreeSearchPage> {
           Row(
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: 15, right: 10),
+                padding: const EdgeInsets.only(left: 10, right: 10),
                 child: SizedBox(
                   width: 100,
                   height: 40,
@@ -89,22 +85,55 @@ class _TreeSearchPageState extends State<TreeSearchPage> {
                   ),
                 ),
               ),
-              InputButton(
-                controller: _controller,
-                onTap: () {
-                  setState(() {
-                    small = true;
-                  });
-                },
-                onEditingComplete: () {
-                  setState(() {
-                    small = false;
-                  });
-                  FocusScope.of(context).unfocus();
-                  if (_controller.text != "") {
-                    coordinator.searchValue = int.parse(_controller.text);
-                  }
-                },
+              SizedBox(
+                width: 100,
+                height: 40,
+                child: ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromRGBO(51, 74, 100, 1),
+                    shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                  ),
+                  onPressed: () {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            backgroundColor:
+                                const Color.fromARGB(255, 197, 201, 205),
+                            content: StatefulBuilder(builder:
+                                (BuildContext context, StateSetter setState) {
+                              return InputButton(
+                                title:
+                                    "Provide values to search in the Binarysearch tree",
+                                onEditingComplete:
+                                    (TextEditingController controller) {
+                                  FocusScope.of(context).unfocus();
+                                  if (controller.text != "") {
+                                    coordinator.searchValue =
+                                        int.parse(controller.text);
+                                  }
+                                },
+                              );
+                            }),
+                          );
+                        });
+                  },
+                  icon: const Icon(
+                    Icons.search,
+                    color: Colors.white,
+                  ),
+                  label: Text(
+                    coordinator.getSearchValue() == null
+                        ? "Value"
+                        : coordinator.getSearchValue().toString(),
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: coordinator.getSearchValue() == null ? 10 : 15,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
               ),
               const SizedBox(
                 width: 10,

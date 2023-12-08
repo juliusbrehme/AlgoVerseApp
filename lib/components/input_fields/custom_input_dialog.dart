@@ -78,53 +78,54 @@ class _CustomInputDialogState extends State<CustomInputDialog> {
               : const SizedBox(),
           const SizedBox(height: 10),
           Container(
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              decoration: BoxDecoration(
-                  color: Colors.grey,
-                  borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                  border: Border.all(color: const Color(0xffafafaf))),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      maxLines: 1,
-                      keyboardType: TextInputType.number,
-                      controller: _controller,
-                      style: TextStyle(color: Colors.grey[900]),
-                      decoration: InputDecoration(
-                          hintText: 'E.g. 34    (0 < $value)',
-                          hintStyle: TextStyle(color: Colors.grey[900]),
-                          focusedBorder: InputBorder.none,
-                          border: InputBorder.none,
-                          enabledBorder: InputBorder.none),
-                      inputFormatters: <TextInputFormatter>[
-                        FilteringTextInputFormatter.allow(widget.smallerHundred
-                            ? RegExp(r'^[1-9][0-9]{1}$|^\d$')
-                            : RegExp(r'^[1-9][0-9]{1,2}$|^\d$')),
-                        TextInputFormatter.withFunction(
-                          (oldValue, newValue) => newValue.copyWith(
-                            text: newValue.text.replaceAll('.', ','),
-                          ),
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            decoration: BoxDecoration(
+                color: Colors.grey,
+                borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+                border: Border.all(color: const Color(0xffafafaf))),
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    maxLines: 1,
+                    keyboardType: TextInputType.number,
+                    controller: _controller,
+                    style: TextStyle(color: Colors.grey[900]),
+                    decoration: InputDecoration(
+                        hintText: 'E.g. 34    (0 < $value)',
+                        hintStyle: TextStyle(color: Colors.grey[900]),
+                        focusedBorder: InputBorder.none,
+                        border: InputBorder.none,
+                        enabledBorder: InputBorder.none),
+                    inputFormatters: <TextInputFormatter>[
+                      FilteringTextInputFormatter.allow(widget.smallerHundred
+                          ? RegExp(r'^[1-9][0-9]{1}$|^\d$')
+                          : RegExp(r'^[1-9][0-9]{1,2}$|^\d$')),
+                      TextInputFormatter.withFunction(
+                        (oldValue, newValue) => newValue.copyWith(
+                          text: newValue.text.replaceAll('.', ','),
                         ),
-                      ],
-                      onEditingComplete: () {
-                        addNumber();
-                      },
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {
+                      ),
+                    ],
+                    onEditingComplete: () {
                       addNumber();
                     },
-                    child: const Text(
-                      "Add +",
-                      style: TextStyle(
-                          color: Color.fromRGBO(51, 74, 100, 1), fontSize: 20),
-                    ),
-                  )
-                ],
-              )),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    addNumber();
+                  },
+                  child: const Text(
+                    "Add +",
+                    style: TextStyle(
+                        color: Color.fromRGBO(51, 74, 100, 1), fontSize: 20),
+                  ),
+                )
+              ],
+            ),
+          ),
           const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
