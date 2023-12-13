@@ -77,7 +77,7 @@ class FindPathButton extends StatelessWidget {
             );
             astar.findPath(coordinator);
           },
-          algorithm: "Astar",
+          algorithm: "A*",
         ),
       ],
     );

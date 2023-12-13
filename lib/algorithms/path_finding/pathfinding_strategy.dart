@@ -1,3 +1,5 @@
+import 'package:algo_verse_app/algorithms/path_finding/location.dart';
+import 'package:algo_verse_app/algorithms/path_finding/node.dart';
 import 'package:algo_verse_app/provider/pathfinding_coordinator.dart';
 import 'package:collection/collection.dart';
 
