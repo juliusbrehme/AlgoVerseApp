@@ -1,13 +1,11 @@
 import 'dart:math';
 
+import 'package:algo_verse_app/algorithms/path_finding/location.dart';
+import 'package:algo_verse_app/algorithms/path_finding/node.dart';
+import 'package:algo_verse_app/algorithms/path_finding/path_history.dart';
 import 'package:algo_verse_app/provider/speed.dart';
 import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
-
-// Game Coordinator should be providor and provide all the important stuff, the nodes (start/end node),
-// obstacles, path (updated when generated) and visited nodes (updated when generated)
-// if any changes happen here, the page will reload. If an algorithm is finished, the results should be
-// added to the game coordinator
 
 class PathFindingCoordinator extends ChangeNotifier {
   final Location _size;
@@ -16,6 +14,7 @@ class PathFindingCoordinator extends ChangeNotifier {
   List<Node> _obstacle = [];
   List<Node> _visitedNodes = [];
   List<Node> _path = [];
+  List<PathHistory> _history = [];
   int _animationSpeed = 150;
   Enum _speed = Speed.slow;
   bool _stop = false;
@@ -67,6 +66,8 @@ class PathFindingCoordinator extends ChangeNotifier {
   bool get stop => _stop;
 
   bool get stopButton => _stopButton;
+
+  List<PathHistory> get history => _history;
 
   /// Get either the starting or ending node, depending on the location [x] and [y].
   Node? getNode(int x, int y) {
@@ -188,6 +189,17 @@ class PathFindingCoordinator extends ChangeNotifier {
     notifyListeners();
   }
 
+  void addToHistory(PathHistory pathHistory) {
+    _history.insert(0, pathHistory);
+    notifyListeners();
+    print(history);
+  }
+
+  void clearHistory() {
+    _history = [];
+    notifyListeners();
+  }
+
   // This methods creates a random maze, but this maze is sometimes not solvable and also does not utilize the best space.
   //Should be updated. Also it would be possible and easy to make an animation to visualize how the maze is generated.
   void createRandomMaze() {
@@ -267,9 +279,6 @@ class PathFindingCoordinator extends ChangeNotifier {
         }
       }
     }
-
-    print(_nodes);
-
     notifyListeners();
   }
 
@@ -332,67 +341,5 @@ class PathFindingCoordinator extends ChangeNotifier {
     } else {
       return Node(location: Location(node.x, node.y + 1));
     }
-  }
-}
-
-class Location {
-  final int _x;
-  final int _y;
-
-  Location(this._x, this._y);
-
-  int get x => _x;
-  int get y => _y;
-
-  @override
-  int get hashCode => _x.hashCode ^ _y.hashCode;
-
-  @override
-  bool operator ==(Object other) {
-    return other is Location && (_x == other.x && _y == other.y);
-  }
-
-  @override
-  String toString() => "Location($_x, $_y)";
-}
-
-class Node {
-  final Location location;
-  final Widget? icon;
-  final Location? size;
-
-  Node({required this.location, this.size, this.icon});
-
-  @override
-  int get hashCode => location.x.hashCode ^ location.y.hashCode;
-
-  @override
-  bool operator ==(Object other) {
-    return other is Node &&
-        (location.x == other.location.x && location.y == other.location.y);
-  }
-
-  @override
-  String toString() => "Location(${location.x}, ${location.y})";
-
-  int get x => location.x;
-  int get y => location.y;
-
-  Widget? getIcon() {
-    if (icon == null) {
-      return null;
-    } else {
-      return icon;
-    }
-  }
-
-  bool canMoveTo(
-      int x, int y, Location size, List<Node> nodes, List<Node> obstacles) {
-    Node nodeLocation = Node(location: Location(x, y));
-
-    return x < size.x &&
-        y < size.y &&
-        !nodes.contains(nodeLocation) &&
-        !obstacles.contains(nodeLocation);
   }
 }
