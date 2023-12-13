@@ -1,18 +1,22 @@
 import 'dart:math';
 
 import 'package:algo_verse_app/algorithms/binary_search_tree/binary_search_tree.dart';
+import 'package:algo_verse_app/algorithms/path_finding/location.dart';
 import 'package:algo_verse_app/components/buttons/find_path_button.dart';
 import 'package:algo_verse_app/components/buttons/search_tree_button.dart';
 import 'package:algo_verse_app/components/buttons/sorting_button.dart';
 import 'package:algo_verse_app/components/buttons/highlighted_sidebar_button.dart';
 import 'package:algo_verse_app/components/buttons/home_button.dart';
 import 'package:algo_verse_app/components/buttons/sidebar_button.dart';
+import 'package:algo_verse_app/pages/pathfinding/pathfinding_info_page.dart';
+import 'package:algo_verse_app/pages/sorting/sorting_info_page.dart';
+import 'package:algo_verse_app/pages/treesearch/treesearch_info_page.dart';
 import 'package:algo_verse_app/provider/binary_search_tree_coordinator.dart';
 import 'package:algo_verse_app/provider/pathfinding_coordinator.dart';
 import 'package:algo_verse_app/pages/main_page.dart';
-import 'package:algo_verse_app/pages/pathfinding_page.dart';
-import 'package:algo_verse_app/pages/sorting_page.dart';
-import 'package:algo_verse_app/pages/treesearch_page.dart';
+import 'package:algo_verse_app/pages/pathfinding/pathfinding_page.dart';
+import 'package:algo_verse_app/pages/sorting/sorting_page.dart';
+import 'package:algo_verse_app/pages/treesearch/treesearch_page.dart';
 import 'package:algo_verse_app/provider/sorting_coordinator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -35,8 +39,6 @@ class _HomePageState extends State<HomePage> {
       BinarySearchTreeCoordinator treeCoordinator,
       int selectedPage) {
     switch (selectedPage) {
-      case 0:
-        return const SizedBox();
       case 1:
         if (pathFindingCoordinator.stopButton) {
           return Padding(
@@ -62,7 +64,7 @@ class _HomePageState extends State<HomePage> {
         } else {
           return const SortingButton();
         }
-      default:
+      case 3:
         if (treeCoordinator.stopButton) {
           return Padding(
             padding: const EdgeInsets.only(right: 15),
@@ -75,6 +77,8 @@ class _HomePageState extends State<HomePage> {
         } else {
           return const SearchTreeButton();
         }
+      default:
+        return const SizedBox();
     }
   }
 
@@ -83,6 +87,9 @@ class _HomePageState extends State<HomePage> {
     "Pathfinding",
     "Sorting",
     "Treesearch",
+    "Pathfinding Information",
+    "Sorting Information",
+    "Binarysearchtree Information",
   ];
 
   Widget getPage(int selectedPage) {
@@ -97,8 +104,14 @@ class _HomePageState extends State<HomePage> {
         return const PathFindingPage();
       case 2:
         return const SortingPage();
-      default:
+      case 3:
         return const TreeSearchPage();
+      case 4:
+        return const PathFindingInfoPage();
+      case 5:
+        return const SortingInfoPage();
+      default:
+        return const TreeSearchInfoPage();
     }
   }
 
@@ -117,6 +130,24 @@ class _HomePageState extends State<HomePage> {
   void toTreeSearch() {
     setState(() {
       _selectedPage = 3;
+    });
+  }
+
+  void toPathFindingInfo() {
+    setState(() {
+      _selectedPage = 4;
+    });
+  }
+
+  void toSortingInfo() {
+    setState(() {
+      _selectedPage = 5;
+    });
+  }
+
+  void toTreeSearchInfo() {
+    setState(() {
+      _selectedPage = 6;
     });
   }
 
@@ -167,13 +198,24 @@ class _HomePageState extends State<HomePage> {
           builder: (context) => Scaffold(
             appBar: AppBar(
               leading: Builder(
-                builder: (context) => IconButton(
-                  onPressed: Scaffold.of(context).openDrawer,
-                  icon: const Icon(
-                    Icons.menu,
-                    color: Colors.white,
-                  ),
-                ),
+                builder: (context) => (_selectedPage < 4)
+                    ? IconButton(
+                        onPressed: Scaffold.of(context).openDrawer,
+                        icon: const Icon(
+                          Icons.menu,
+                          color: Colors.white,
+                        ),
+                      )
+                    : IconButton(
+                        onPressed: () => _selectedPage == 4
+                            ? toPathFinding()
+                            : _selectedPage == 5
+                                ? toSorting()
+                                : toTreeSearch(),
+                        icon: const Icon(
+                          Icons.arrow_back,
+                          color: Colors.white,
+                        )),
               ),
               title: Text(
                 _title[_selectedPage],
@@ -183,21 +225,26 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               backgroundColor: const Color.fromRGBO(51, 74, 100, 1),
-              actions: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(right: 10),
-                  child: IconButton(
-                    icon: const Icon(
-                      Icons.description,
-                      color: Color.fromRGBO(255, 255, 255, 1),
-                    ),
-                    onPressed: () {
-                      /* TODO: this should be switch to show background of the algorithms, not implemented yet. */
-                      null;
-                    },
-                  ),
-                )
-              ],
+              actions: _selectedPage < 4 && _selectedPage != 0
+                  ? <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(right: 10),
+                        child: IconButton(
+                          icon: const Icon(
+                            Icons.description,
+                            color: Color.fromRGBO(255, 255, 255, 1),
+                          ),
+                          onPressed: () {
+                            _selectedPage == 1
+                                ? toPathFindingInfo()
+                                : _selectedPage == 2
+                                    ? toSortingInfo()
+                                    : toTreeSearchInfo();
+                          },
+                        ),
+                      )
+                    ]
+                  : null,
             ),
             drawer: Drawer(
               backgroundColor: const Color.fromRGBO(51, 74, 100, 1),
