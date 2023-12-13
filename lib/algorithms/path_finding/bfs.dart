@@ -1,5 +1,8 @@
 import 'dart:collection';
 
+import 'package:algo_verse_app/algorithms/path_finding/location.dart';
+import 'package:algo_verse_app/algorithms/path_finding/node.dart';
+import 'package:algo_verse_app/algorithms/path_finding/path_history.dart';
 import 'package:algo_verse_app/algorithms/path_finding/pathfinding_strategy.dart';
 import 'package:algo_verse_app/provider/pathfinding_coordinator.dart';
 
@@ -58,6 +61,8 @@ class BFS extends PathFindingStrategy {
                 Duration(milliseconds: coordinator.animationSpeed));
             reconstructPath(
                 startingNode, endingNode, visitedNodes, parent, coordinator);
+            coordinator.addToHistory(PathHistory("BFS", coordinator.startNode,
+                coordinator.endingNode, coordinator.allVisitedNodes));
             return;
           }
           nextNode.add(neighbor);
@@ -65,5 +70,7 @@ class BFS extends PathFindingStrategy {
       }
     }
     coordinator.stopButton = false;
+    coordinator.addToHistory(PathHistory("BFS", coordinator.startNode,
+        coordinator.endingNode, coordinator.allVisitedNodes));
   }
 }
