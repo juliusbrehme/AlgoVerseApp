@@ -121,8 +121,6 @@ class SortingCoordinator extends ChangeNotifier {
 
   void addToHistory(SortingHistory sortingHistory) {
     _sortingHistory.insert(0, sortingHistory);
-    print("Added");
-    print(sortingHistory);
     notifyListeners();
   }
 
