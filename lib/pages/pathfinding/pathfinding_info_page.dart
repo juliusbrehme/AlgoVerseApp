@@ -1,5 +1,5 @@
-import 'package:algo_verse_app/components/information/history_block.dart';
-import 'package:algo_verse_app/components/information/info_algorithmd.dart';
+import 'package:algo_verse_app/components/information/path_history_block.dart';
+import 'package:algo_verse_app/components/information/info_algorithm.dart';
 import 'package:algo_verse_app/components/information/pseudocode.dart';
 import 'package:algo_verse_app/provider/pathfinding_coordinator.dart';
 import 'package:flutter/material.dart';
@@ -49,7 +49,8 @@ class PathFindingInfoPage extends StatelessWidget {
                 shrinkWrap: true,
                 itemCount: coordinator.history.length,
                 itemBuilder: (context, count) {
-                  return HistoryBlock(pathHistory: coordinator.history[count]);
+                  return PathHistoryBlock(
+                      pathHistory: coordinator.history[count]);
                 },
               ),
               const SizedBox(
@@ -87,7 +88,7 @@ class PathFindingInfoPage extends StatelessWidget {
                 averageCase: "O(V + E)",
                 averageCaseSubtitle: "V Vertices",
                 averageCaseSubSubtitle: "E Edges",
-                codeContent: PseudoCode.Astar(),
+                codeContent: PseudoCode.BFS(),
               ),
               const SizedBox(height: 20),
               InfoAlgorithm(
@@ -101,7 +102,7 @@ class PathFindingInfoPage extends StatelessWidget {
                 averageCase: "O(V + E)",
                 averageCaseSubtitle: "V Vertices",
                 averageCaseSubSubtitle: "E Edges",
-                codeContent: PseudoCode.Astar(),
+                codeContent: PseudoCode.DFS(),
               ),
               const SizedBox(height: 20),
               InfoAlgorithm(
@@ -112,7 +113,7 @@ class PathFindingInfoPage extends StatelessWidget {
                 bestCaseSubtitle: "V Vertices",
                 averageCase: "O(V²)",
                 averageCaseSubtitle: "V Vertices",
-                codeContent: PseudoCode.Astar(),
+                codeContent: PseudoCode.Dijkstra(),
               ),
             ],
           ),

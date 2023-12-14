@@ -192,7 +192,6 @@ class PathFindingCoordinator extends ChangeNotifier {
   void addToHistory(PathHistory pathHistory) {
     _history.insert(0, pathHistory);
     notifyListeners();
-    print(history);
   }
 
   void clearHistory() {
