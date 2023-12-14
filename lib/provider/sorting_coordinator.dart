@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:algo_verse_app/algorithms/sorting/sorting_history.dart';
 import 'package:algo_verse_app/provider/speed.dart';
 import 'package:flutter/material.dart';
 
@@ -7,6 +8,7 @@ class SortingCoordinator extends ChangeNotifier {
   List<int> _startingArr = [];
   List<int> _toSortArr = [];
   List<int> _indexArr = [];
+  List<SortingHistory> _sortingHistory = [];
   int _swapI = -1;
   int _swapJ = -1;
   bool _stop = false;
@@ -66,6 +68,7 @@ class SortingCoordinator extends ChangeNotifier {
   int get animationSpeed => _animationSpeed;
   Enum get speed => _speed;
   bool get stopButton => _stopButton;
+  List<SortingHistory> get sortingHistory => _sortingHistory;
 
   List<int> generateRandomArray(int size) {
     Set<int> set = {};
@@ -113,6 +116,18 @@ class SortingCoordinator extends ChangeNotifier {
     int temp = _toSortArr[i];
     _toSortArr[i] = _toSortArr[j];
     _toSortArr[j] = temp;
+    notifyListeners();
+  }
+
+  void addToHistory(SortingHistory sortingHistory) {
+    _sortingHistory.insert(0, sortingHistory);
+    print("Added");
+    print(sortingHistory);
+    notifyListeners();
+  }
+
+  void clearHistory() {
+    _sortingHistory = [];
     notifyListeners();
   }
 

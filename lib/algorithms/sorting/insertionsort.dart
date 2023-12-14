@@ -1,9 +1,15 @@
+import 'package:algo_verse_app/algorithms/sorting/sorting_history.dart';
 import 'package:algo_verse_app/algorithms/sorting/sorting_strategy.dart';
 import 'package:algo_verse_app/provider/sorting_coordinator.dart';
 
 class InsertionSort implements SortingStrategy {
+  int swaps = 0;
+  List<List<int>> sortArray = [];
+
   @override
   Future<void> sort(SortingCoordinator coordinator) async {
+    sortArray.add(coordinator.toSortArr);
+
     for (int i = 0; i < coordinator.toSortArr.length; ++i) {
       if (coordinator.stop) {
         coordinator.resetSwap();
@@ -31,11 +37,17 @@ class InsertionSort implements SortingStrategy {
       }
       coordinator.indexArr[indexI] = j + 1;
       coordinator.toSortArr[j + 1] = temp;
+
+      swaps++;
+      sortArray.add(coordinator.toSortArr);
+
       coordinator.notify();
       await Future.delayed(Duration(milliseconds: coordinator.animationSpeed));
     }
 
     coordinator.resetSwap();
     coordinator.stopButton = false;
+    coordinator.addToHistory(SortingHistory(
+        "InsertionSort", sortArray, swaps, coordinator.toSortArr.length));
   }
 }

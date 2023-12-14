@@ -1,18 +1,31 @@
 import 'dart:core';
 
+import 'package:algo_verse_app/algorithms/sorting/sorting_history.dart';
 import 'package:algo_verse_app/algorithms/sorting/sorting_strategy.dart';
 import 'package:algo_verse_app/provider/sorting_coordinator.dart';
 
 class QuickSort implements SortingStrategy {
+  int swaps = 0;
+  List<List<int>> sortArray = [];
+
   @override
   Future<void> sort(SortingCoordinator coordinator) async {
+    sortArray.add(coordinator.toSortArr);
+
     if (coordinator.stop) {
       coordinator.resetSwap();
       coordinator.stopButton = false;
       return;
     }
     await _quickSort(0, coordinator.toSortArr.length - 1, coordinator);
+    if (coordinator.stop) {
+      coordinator.resetSwap();
+      coordinator.stopButton = false;
+      return;
+    }
     coordinator.stopButton = false;
+    coordinator.addToHistory(SortingHistory(
+        "QuickSort", sortArray, swaps, coordinator.toSortArr.length));
   }
 
   Future<void> _quickSort(
@@ -57,6 +70,10 @@ class QuickSort implements SortingStrategy {
       }
       if (coordinator.toSortArr[i] <= pivot) {
         coordinator.swap(i, pIndex);
+
+        swaps++;
+        sortArray.add(coordinator.toSortArr);
+
         await Future.delayed(
             Duration(milliseconds: coordinator.animationSpeed));
         ++pIndex;
@@ -64,6 +81,9 @@ class QuickSort implements SortingStrategy {
     }
 
     coordinator.swap(pIndex, end);
+    swaps++;
+    sortArray.add(coordinator.toSortArr);
+
     await Future.delayed(Duration(milliseconds: coordinator.animationSpeed));
 
     coordinator.resetSwap();

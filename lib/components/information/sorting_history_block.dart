@@ -1,15 +1,13 @@
-import 'package:algo_verse_app/algorithms/path_finding/path_history.dart';
+import 'package:algo_verse_app/algorithms/sorting/sorting_history.dart';
 import 'package:flutter/material.dart';
 
-class HistoryBlock extends StatelessWidget {
-  const HistoryBlock({
+class SortingHistoryBlock extends StatelessWidget {
+  const SortingHistoryBlock({
     super.key,
-    required this.pathHistory,
+    required this.sortingHistory,
   });
 
-  // hier einfach die anderen reinsetzten und je nachdem was gebraucht wird umbauen?
-
-  final PathHistory pathHistory;
+  final SortingHistory sortingHistory;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +31,7 @@ class HistoryBlock extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                pathHistory.algorithm,
+                sortingHistory.algorithm,
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
@@ -50,12 +48,12 @@ class HistoryBlock extends StatelessWidget {
                   Column(
                     children: [
                       Text(
-                        "Start",
+                        "Array Size",
                         style: TextStyle(
                             color: const Color.fromRGBO(245, 245, 245, 1)),
                       ),
                       Text(
-                        pathHistory.startingNode.toString(),
+                        sortingHistory.size.toString(),
                         style: TextStyle(
                             color: const Color.fromRGBO(245, 245, 245, 1)),
                       )
@@ -64,31 +62,31 @@ class HistoryBlock extends StatelessWidget {
                   Column(
                     children: [
                       Text(
-                        "Target",
+                        "Swaps",
                         style: TextStyle(
                             color: const Color.fromRGBO(245, 245, 245, 1)),
                       ),
                       Text(
-                        pathHistory.targetNode.toString(),
+                        sortingHistory.swaps.toString(),
                         style: TextStyle(
                             color: const Color.fromRGBO(245, 245, 245, 1)),
                       )
                     ],
                   ),
-                  Column(
-                    children: [
-                      Text(
-                        "Visited Nodes",
-                        style: TextStyle(
-                            color: const Color.fromRGBO(245, 245, 245, 1)),
-                      ),
-                      Text(
-                        pathHistory.numberOfVisitedNodes.toString(),
-                        style: TextStyle(
-                            color: const Color.fromRGBO(245, 245, 245, 1)),
-                      )
-                    ],
-                  ),
+                  // Column(
+                  //   children: [
+                  //     Text(
+                  //       "Visited Nodes",
+                  //       style: TextStyle(
+                  //           color: const Color.fromRGBO(245, 245, 245, 1)),
+                  //     ),
+                  //     Text(
+                  //       pathHistory.numberOfVisitedNodes.toString(),
+                  //       style: TextStyle(
+                  //           color: const Color.fromRGBO(245, 245, 245, 1)),
+                  //     )
+                  //   ],
+                  // ),
                   Container(
                     height: 40,
                     width: 80,

@@ -1,7 +1,11 @@
+import 'package:algo_verse_app/algorithms/sorting/sorting_history.dart';
 import 'package:algo_verse_app/algorithms/sorting/sorting_strategy.dart';
 import 'package:algo_verse_app/provider/sorting_coordinator.dart';
 
 class MergeSort implements SortingStrategy {
+  List<List<int>> sortArray = [];
+  int swaps = 0;
+
   @override
   Future<void> sort(SortingCoordinator coordinator) async {
     if (coordinator.stop) {
@@ -9,7 +13,16 @@ class MergeSort implements SortingStrategy {
       coordinator.stopButton = false;
       return;
     }
+    sortArray.add(coordinator.toSortArr);
     await _mergeSort(0, coordinator.toSortArr.length - 1, coordinator);
+    if (coordinator.stop) {
+      coordinator.resetSwap();
+      coordinator.stopButton = false;
+      return;
+    }
+    coordinator.stopButton = false;
+    coordinator.addToHistory(
+        SortingHistory("MergeSort", [], swaps, coordinator.toSortArr.length));
   }
 
   Future<void> _mergeSort(
@@ -94,11 +107,15 @@ class MergeSort implements SortingStrategy {
         coordinator.swapI = index;
         coordinator.indexArr[index] = k;
 
+        swaps++;
+
         coordinator.toSortArr[k++] = arr1[i++];
       } else {
         index = coordinator.startingArr.indexOf(arr2[j]);
         coordinator.swapJ = index;
         coordinator.indexArr[index] = k;
+
+        swaps++;
 
         coordinator.toSortArr[k++] = arr2[j++];
       }
@@ -116,6 +133,8 @@ class MergeSort implements SortingStrategy {
       coordinator.swapI = index;
       coordinator.indexArr[index] = k;
 
+      swaps++;
+
       coordinator.toSortArr[k++] = arr1[i++];
 
       await Future.delayed(Duration(milliseconds: coordinator.animationSpeed));
@@ -131,12 +150,13 @@ class MergeSort implements SortingStrategy {
       coordinator.swapJ = index;
       coordinator.indexArr[index] = k;
 
+      swaps++;
+
       coordinator.toSortArr[k++] = arr2[j++];
 
       await Future.delayed(Duration(milliseconds: coordinator.animationSpeed));
     }
 
     coordinator.resetSwap();
-    coordinator.stopButton = false;
   }
 }
