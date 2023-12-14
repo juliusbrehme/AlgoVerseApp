@@ -1,4 +1,5 @@
 import 'package:algo_verse_app/algorithms/binary_search_tree/binary_search_tree.dart';
+import 'package:algo_verse_app/algorithms/binary_search_tree/binary_search_tree_history.dart';
 import 'package:algo_verse_app/algorithms/binary_search_tree/node.dart';
 import 'package:algo_verse_app/provider/speed.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ class BinarySearchTreeCoordinator extends ChangeNotifier {
   int _animationSpeed = 600;
   bool _stop = false;
   bool _stopButton = false;
+  List<BinarySearchTreeHistory> _history = [];
 
   BinarySearchTreeCoordinator(this._binaryTree) {
     binaryTree.calculateNodePositions(_binaryTree.root);
@@ -22,6 +24,7 @@ class BinarySearchTreeCoordinator extends ChangeNotifier {
   bool get stop => _stop;
   bool get stopButton => _stopButton;
   int get animationSpeed => _animationSpeed;
+  List<BinarySearchTreeHistory> get history => _history;
 
   int? getSearchValue() {
     return _searchValue;
@@ -58,6 +61,16 @@ class BinarySearchTreeCoordinator extends ChangeNotifier {
   void addNodes(List<int> list) {
     binaryTree.fromList(list);
     binaryTree.calculateNodePositions(binaryTree.root);
+    notifyListeners();
+  }
+
+  void clearHistory() {
+    _history = [];
+    notifyListeners();
+  }
+
+  void addToHistory(BinarySearchTreeHistory searchHistory) {
+    _history.insert(0, searchHistory);
     notifyListeners();
   }
 
@@ -109,9 +122,9 @@ class BinarySearchTreeCoordinator extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> binarySearch(
-      int value, BinarySearchTreeCoordinator coordinator) {
-    return binaryTree.binarySearch(value, coordinator);
+  Future<void> binarySearch(
+      int value, BinarySearchTreeCoordinator coordinator) async{
+    binaryTree.binarySearch(value, coordinator);
   }
 
   Future<bool> bfs(
