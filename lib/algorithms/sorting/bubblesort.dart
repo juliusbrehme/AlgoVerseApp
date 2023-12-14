@@ -8,8 +8,8 @@ class BubbleSort implements SortingStrategy {
 
   @override
   Future<void> sort(SortingCoordinator coordinator) async {
+    sortArray.add(List.of(coordinator.toSortArr));
     for (int i = coordinator.toSortArr.length; i > 0; i--) {
-      sortArray.add(coordinator.toSortArr);
       if (coordinator.stop) {
         coordinator.resetSwap();
         coordinator.stopButton = false;
@@ -29,7 +29,7 @@ class BubbleSort implements SortingStrategy {
         index++;
       }
       coordinator.swap(max, index - 1);
-      sortArray.add(coordinator.toSortArr);
+      sortArray.add(List.of(coordinator.toSortArr));
       swaps++;
       await Future.delayed(Duration(milliseconds: coordinator.animationSpeed));
     }

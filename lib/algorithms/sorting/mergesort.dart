@@ -8,12 +8,12 @@ class MergeSort implements SortingStrategy {
 
   @override
   Future<void> sort(SortingCoordinator coordinator) async {
+    sortArray.add(List.of(coordinator.toSortArr));
     if (coordinator.stop) {
       coordinator.resetSwap();
       coordinator.stopButton = false;
       return;
     }
-    sortArray.add(coordinator.toSortArr);
     await _mergeSort(0, coordinator.toSortArr.length - 1, coordinator);
     if (coordinator.stop) {
       coordinator.resetSwap();
@@ -21,8 +21,8 @@ class MergeSort implements SortingStrategy {
       return;
     }
     coordinator.stopButton = false;
-    coordinator.addToHistory(
-        SortingHistory("MergeSort", [], swaps, coordinator.toSortArr.length));
+    coordinator.addToHistory(SortingHistory(
+        "MergeSort", sortArray, swaps, coordinator.toSortArr.length));
   }
 
   Future<void> _mergeSort(
@@ -102,21 +102,18 @@ class MergeSort implements SortingStrategy {
       }
       int index;
 
+      sortArray.add(List.of(coordinator.toSortArr));
+      swaps++;
+
       if (arr1[i] < arr2[j]) {
         index = coordinator.startingArr.indexOf(arr1[i]);
         coordinator.swapI = index;
         coordinator.indexArr[index] = k;
-
-        swaps++;
-
         coordinator.toSortArr[k++] = arr1[i++];
       } else {
         index = coordinator.startingArr.indexOf(arr2[j]);
         coordinator.swapJ = index;
         coordinator.indexArr[index] = k;
-
-        swaps++;
-
         coordinator.toSortArr[k++] = arr2[j++];
       }
 
@@ -129,12 +126,13 @@ class MergeSort implements SortingStrategy {
         coordinator.stopButton = false;
         return;
       }
+
+      sortArray.add(List.of(coordinator.toSortArr));
+      swaps++;
+
       int index = coordinator.startingArr.indexOf(arr1[i]);
       coordinator.swapI = index;
       coordinator.indexArr[index] = k;
-
-      swaps++;
-
       coordinator.toSortArr[k++] = arr1[i++];
 
       await Future.delayed(Duration(milliseconds: coordinator.animationSpeed));
@@ -146,12 +144,13 @@ class MergeSort implements SortingStrategy {
         coordinator.stopButton = false;
         return;
       }
+
+      sortArray.add(List.of(coordinator.toSortArr));
+      swaps++;
+
       int index = coordinator.startingArr.indexOf(arr2[j]);
       coordinator.swapJ = index;
       coordinator.indexArr[index] = k;
-
-      swaps++;
-
       coordinator.toSortArr[k++] = arr2[j++];
 
       await Future.delayed(Duration(milliseconds: coordinator.animationSpeed));

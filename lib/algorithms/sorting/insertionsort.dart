@@ -8,7 +8,7 @@ class InsertionSort implements SortingStrategy {
 
   @override
   Future<void> sort(SortingCoordinator coordinator) async {
-    sortArray.add(coordinator.toSortArr);
+    sortArray.add(List.of(coordinator.toSortArr));
 
     for (int i = 0; i < coordinator.toSortArr.length; ++i) {
       if (coordinator.stop) {
@@ -39,7 +39,7 @@ class InsertionSort implements SortingStrategy {
       coordinator.toSortArr[j + 1] = temp;
 
       swaps++;
-      sortArray.add(coordinator.toSortArr);
+      sortArray.add(List.of(coordinator.toSortArr));
 
       coordinator.notify();
       await Future.delayed(Duration(milliseconds: coordinator.animationSpeed));

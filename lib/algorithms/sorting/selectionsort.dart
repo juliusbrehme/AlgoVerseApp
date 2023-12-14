@@ -8,7 +8,7 @@ class SelectionSort implements SortingStrategy {
 
   @override
   Future<void> sort(SortingCoordinator coordinator) async {
-    sortArray.add(coordinator.toSortArr);
+    sortArray.add(List.of(coordinator.toSortArr));
 
     for (int i = 0; i < coordinator.toSortArr.length; ++i) {
       if (coordinator.stop) {
@@ -43,7 +43,7 @@ class SelectionSort implements SortingStrategy {
 
       coordinator.swap(i, smallestIndex);
       swaps++;
-      sortArray.add(coordinator.toSortArr);
+      sortArray.add(List.of(coordinator.toSortArr));
       await Future.delayed(Duration(milliseconds: coordinator.animationSpeed));
     }
     coordinator.resetSwap();

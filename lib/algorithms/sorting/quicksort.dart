@@ -10,7 +10,7 @@ class QuickSort implements SortingStrategy {
 
   @override
   Future<void> sort(SortingCoordinator coordinator) async {
-    sortArray.add(coordinator.toSortArr);
+    sortArray.add(List.of(coordinator.toSortArr));
 
     if (coordinator.stop) {
       coordinator.resetSwap();
@@ -72,7 +72,7 @@ class QuickSort implements SortingStrategy {
         coordinator.swap(i, pIndex);
 
         swaps++;
-        sortArray.add(coordinator.toSortArr);
+        sortArray.add(List.of(coordinator.toSortArr));
 
         await Future.delayed(
             Duration(milliseconds: coordinator.animationSpeed));
@@ -82,7 +82,7 @@ class QuickSort implements SortingStrategy {
 
     coordinator.swap(pIndex, end);
     swaps++;
-    sortArray.add(coordinator.toSortArr);
+    sortArray.add(List.of(coordinator.toSortArr));
 
     await Future.delayed(Duration(milliseconds: coordinator.animationSpeed));
 
