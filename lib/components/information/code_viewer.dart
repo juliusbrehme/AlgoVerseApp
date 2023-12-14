@@ -40,7 +40,7 @@ class CodeViewer extends StatelessWidget {
                 children: [
                   HighlightView(
                     codeContent,
-                    language: 'dart',
+                    language: 'ruby',
                     theme: themeMap["atom-one-light"]!,
                     padding: EdgeInsets.only(left: 10, right: 10),
                     textStyle: TextStyle(
