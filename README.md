@@ -3,6 +3,11 @@
 A mobile application to visualizes a variety of algorithms. Pathfinding, sorting and binary search tree is visualized.
 This application was developed in flutter.
 
+## Website
+
+The application is a mobile application. But for making it easier to use the application and to showcase it, I deployed the webiste version on github pages. Just keep in mind, it look a little stretch, because it is not optimized for big screens. \
+Website: [AlgoVerseApp](https://juliusbrehme.github.io/AlgoVerseApp/)
+
 ## Pathfinding
 
 A coordinate system is shown with a start and end node. The app visualizes the visited nodes and the path taken. It is possible to set obstacles or a random maze.
